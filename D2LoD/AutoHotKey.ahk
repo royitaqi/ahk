@@ -682,6 +682,13 @@ L_3LK()
     }
 
     LK_Run_Return()
+    if (LK_Detect_Orange_Text()) {
+        StopScript("Loot detected", () => Send("{Escape}"))
+    }
+    if (!IsD2Active()) {
+        StopScript()
+    }
+
     loop 3 ; 3 attempts to return to waypoint
     {
         confidence := LK_Detect_Waypoint_And_Recover()
