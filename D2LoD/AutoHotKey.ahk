@@ -390,12 +390,21 @@ F9::
     switch s_CurrentMode
     {
     case 1:
-        confidence := LK_Detect_On_Waypoint()
-        Say("Detect waypoint = " confidence, 1000)
-        if (confidence < 0.5) {
-            StopScript("Failed waypoint detection: " confidence, () => Send("{Escape}"))
+        loop 3 ; 3 attempts to return to waypoint
+        {
+            confidence := LK_Detect_Waypoint_And_Recover()
+            if (confidence >= 0.5) {
+                break
+            }
         }
+        if (confidence < 0.5) {
+            ; It can be that we just tried the last recovery blink.
+            ; So let's detect again and see if we get lucky.
+            confidence := LK_Detect_On_Waypoint()
 
+            ; All recovery attempts have failed. Give up.
+            StopScript("Failed waypoint detection (confidence = " confidence ")", () => Send("{Escape}"))
+        }
         return
     }
     Send "{F9}"
@@ -691,6 +700,11 @@ L_3LK()
         }
     }
     if (confidence < 0.5) {
+        ; It can be that we just tried the last recovery blink.
+        ; So let's detect again and see if we get lucky.
+        confidence := LK_Detect_On_Waypoint()
+
+        ; All recovery attempts have failed. Give up.
         StopScript("Failed waypoint detection (confidence = " confidence ")", () => Send("{Escape}"))
     }
     if (!IsD2Active()) {
@@ -843,9 +857,10 @@ LK_Detect_Waypoint_And_Recover()
                 continue
             }
 
-            ; Confirmed that the waypoint is likely there. Blink there.
+            ; Confirmed that the waypoint is likely there.
             x := x + (relative_x_l + relative_x_r) / 2 + search_box_size / 2
             y := y + (relative_y_l + relative_y_r) / 2 + search_box_size / 2
+            ; Blink there but return 0.0 confidence (because we don't know until the next detection is run)
             Press "C", s_LK_Run_Press_Delay
             ClickOrMove x, y, "", s_LK_Run_Premove_Delay
             ClickOrMove x, y, "Right", s_LK_Run_Blink_Delay
@@ -853,6 +868,7 @@ LK_Detect_Waypoint_And_Recover()
         }
         x := x + 10
     }
+    ; Cannot find any potential waypoint positions
     return 0.0
 }
 s_LK_Left_Blue_Flame_X1 := 470
