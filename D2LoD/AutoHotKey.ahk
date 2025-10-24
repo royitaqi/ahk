@@ -394,7 +394,7 @@ F9::
     switch s_CurrentMode
     {
     case 1:
-        Test_LK_Waypoint()
+        Test_LK()
         return
     }
     Send "{F9}"
@@ -792,9 +792,11 @@ LK_Run_Return()
     ; Move mouse to waypoint
     ClickOrMove 536, 278, "", s_LK_Run_Premove_Delay
 }
-LK_Detect_Orange_Text()
+LK_Detect_Orange_Text(bitmap := 0)
 {
-    bitmap := GetD2BitMap()
+    if (!bitmap) {
+        bitmap := GetD2BitMap("Screenshot_LK_Detect_Orange_Text.jpg")
+    }
     return DetectColoredText(bitmap, 3, 0xCD862E, 0x20)
 }
 LK_Detect_Waypoint_And_Recover(bitmap := 0, recover := 1)
@@ -1006,6 +1008,27 @@ LK_Detect_On_Waypoint(bitmap := 0)
     }
 
     return confidence / 3.0
+}
+Test_LK()
+{
+    ;Test_LK_Waypoint()
+    Test_LK_Loot()
+}
+Test_LK_Loot()
+{
+    Test(file)
+    {
+        bitmap := Gdip_CreateBitmapFromFile(file)
+        Say(file " loaded")
+
+        start := A_TickCount
+        confidence := LK_Detect_Orange_Text(bitmap)
+        time := A_TickCount - start
+        Say("Result: " confidence " (" time ")")
+    }
+
+    Test("Test_LK_Loot_Io_Line1.jpg")
+    Test("Test_LK_Loot_Io_Line2.jpg")
 }
 Test_LK_Waypoint()
 {
