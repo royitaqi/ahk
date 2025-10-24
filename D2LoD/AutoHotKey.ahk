@@ -1012,8 +1012,8 @@ LK_Detect_On_Waypoint(bitmap := 0)
 }
 Test_LK()
 {
-    ;Test_LK_Waypoint()
     Test_LK_Loot()
+    Test_LK_Waypoint()
 }
 Test_LK_Loot()
 {
@@ -1028,8 +1028,9 @@ Test_LK_Loot()
         Say("Result: " confidence " (" time ")")
     }
 
-    Test("Test_LK_Loot_Io_Line1.jpg")
-    Test("Test_LK_Loot_Io_Line2.jpg")
+    Test("Test_LK_Loot_Gul_Line2.jpg") ; failing in game ; pass in test
+    Test("Test_LK_Loot_Io_Line1.jpg") ; failing in game ; pass in test
+    Test("Test_LK_Loot_Io_Line2.jpg") ; failing in game ; pass in test
 }
 Test_LK_Waypoint()
 {
@@ -1053,7 +1054,8 @@ Test_LK_Waypoint()
     Test("Test_LK_WayPoint_FarAbove_Night2.jpg")
     Test("Test_LK_WayPoint_FarAbove_NightRain.jpg")
     Test("Test_LK_WayPoint_FarBelow_Day.jpg")
-    Test("Test_LK_WayPoint_FarBelow_Night.jpg")
+    Test("Test_LK_WayPoint_FarBelow_Night.jpg") ; failing test
+    Test("Test_LK_WayPoint_FarBelow_Night2.jpg") ; failing test
     Test("Test_LK_WayPoint_FarLeft_Day.jpg")
     Test("Test_LK_WayPoint_FarRight_Day.jpg")
     Test("Test_LK_WayPoint_MediumBottomLeft_Day.jpg")
