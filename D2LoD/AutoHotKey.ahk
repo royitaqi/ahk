@@ -820,7 +820,7 @@ LK_Detect_Waypoint_And_Recover(bitmap := 0, recover := 1)
                     y - search_box_size * (blue_flame_boxes / 2),
                     x + search_box_size * (blue_flame_boxes / 2 + 1) - 1,
                     y + search_box_size * (blue_flame_boxes / 2 + 1) - 1,
-                    0x669AD4, 0x20, , , &left_x, &left_y)) {
+                    0x669AD4, 0x20, 0x7290FF, 0x20, &left_x, &left_y)) {
                 y := y + search_box_size
                 continue
             }
@@ -835,7 +835,7 @@ LK_Detect_Waypoint_And_Recover(bitmap := 0, recover := 1)
                     y + relative_y - search_box_size * (blue_flame_boxes / 2),
                     x + relative_x + search_box_size * (blue_flame_boxes / 2 + 1) - 1,
                     y + relative_y + search_box_size * (blue_flame_boxes / 2 + 1) - 1,
-                    0x76A9DE, 0x20, , , &right_x, &right_y)) {
+                    0x76A9DE, 0x20, 0x6988F4, 0x20, &right_x, &right_y)) {
                 y := y + search_box_size
                 continue
             }
@@ -1011,28 +1011,22 @@ Test_LK_Waypoint()
         time := A_TickCount - start
         Say("New: " confidence " (" time ")")
 
-        start := A_TickCount
-        confidence := LK_Detect_Waypoint_And_Recover_Old(bitmap, recover := 0)
-        time := A_TickCount - start
-        Say("Old: " confidence " (" time ")")
-
-        start := A_TickCount
-        confidence := LK_Detect_Waypoint_And_Recover(bitmap, recover := 0)
-        time := A_TickCount - start
-        Say("New: " confidence " (" time ")")
-
-        start := A_TickCount
-        confidence := LK_Detect_Waypoint_And_Recover_Old(bitmap, recover := 0)
-        time := A_TickCount - start
-        Say("Old: " confidence " (" time ")")
+        ;start := A_TickCount
+        ;confidence := LK_Detect_Waypoint_And_Recover_Old(bitmap, recover := 0)
+        ;time := A_TickCount - start
+        ;Say("Old: " confidence " (" time ")")
     }
 
+    Test("Test_LK_WayPoint_FarAbove_Night.jpg")
+    Test("Test_LK_WayPoint_FarAbove_Night2.jpg")
+    Test("Test_LK_WayPoint_FarAbove_NightRain.jpg")
+    Test("Test_LK_WayPoint_FarBelow_Day.jpg")
+    Test("Test_LK_WayPoint_MediumBottomLeft_Day.jpg")
+    Test("Test_LK_WayPoint_MediumBottomLeft_Night.jpg")
     Test("Test_LK_WayPoint_RightAbove_Day.jpg")
     Test("Test_LK_WayPoint_RightAbove_Night.jpg")
     Test("Test_LK_WayPoint_RightBelow_Day.jpg")
     Test("Test_LK_WayPoint_RightBelow_Night.jpg")
-    Test("Test_LK_WayPoint_MediumBottomLeft_Day.jpg")
-    Test("Test_LK_WayPoint_MediumBottomLeft_Night.jpg")
 }
 
 ;;------------------------------------------------------------
