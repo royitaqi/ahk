@@ -135,14 +135,15 @@ Say(text, delay := 100)
     Sleep delay
 }
 
-s_X_Shift := 0
-s_Y_Shift := 0
+s_X_Max := 1068
+s_Y_Max := 600
+
 ClickOrMove(x, y, button := "", delay := 100)
 {
     if (button != "") {
-        Click x + s_X_Shift, y + s_Y_Shift, button
+        Click x, y, button
     } else {
-        MouseMove x + s_X_Shift, y + s_Y_Shift
+        MouseMove x, y
     }
     if (delay != 0) {
         Sleep delay
@@ -369,7 +370,7 @@ Delete::
 {
     if (s_CurrentMode != 0)
     {
-        StopScript()
+        StopScript("Stopping script")
         return
     }
     Send "{Delete}"
@@ -526,7 +527,7 @@ TestOrangeAndPurpleText()
 }
 
 /* Stop execution of script */
-StopScript(say_reason := "Stopping script", take_action := "")
+StopScript(say_reason := "", take_action := "")
 {
     if (say_reason) {
         Say(say_reason)
@@ -577,7 +578,7 @@ M_2Gamble()
 }
 NextGamblePage(who)
 {
-    MouseGetPos &xpos, &ypos 
+    MouseGetPos &xpos, &ypos
     Send "{Escape}"
     Sleep 100
     MouseMove 535, 191
@@ -640,13 +641,13 @@ L_3LK()
 
     Char1Hell()
     if (!IsD2Active()) {
-        StopScript("")
+        StopScript()
     }
     Sleep 2500
 
     K_3LK()
     if (!IsD2Active()) {
-        StopScript("")
+        StopScript()
     }
 
     LK_Run_1st_Hut()
@@ -654,7 +655,7 @@ L_3LK()
         StopScript("Loot detected", () => Send("{Escape}"))
     }
     if (!IsD2Active()) {
-        StopScript("")
+        StopScript()
     }
 
     LK_Run_2nd_Hut()
@@ -662,7 +663,7 @@ L_3LK()
         StopScript("Loot detected", () => Send("{Escape}"))
     }
     if (!IsD2Active()) {
-        StopScript("")
+        StopScript()
     }
 
     LK_Run_3rd_Hut()
@@ -670,7 +671,7 @@ L_3LK()
         StopScript("Loot detected", () => Send("{Escape}"))
     }
     if (!IsD2Active()) {
-        StopScript("")
+        StopScript()
     }
 
     LK_Run_4th_Hut()
@@ -678,16 +679,22 @@ L_3LK()
         StopScript("Loot detected", () => Send("{Escape}"))
     }
     if (!IsD2Active()) {
-        StopScript("")
+        StopScript()
     }
 
     LK_Run_Return()
-    confidence := LK_Detect_On_Waypoint()
+    loop 3 ; 3 attempts to return to waypoint
+    {
+        confidence := LK_Detect_Waypoint_And_Recover()
+        if (confidence >= 0.5) {
+            break
+        }
+    }
     if (confidence < 0.5) {
         StopScript("Failed waypoint detection (confidence = " confidence ")", () => Send("{Escape}"))
     }
     if (!IsD2Active()) {
-        StopScript("")
+        StopScript()
     }
 
     Sleep 500
@@ -783,21 +790,112 @@ LK_Detect_Orange_Text()
     bitmap := GetD2BitMap()
     return DetectColoredText(bitmap, 3, 0xCD862E, 0x20)
 }
-LK_Detect_On_Waypoint()
+LK_Detect_Waypoint_And_Recover()
 {
+    global
+
+    ; Only get the bitmap once for the whole detection and search of the waypoint position
     bitmap := GetD2BitMap()
+
+    ; Check if the character is on the waypoint
+    confidence := LK_Detect_On_Waypoint(bitmap)
+    if (confidence >= 0.5) {
+        return confidence
+    }
+
+    ; The character isn't on the waypoint. Try to find the waypoint by scanning the whole screen.
+    search_box_size := 10
+    x := 0
+    while x <= s_X_Max
+    {
+        y := 0
+        while y <= s_Y_Max
+        {
+            ; Check if the waypoint fire is in this 10x10 area
+            if (!DetectD2PixelColorInRect(bitmap, x, y, x + search_box_size - 1, y + search_box_size - 1, 0xFFC54D, 0x40, 0x8B3000, 0x40)) {
+                y := y + 10
+                continue
+            }
+
+            ; Check if the right blue flame is in a 30x30 area to the top right of the waypoint fire
+            relative_x_r := s_LK_Right_Blue_Flame_X1 - s_LK_Yellow_Flame_X1
+            relative_y_r := s_LK_Right_Blue_Flame_Y1 - s_LK_Yellow_Flame_Y1
+            if (!DetectD2PixelColorInRect(bitmap,
+                    x + relative_x_r - search_box_size,
+                    y + relative_y_r - search_box_size,
+                    x + relative_x_r + search_box_size * 2 - 1,
+                    y + relative_y_r + search_box_size * 2 - 1,
+                    0x76A9DE, 0x20)) {
+                y := y + 10
+                continue
+            }
+
+            ; Check if the left blue flame is in a 30x30 area in its corresponding position
+            relative_x_l := s_LK_Left_Blue_Flame_X1 - s_LK_Yellow_Flame_X1
+            relative_y_l := s_LK_Left_Blue_Flame_Y1 - s_LK_Yellow_Flame_Y1
+            if (!DetectD2PixelColorInRect(bitmap,
+                    x + relative_x_l - search_box_size,
+                    y + relative_y_l - search_box_size,
+                    x + relative_x_l + search_box_size * 2 - 1,
+                    y + relative_y_l + search_box_size * 2 - 1,
+                    0x669AD4, 0x20)) {
+                y := y + 10
+                continue
+            }
+
+            ; Confirmed that the waypoint is likely there. Blink there.
+            x := x + (relative_x_l + relative_x_r) / 2 + search_box_size / 2
+            y := y + (relative_y_l + relative_y_r) / 2 + search_box_size / 2
+            Press "C", s_LK_Run_Press_Delay
+            ClickOrMove x, y, "", s_LK_Run_Premove_Delay
+            ClickOrMove x, y, "Right", s_LK_Run_Blink_Delay
+            return 0.0
+        }
+        x := x + 10
+    }
+    return 0.0
+}
+s_LK_Left_Blue_Flame_X1 := 470
+s_LK_Left_Blue_Flame_Y1 := 256
+s_LK_Right_Blue_Flame_X1 := 579
+s_LK_Right_Blue_Flame_Y1 := 256
+s_LK_Blue_Flame_Size := 12
+s_LK_Yellow_Flame_X1 := 155
+s_LK_Yellow_Flame_Y1 := 412
+s_LK_Yellow_Flame_X2 := 177
+s_LK_Yellow_Flame_Y2 := 424
+LK_Detect_On_Waypoint(bitmap := 0)
+{
+    if (!bitmap) {
+        bitmap := GetD2BitMap()
+    }
 
     confidence := 0.0
     ; Detect left blue flame
-    if (DetectD2PixelColorInRect(bitmap, 470, 256, 470 + 12, 256 + 12, 0x669AD4, 0x20)) {
+    if (DetectD2PixelColorInRect(bitmap,
+            s_LK_Left_Blue_Flame_X1,
+            s_LK_Left_Blue_Flame_Y1,
+            s_LK_Left_Blue_Flame_X1 + s_LK_Blue_Flame_Size,
+            s_LK_Left_Blue_Flame_Y1 + s_LK_Blue_Flame_Size,
+            0x669AD4, 0x20)) {
         confidence := confidence + 1.0
     }
     ; Detect right blue flame
-    if (DetectD2PixelColorInRect(bitmap, 579, 256, 579 + 12, 258 + 12, 0x76A9DE, 0x20)) {
+    if (DetectD2PixelColorInRect(bitmap,
+            s_LK_Right_Blue_Flame_X1,
+            s_LK_Right_Blue_Flame_Y1,
+            s_LK_Right_Blue_Flame_X1 + s_LK_Blue_Flame_Size,
+            s_LK_Right_Blue_Flame_Y1 + s_LK_Blue_Flame_Size,
+            0x76A9DE, 0x20)) {
         confidence := confidence + 1.0
     }
     ; Detect bottom left yellow flame
-    if (DetectD2PixelColorInRect(bitmap, 155, 412, 177, 424, 0xFFC54D, 0x40, 0x8B3000, 0x40)) {
+    if (DetectD2PixelColorInRect(bitmap,
+            s_LK_Yellow_Flame_X1,
+            s_LK_Yellow_Flame_Y1,
+            s_LK_Yellow_Flame_X2,
+            s_LK_Yellow_Flame_Y2,
+            0xFFC54D, 0x40, 0x8B3000, 0x40)) {
         confidence := confidence + 1.0
     }
 
@@ -826,7 +924,7 @@ s_CurrentColumn := 0
 NextReroll()
 {
     global
-    
+
     Send "{Shift Down}"
     ClickCube(3, 2, "Right")
     ClickInventory(0, s_CurrentColumn, "Right")
