@@ -394,22 +394,7 @@ F9::
     switch s_CurrentMode
     {
     case 1:
-        i := 1
-        loop 3 ; 3 attempts to return to waypoint
-        {
-            bitmap := GetD2BitMap("Screenshot_Test.jpg")
-            ;bitmap := Gdip_CreateBitmapFromFile("Screenshot_Test.jpg")
-            confidence := LK_Detect_Waypoint_And_Recover(bitmap)
-            Say("Attempt " i ": conf=" confidence)
-            if (confidence >= 0.5) {
-                break
-            }
-            i := i + 1
-        }
-        if (confidence < 0.5) {
-            ; All recovery attempts have failed. Give up.
-            StopScript("Failed waypoint detection (confidence = " confidence ")", () => Send("{Escape}"))
-        }
+        Test_LK_Waypoint()
         return
     }
     Send "{F9}"
@@ -805,7 +790,7 @@ LK_Detect_Orange_Text()
     bitmap := GetD2BitMap()
     return DetectColoredText(bitmap, 3, 0xCD862E, 0x20)
 }
-LK_Detect_Waypoint_And_Recover(bitmap := 0)
+LK_Detect_Waypoint_And_Recover(bitmap := 0, recover := 1)
 {
     global
 
@@ -859,6 +844,12 @@ LK_Detect_Waypoint_And_Recover(bitmap := 0)
             Say(left_x " " left_y "    " right_x " " right_y)
             x := (left_x + right_x) / 2
             y := (left_y + right_y) / 2
+
+            if (!recover)
+            {
+                ; We think we have found the waypoint
+                return 1.0
+            }
             
             ; Blink there
             Press "C", s_LK_Run_Press_Delay
@@ -920,7 +911,19 @@ LK_Detect_On_Waypoint(bitmap := 0)
 
     return confidence / 3.0
 }
+Test_LK_Waypoint()
+{
+    Test(file)
+    {
+        bitmap := Gdip_CreateBitmapFromFile(file)
+        confidence := LK_Detect_Waypoint_And_Recover(bitmap, recover := 0)
+        Say(file ": " confidence)
+    }
 
+    Test("Test_LK_WayPoint_RightAbove_Day.jpg")
+    Test("Test_LK_WayPoint_RightBelow_Day.jpg")
+    Test("Test_LK_WayPoint_MediumBottomLeft_Day.jpg")
+}
 
 ;;------------------------------------------------------------
 ;; Advanced Mode: 4/Reroll
