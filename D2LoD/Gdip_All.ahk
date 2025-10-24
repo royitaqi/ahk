@@ -2042,7 +2042,7 @@ Gdip_CreateBitmap(Width, Height, Format:=0x26200A)
 
 Gdip_CreateBitmapFromClipboard()
 {
-	if !DllCall("IsClipboardFormatAvailable", "UInt", 😎 {
+	if !DllCall("IsClipboardFormatAvailable", "UInt", 8) {
 		return -2
 	}
 
@@ -2862,7 +2862,7 @@ Gdip_PixelateBitmap(pBitmap, &pBitmapOut, BlockSize)
 
 Gdip_ToARGB(A, R, G, B)
 {
-	return (A << 24) | (R << 16) | (G << 😎 | B
+	return (A << 24) | (R << 16) | (G << 8) | B
 }
 
 ;#####################################################################################
