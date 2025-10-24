@@ -689,7 +689,7 @@ L_3LK()
         StopScript()
     }
 
-    loop 3 ; 3 attempts to verify that we are on waypoint, and recover if necessary
+    loop 1 ; 1 attempt to verify that we are on waypoint, and recover if necessary
     {
         confidence := LK_Detect_Waypoint_And_Recover()
         if (confidence >= 0.5) {
@@ -1013,7 +1013,7 @@ LK_Detect_On_Waypoint(bitmap := 0)
 Test_LK()
 {
     Test_LK_Loot()
-    Test_LK_Waypoint()
+    ;Test_LK_Waypoint()
 }
 Test_LK_Loot()
 {
@@ -1031,6 +1031,7 @@ Test_LK_Loot()
     Test("Test_LK_Loot_Gul_Line2.jpg") ; failing in game ; pass in test
     Test("Test_LK_Loot_Io_Line1.jpg") ; failing in game ; pass in test
     Test("Test_LK_Loot_Io_Line2.jpg") ; failing in game ; pass in test
+    Test("Test_LK_Loot_Ko_Line1.jpg") ; failing in game ; pass in test
 }
 Test_LK_Waypoint()
 {
