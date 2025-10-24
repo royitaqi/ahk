@@ -1,4 +1,4 @@
-; Downloaded from https://github.com/buliasz/AHKv2-Gdip/blob/master/Gdip_All.ahk
+; Downloaded from https://github.com/buliasz/AHKv2-Gdip/
 ; Added "Flag" param to "Gdip_BitmapFromHWND". Value can be 0 (default) and 1 (PrintWindow::PW_CLIENTONLY).
 
 ; v1.62

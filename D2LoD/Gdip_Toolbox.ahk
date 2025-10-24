@@ -1,4 +1,4 @@
-; Downloaded from https://github.com/buliasz/AHKv2-Gdip/blob/master/Gdip_All.ahk
+; Downloaded from https://github.com/buliasz/AHKv2-Gdip/
 #include Gdip_All.ahk
 
 ; Creates always on top window with current screen making impression as if screen froze
