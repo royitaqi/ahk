@@ -274,7 +274,7 @@ GetD2PixelColorInHex(bitmap, x, y)
     ARGB2RGB(rgb, &r, &g, &b)
     return RGB2Hex(r, g, b)
 }
-DetectD2PixelColorInRect(bitmap, x1, y1, x2, y2, color1, variation1 := 0, color2 := "", variation2 := 0)
+DetectD2PixelColorInRect(bitmap, x1, y1, x2, y2, color1, variation1 := 0, color2 := "", variation2 := 0, &match_x := 0, &match_y := 0)
 {
     ARGB2RGB(color1, &r1, &g1, &b1)
     if (color2) {
@@ -291,9 +291,13 @@ DetectD2PixelColorInRect(bitmap, x1, y1, x2, y2, color1, variation1 := 0, color2
 
             ; Check if the color of the pixel is within range of any input colors
             if (r >= r1 - variation1 && r <= r1 + variation1 && g >= g1 - variation1 && g <= g1 + variation1 && b >= b1 - variation1 && b <= b1 + variation1) {
+                match_x := x1
+                match_y := y1
                 return 1
             }
             if (color2 && r >= r2 - variation2 && r <= r2 + variation2 && g >= g2 - variation2 && g <= g2 + variation2 && b >= b2 - variation2 && b <= b2 + variation2) {
+                match_x := x1
+                match_y := y1
                 return 2
             }
 
@@ -394,6 +398,7 @@ F9::
         loop 3 ; 3 attempts to return to waypoint
         {
             bitmap := GetD2BitMap("Screenshot_Test.jpg")
+            ;bitmap := Gdip_CreateBitmapFromFile("Screenshot_Test.jpg")
             confidence := LK_Detect_Waypoint_And_Recover(bitmap)
             Say("Attempt " i ": conf=" confidence)
             if (confidence >= 0.5) {
@@ -824,41 +829,48 @@ LK_Detect_Waypoint_And_Recover(bitmap := 0)
         y := 0
         while y <= s_Y_Max
         {
+            score := 0
             ; Check if the yellow flame is in this 10x10 area
-            if (!DetectD2PixelColorInRect(bitmap, x, y, x + search_box_size - 1, y + search_box_size - 1, 0xFFC54D, 0x40, 0x8B3000, 0x40)) {
-                y := y + 10
-                continue
+            if (DetectD2PixelColorInRect(bitmap, x, y, x + search_box_size - 1, y + search_box_size - 1, 0xFFC54D, 0x40, 0x8B3000, 0x40)) {
+                score := score + 1
             }
 
             ; Check if the right blue flame is in a 30x30 area to the top right of the waypoint fire
             relative_x_r := s_LK_Right_Blue_Flame_X1 - s_LK_Yellow_Flame_X1
             relative_y_r := s_LK_Right_Blue_Flame_Y1 - s_LK_Yellow_Flame_Y1
-            if (!DetectD2PixelColorInRect(bitmap,
+            if (DetectD2PixelColorInRect(bitmap,
                     x + relative_x_r - search_box_size * (blue_flame_boxes / 2),
                     y + relative_y_r - search_box_size * (blue_flame_boxes / 2),
                     x + relative_x_r + search_box_size * (blue_flame_boxes / 2 + 1) - 1,
                     y + relative_y_r + search_box_size * (blue_flame_boxes / 2 + 1) - 1,
-                    0x76A9DE, 0x40)) {
-                y := y + 10
-                continue
+                    0x76A9DE, 0x20, , , &right_x, &right_y)) {
+                score := score + 1
             }
 
             ; Check if the left blue flame is in a 30x30 area in its corresponding position
             relative_x_l := s_LK_Left_Blue_Flame_X1 - s_LK_Yellow_Flame_X1
             relative_y_l := s_LK_Left_Blue_Flame_Y1 - s_LK_Yellow_Flame_Y1
-            if (!DetectD2PixelColorInRect(bitmap,
+            if (DetectD2PixelColorInRect(bitmap,
                     x + relative_x_l - search_box_size * (blue_flame_boxes / 2),
                     y + relative_y_l - search_box_size * (blue_flame_boxes / 2),
                     x + relative_x_l + search_box_size * (blue_flame_boxes / 2 + 1) - 1,
                     y + relative_y_l + search_box_size * (blue_flame_boxes / 2 + 1) - 1,
-                    0x669AD4, 0x40)) {
-                y := y + 10
+                    0x669AD4, 0x20, , , &left_x, &left_y)) {
+                score := score + 1
+            }
+
+            ; If not detected, search next position
+            if (score < 2) {
+                y := y + search_box_size
                 continue
             }
 
             ; Confirmed that the waypoint is likely there.
-            x := x + (relative_x_l + relative_x_r) / 2 + search_box_size / 2
-            y := y + (relative_y_l + relative_y_r) / 2 + search_box_size / 2
+            Say(score "   " left_x " " left_y "    " right_x " " right_y)
+            ;x := x + (relative_x_l + relative_x_r) / 2 + search_box_size / 2
+            ;y := y + (relative_y_l + relative_y_r) / 2 + search_box_size / 2
+            x := (left_x + right_x) / 2
+            y := (left_y + right_y) / 2
             ; Blink there
             Press "C", s_LK_Run_Press_Delay
             ClickOrMove x, y, "", s_LK_Run_Premove_Delay
@@ -868,7 +880,7 @@ LK_Detect_Waypoint_And_Recover(bitmap := 0)
             confidence := LK_Detect_On_Waypoint()
             return confidence
         }
-        x := x + 10
+        x := x + search_box_size
     }
     ; Cannot find any potential waypoint positions
     return 0.0
