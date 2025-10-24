@@ -861,7 +861,8 @@ LK_Detect_Waypoint_And_Recover(bitmap := 0, recover := 1)
             ; Blink there
             Press "C", s_LK_Run_Press_Delay
             ClickOrMove x, y, "", s_LK_Run_Premove_Delay
-            ClickOrMove x, y, "Right", s_LK_Run_Blink_Delay
+            ClickOrMove x, y, "Right", s_LK_Run_Blink_Delay + 500
+            ; ^Add 500 delay because the following detection can be wrong if run too soon
             
             ; Return the detected confidence
             confidence := LK_Detect_On_Waypoint()
@@ -1028,6 +1029,7 @@ Test_LK_Waypoint()
     Test("Test_LK_WayPoint_FarAbove_Night2.jpg")
     Test("Test_LK_WayPoint_FarAbove_NightRain.jpg")
     Test("Test_LK_WayPoint_FarBelow_Day.jpg")
+    Test("Test_LK_WayPoint_FarBelow_Night.jpg")
     Test("Test_LK_WayPoint_FarLeft_Day.jpg")
     Test("Test_LK_WayPoint_FarRight_Day.jpg")
     Test("Test_LK_WayPoint_MediumBottomLeft_Day.jpg")
