@@ -689,7 +689,7 @@ L_3LK()
         StopScript()
     }
 
-    loop 3 ; 3 attempts to return to waypoint
+    loop 3 ; 3 attempts to verify that we are on waypoint, and recover if necessary
     {
         confidence := LK_Detect_Waypoint_And_Recover()
         if (confidence >= 0.5) {
@@ -704,7 +704,11 @@ L_3LK()
         StopScript()
     }
 
+    ; Move mouse to waypoint
+    ClickOrMove 536, 278, "", s_LK_Run_Premove_Delay
+    ; Give human a chance to stop the script before leaving LK
     Sleep 500
+    ; Leave LK and do the next run
     L_3LK()
 }
 s_LK_Run_Press_Delay := 100
@@ -789,8 +793,6 @@ LK_Run_Return()
     ClickOrMove 155, 434, "Right", s_LK_Run_Blink_Delay
     ClickOrMove 155, 434, "Right", s_LK_Run_Blink_Delay
     ClickOrMove 155, 434, "Right", s_LK_Run_Blink_Delay
-    ; Move mouse to waypoint
-    ClickOrMove 536, 278, "", s_LK_Run_Premove_Delay
 }
 LK_Detect_Orange_Text(bitmap := 0)
 {
@@ -863,8 +865,7 @@ LK_Detect_Waypoint_And_Recover(bitmap := 0, recover := 1)
             ; Blink there
             Press "C", s_LK_Run_Press_Delay
             ClickOrMove x, y, "", s_LK_Run_Premove_Delay
-            ClickOrMove x, y, "Right", s_LK_Run_Blink_Delay + 500
-            ; ^Add 500 delay because the following detection can be wrong if run too soon
+            ClickOrMove x, y, "Right", s_LK_Run_Blink_Delay
             
             ; Return the detected confidence
             confidence := LK_Detect_On_Waypoint()
