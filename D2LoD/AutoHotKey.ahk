@@ -388,16 +388,22 @@ Delete::
     }
     Send "{Delete}"
 }
+; Temporary tests
 F10::
 {
     switch s_CurrentMode
     {
     case 1:
-        TestOrangeAndPurpleText()
+        SendMode("Input")
+        loop {
+            ClickOrMove 555, 297, "Left", 1000
+            ClickOrMove 510, 280, "Left", 1000
+        }
         return
     }
     Send "{F10}"
 }
+; Unit tests
 F9::
 {
     switch s_CurrentMode
