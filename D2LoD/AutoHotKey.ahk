@@ -125,6 +125,13 @@ ScrollLock::
 ;; Utils
 ;;------------------------------------------------------------
 
+Assert(expr, msg)
+{
+    if (!expr) {
+        Throw Error("msg", -1)
+    }
+}
+
 Say(text, delay := 100)
 {
     Send "{Enter}"
@@ -274,8 +281,10 @@ GetD2PixelColorInHex(bitmap, x, y)
     ARGB2RGB(rgb, &r, &g, &b)
     return RGB2Hex(r, g, b)
 }
-DetectD2PixelColorInRect(bitmap, x1, y1, x2, y2, color1, variation1 := 0, color2 := "", variation2 := 0, &match_x := 0, &match_y := 0)
+DetectD2PixelColorInRect(bitmap, x1, y1, x2, y2, color1, variation1 := 0, color2 := 0, variation2 := 0, &match_x := 0, &match_y := 0)
 {
+    Assert(bitmap, "bitmap should have value")
+
     ARGB2RGB(color1, &r1, &g1, &b1)
     if (color2) {
         ARGB2RGB(color2, &r2, &g2, &b2)
@@ -307,7 +316,7 @@ DetectD2PixelColorInRect(bitmap, x1, y1, x2, y2, color1, variation1 := 0, color2
     }
     return 0
 }
-DetectColoredText(bitmap, lines, color1, variation1 := 0, color2 := "", variation2 := 0)
+DetectColoredText(bitmap, lines, color1, variation1 := 0, color2 := 0, variation2 := 0)
 {
     x1 := 16
     y1 := 84
@@ -517,7 +526,7 @@ TestPixelColor()
 TestOrangeAndPurpleText()
 {
     bitmap := GetD2BitMap("D:/Downloads/a.jpg")
-    ret := DetectColoredText(bitmap, 3, 0xCD862E, 0x20)
+    ret := DetectColoredText(bitmap, 3, 0xC48100, 0x20)
     if (ret) {
         Say("Text detected: " ret)
     } else {
@@ -804,7 +813,8 @@ LK_Detect_Orange_Text(bitmap := 0)
     if (!bitmap) {
         bitmap := GetD2BitMap("Screenshot_LK_Detect_Orange_Text.jpg")
     }
-    return DetectColoredText(bitmap, 3, 0xCD862E, 0x20)
+    confidence := DetectColoredText(bitmap, 5, 0xC48100, 0x20)
+    return confidence
 }
 LK_Detect_Waypoint_And_Recover(bitmap := 0, recover := 1)
 {
