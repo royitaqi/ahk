@@ -383,7 +383,7 @@ Delete::
 {
     if (s_CurrentMode != 0)
     {
-        StopScript("Stopping script")
+        StopScript("Stopping script", 0, 0)
         return
     }
     Send "{Delete}"
@@ -545,7 +545,7 @@ StopScript(say_reason := 0, take_action := 0, play_sound := 0)
     }
     ; Sound is downloaded from https://www.youtube.com/watch?v=ii8zdA_teQE
     if (play_sound) {
-        SoundPlay("Notification.mp3", 0)
+        SoundPlay("Notification.aac", 1)
     }
     Reload
 }
@@ -665,7 +665,7 @@ L_3LK()
     LK_Run_1st_Hut()
     bitmap := GetD2BitMap("Screenshot_LK_Detect_Orange_Text_1.jpg")
     if (LK_Detect_Orange_Text(bitmap)) {
-        StopScript("Loot detected", () => Send("{Escape}"))
+        StopScript("Loot detected", () => Send("{Escape}"), 1)
     }
     if (!IsD2Active()) {
         StopScript()
@@ -674,7 +674,7 @@ L_3LK()
     LK_Run_2nd_Hut()
     bitmap := GetD2BitMap("Screenshot_LK_Detect_Orange_Text_2.jpg")
     if (LK_Detect_Orange_Text(bitmap)) {
-        StopScript("Loot detected", () => Send("{Escape}"))
+        StopScript("Loot detected", () => Send("{Escape}"), 1)
     }
     if (!IsD2Active()) {
         StopScript()
@@ -683,7 +683,7 @@ L_3LK()
     LK_Run_3rd_Hut()
     bitmap := GetD2BitMap("Screenshot_LK_Detect_Orange_Text_3.jpg")
     if (LK_Detect_Orange_Text(bitmap)) {
-        StopScript("Loot detected", () => Send("{Escape}"))
+        StopScript("Loot detected", () => Send("{Escape}"), 1)
     }
     if (!IsD2Active()) {
         StopScript()
@@ -692,7 +692,7 @@ L_3LK()
     LK_Run_4th_Hut()
     bitmap := GetD2BitMap("Screenshot_LK_Detect_Orange_Text_4.jpg")
     if (LK_Detect_Orange_Text(bitmap)) {
-        StopScript("Loot detected", () => Send("{Escape}"))
+        StopScript("Loot detected", () => Send("{Escape}"), 1)
     }
     if (!IsD2Active()) {
         StopScript()
@@ -701,7 +701,7 @@ L_3LK()
     LK_Run_Return()
     bitmap := GetD2BitMap("Screenshot_LK_Detect_Orange_Text_R.jpg")
     if (LK_Detect_Orange_Text(bitmap)) {
-        StopScript("Loot detected", () => Send("{Escape}"))
+        StopScript("Loot detected", () => Send("{Escape}"), 1)
     }
     if (!IsD2Active()) {
         StopScript()
@@ -716,7 +716,7 @@ L_3LK()
     }
     if (confidence < 0.5) {
         ; All recovery attempts have failed. Give up.
-        StopScript("Failed waypoint detection after " s_LK_Run_ID " runs (confidence = " confidence ")", () => Send("{Escape}"))
+        StopScript("Failed waypoint detection after " s_LK_Run_ID " runs (confidence = " confidence ")", () => Send("{Escape}"), 1)
     }
     if (!IsD2Active()) {
         StopScript()
