@@ -535,13 +535,17 @@ TestOrangeAndPurpleText()
 }
 
 /* Stop execution of script */
-StopScript(say_reason := "", take_action := "")
+StopScript(say_reason := 0, take_action := 0, play_sound := 0)
 {
     if (say_reason) {
         Say(say_reason)
     }
     if (take_action) {
         take_action.Call()
+    }
+    ; Sound is downloaded from https://www.youtube.com/watch?v=ii8zdA_teQE
+    if (play_sound) {
+        SoundPlay("Notification.mp3", 0)
     }
     Reload
 }
@@ -876,12 +880,12 @@ LK_Detect_Waypoint_And_Recover(bitmap := 0, recover := 1)
                 ; We think we have found the waypoint
                 return 1.0
             }
-            
+
             ; Blink there
             Press "C", s_LK_Run_Press_Delay
             ClickOrMove x, y, "", s_LK_Run_Premove_Delay
             ClickOrMove x, y, "Right", s_LK_Run_Blink_Delay
-            
+
             ; Return the detected confidence
             confidence := LK_Detect_On_Waypoint()
             return confidence
@@ -969,7 +973,7 @@ LK_Detect_Waypoint_And_Recover_Old(bitmap := 0, recover := 1)
             Press "C", s_LK_Run_Press_Delay
             ClickOrMove x, y, "", s_LK_Run_Premove_Delay
             ClickOrMove x, y, "Right", s_LK_Run_Blink_Delay
-            
+
             ; Return the detected confidence
             confidence := LK_Detect_On_Waypoint()
             return confidence
