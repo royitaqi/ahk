@@ -650,7 +650,8 @@ L_3LK()
     }
 
     LK_Run_1st_Hut()
-    if (LK_Detect_Orange_Text()) {
+    bitmap := GetD2BitMap("Screenshot_LK_Detect_Orange_Text_1.jpg")
+    if (LK_Detect_Orange_Text(bitmap)) {
         StopScript("Loot detected", () => Send("{Escape}"))
     }
     if (!IsD2Active()) {
@@ -658,7 +659,8 @@ L_3LK()
     }
 
     LK_Run_2nd_Hut()
-    if (LK_Detect_Orange_Text()) {
+    bitmap := GetD2BitMap("Screenshot_LK_Detect_Orange_Text_2.jpg")
+    if (LK_Detect_Orange_Text(bitmap)) {
         StopScript("Loot detected", () => Send("{Escape}"))
     }
     if (!IsD2Active()) {
@@ -666,7 +668,8 @@ L_3LK()
     }
 
     LK_Run_3rd_Hut()
-    if (LK_Detect_Orange_Text()) {
+    bitmap := GetD2BitMap("Screenshot_LK_Detect_Orange_Text_3.jpg")
+    if (LK_Detect_Orange_Text(bitmap)) {
         StopScript("Loot detected", () => Send("{Escape}"))
     }
     if (!IsD2Active()) {
@@ -674,7 +677,8 @@ L_3LK()
     }
 
     LK_Run_4th_Hut()
-    if (LK_Detect_Orange_Text()) {
+    bitmap := GetD2BitMap("Screenshot_LK_Detect_Orange_Text_4.jpg")
+    if (LK_Detect_Orange_Text(bitmap)) {
         StopScript("Loot detected", () => Send("{Escape}"))
     }
     if (!IsD2Active()) {
@@ -682,7 +686,8 @@ L_3LK()
     }
 
     LK_Run_Return()
-    if (LK_Detect_Orange_Text()) {
+    bitmap := GetD2BitMap("Screenshot_LK_Detect_Orange_Text_R.jpg")
+    if (LK_Detect_Orange_Text(bitmap)) {
         StopScript("Loot detected", () => Send("{Escape}"))
     }
     if (!IsD2Active()) {
@@ -698,7 +703,7 @@ L_3LK()
     }
     if (confidence < 0.5) {
         ; All recovery attempts have failed. Give up.
-        StopScript("Failed waypoint detection (confidence = " confidence ")", () => Send("{Escape}"))
+        StopScript("Failed waypoint detection after " s_LK_Run_ID " runs (confidence = " confidence ")", () => Send("{Escape}"))
     }
     if (!IsD2Active()) {
         StopScript()
