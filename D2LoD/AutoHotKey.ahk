@@ -1037,6 +1037,7 @@ Test_LK_Loot()
     Test("Test_LK_Loot_Io_Line1.jpg") ; failing in game ; pass in test
     Test("Test_LK_Loot_Io_Line2.jpg") ; failing in game ; pass in test
     Test("Test_LK_Loot_Ko_Line1.jpg") ; failing in game ; pass in test
+    Test("Test_LK_Loot_Mal_Line1.jpg") ; failing in game ; pass in test
 }
 Test_LK_Waypoint()
 {
