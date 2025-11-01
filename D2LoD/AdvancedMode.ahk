@@ -124,9 +124,6 @@ K::
 {
     switch s_CurrentMode
     {
-    case 3:
-        K_3LK()
-        return
     case 4:
         K_4Reroll()
         return
@@ -138,7 +135,7 @@ L::
     switch s_CurrentMode
     {
     case 3:
-        L_3LK()
+        LK_MainLoop()
         return
     }
     Send "L"

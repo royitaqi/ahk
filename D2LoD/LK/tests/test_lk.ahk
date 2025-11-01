@@ -13,7 +13,7 @@ Test_LK_Loot()
         Say(file " loaded")
 
         start := A_TickCount
-        confidence := LK_Detect_Orange_Text(bitmap)
+        confidence := LK_DetectOrangeText(bitmap)
         time := A_TickCount - start
         Say("Result: " confidence " (" time ")")
     }
