@@ -1,3 +1,4 @@
+#include D2.ahk
 #include SaveAndLoad.ahk
 
 
@@ -17,7 +18,7 @@ LogToFile(text) {
 Log(text) {
     LogToFile(text)
 
-    if (IsGameLoaded() && !IsGamePaused()) {
+    if (IsD2Active() && IsGameLoaded() && !IsGamePaused()) {
         Say(text)
     }
 }
