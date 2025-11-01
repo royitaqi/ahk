@@ -19,7 +19,7 @@ pToken := Gdip_Startup()
 #include utils/SaveAndLoad.ahk
 #include utils/Stash.ahk
 
-#include LK/lk.ahk
+#include LK/LK.ahk
 #include LK/tests/test_lk.ahk
 
 ;;------------------------------------------------------------
@@ -217,13 +217,7 @@ F10::
     switch s_CurrentMode
     {
     case 1:
-        ret := GetGameState()
-        Log("GetGameState() = " ret)
-
-        SaveAndQuit(true)
-        Log("Saved")
-        SinglePlayerChar1Hell(true)
-        Log("Loaded")
+        PauseGame()
         return
     }
     Send "{F10}"

@@ -22,12 +22,14 @@ SinglePlayerChar1Hell(wait := 0)
     }
 }
 
-IsMainScreen(clear_mouse := 0) {
+IsMainScreen(bitmap := 0, clear_mouse := 0) {
     if (clear_mouse) {
         ; Move mouse out of the way of any detection points
         ClickOrMove(400, 250, "", 0)
     }
-    bitmap := GetD2Bitmap()
+    if (!bitmap) {
+        bitmap := GetD2Bitmap()
+    }
 
     /*
         The black space inside the second "I" of "Diablo II" should be black.
@@ -64,12 +66,14 @@ IsMainScreen(clear_mouse := 0) {
     return 1
 }
 
-IsGameLoaded(clear_mouse := 0) {
+IsGameLoaded(bitmap := 0, clear_mouse := 0) {
     if (clear_mouse) {
         ; Move mouse out of the way of any detection points
         ClickOrMove(400, 250, "", 0)
     }
-    bitmap := GetD2Bitmap()
+    if (!bitmap) {
+        bitmap := GetD2Bitmap()
+    }
 
     /*
         The background to the left of the health gauge should be gray.
@@ -106,24 +110,69 @@ IsGameLoaded(clear_mouse := 0) {
     return 1
 }
 
+IsGamePaused(bitmap := 0, clear_mouse := 0) {
+    if (clear_mouse) {
+        ; Move mouse out of the way of any detection points
+        ClickOrMove(400, 250, "", 0)
+    }
+    if (!bitmap) {
+        bitmap := GetD2Bitmap()
+    }
+
+    /*
+        The center of the three "O"s in the pause menu should be yellow.
+        The color at X467 Y210 is 74643C
+        The color at X554 Y212 is 645834
+        The color at X573 Y312 is 645834
+    */
+    if (GetPixelColorInRGB(bitmap, 467, 210) != 0x74643C ||
+            GetPixelColorInRGB(bitmap, 554, 212) != 0x645834 ||
+            GetPixelColorInRGB(bitmap, 573, 312) != 0x645834) {
+        return 0
+    }
+    return 1
+}
+
 WaitUntilMainScreen() {
-    while (!IsMainScreen(true)) {
+    while (!IsMainScreen(, true)) {
         Sleep(100)
     }
 }
 
 WaitUntilGameLoaded() {
-    while (!IsGameLoaded(true)) {
+    while (!IsGameLoaded(, true)) {
         Sleep(100)
     }
 }
 
-GetGameState(clear_mouse := 0) {
-    if (IsGameLoaded(clear_mouse)) {
-        return "GameLoaded"
+GetD2State(clear_mouse := 0) {
+    ; Capture the screen only once
+    bitmap := GetD2Bitmap()
+
+    if (IsGameLoaded(bitmap, clear_mouse)) {
+        if (IsGamePaused(bitmap, clear_mouse)) {
+            return "GamePaused"
+        } else {
+            return "GameRunning"
+        }
     }
-    if (IsMainScreen(clear_mouse)) {
+    if (IsMainScreen(bitmap, clear_mouse)) {
         return "MainScreen"
     }
     return "unknown"
+}
+
+PauseGame() {
+    loop {
+        bitmap := GetD2Bitmap()
+        Assert(IsGameLoaded(bitmap, true), "Game should be loaded in order to be paused")
+        if (IsGamePaused(bitmap, true)) {
+            break
+        }
+        
+        ; Game isn't paused yet. Press ESC to exit one layer of interaction (e.g. inventory,
+        ; hireling, stats, skills, message box) or bring up pause menu.
+        Send "{Escape}"
+        Sleep 50
+    }
 }

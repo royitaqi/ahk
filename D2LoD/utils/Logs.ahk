@@ -17,7 +17,7 @@ LogToFile(text) {
 Log(text) {
     LogToFile(text)
 
-    if (IsGameLoaded()) {
+    if (IsGameLoaded() && !IsGamePaused()) {
         Say(text)
     }
 }

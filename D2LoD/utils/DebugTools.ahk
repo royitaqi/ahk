@@ -35,5 +35,5 @@ TestPixelColor()
     bitmap := GetD2BitMap("temp/Screenshot_Test.jpg")
     color := GetPixelColorInHex(bitmap, xpos, ypos)
 
-    Log("The color at X" xpos " Y" ypos " is " color)
+    Log("The color at X=" xpos " Y=" ypos " is 0x" color)
 }
