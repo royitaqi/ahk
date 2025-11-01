@@ -200,7 +200,8 @@ LK_Run_Return()
 LK_Detect_Orange_Text(bitmap := 0)
 {
     if (!bitmap) {
-        bitmap := GetD2BitMap("Screenshot_LK_Detect_Orange_Text.jpg")
+        ;bitmap := GetD2BitMap("temp/Screenshot_LK_Detect_Orange_Text.jpg")
+        bitmap := GetD2BitMap()
     }
     confidence := DetectColoredText(bitmap, 5, 0xC48100, 0x20)
     return confidence

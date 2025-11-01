@@ -10,8 +10,8 @@ CoordMode("Pixel", "Client")
 #include gdip/Gdip_Toolbox.ahk
 pToken := Gdip_Startup()
 
-#include lk.ahk
-#include tests/test_lk.ahk
+#include LK/lk.ahk
+#include LK/tests/test_lk.ahk
 
 ;;------------------------------------------------------------
 ;; Quick cast
