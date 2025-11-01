@@ -10,6 +10,15 @@ CoordMode("Pixel", "Client")
 #include gdip/Gdip_Toolbox.ahk
 pToken := Gdip_Startup()
 
+#include utils/Cube.ahk
+#include utils/DebugTools.ahk
+#include utils/Inventory.ahk
+#include utils/KeyboardAndMouse.ahk
+#include utils/Logs.ahk
+#include utils/ReadScreen.ahk
+#include utils/SaveAndLoad.ahk
+#include utils/Stash.ahk
+
 #include LK/lk.ahk
 #include LK/tests/test_lk.ahk
 
@@ -130,113 +139,6 @@ ScrollLock::
 ;; Utils
 ;;------------------------------------------------------------
 
-Assert(expr, msg)
-{
-    if (!expr) {
-        Throw Error("msg", -1)
-    }
-}
-
-Say(text, delay := 100)
-{
-    Send "{Enter}"
-    Sleep 50
-    Send text
-    Sleep 50
-    Send "{Enter}"
-    Sleep delay
-}
-
-s_X_Max := 1068
-s_Y_Max := 600
-
-ClickOrMove(x, y, button := "", delay := 100)
-{
-    if (button != "") {
-        Click x, y, button
-    } else {
-        MouseMove x, y
-    }
-    if (delay != 0) {
-        Sleep delay
-    }
-}
-
-Press(key, delay := 100)
-{
-    Send key
-    if (delay != 0) {
-        Sleep delay
-    }
-}
-
-InventoryX(col)
-{
-    return 560 + 30 * col
-}
-
-InventoryY(row)
-{
-    return 330 + 30 * row
-}
-
-ClickInventory(row, col, button := "")
-{
-    ClickOrMove InventoryX(col), InventoryY(row), button
-}
-
-; Stash slots
-; X   Y   res = 1068 x 600
-; 10c 10r
-; 245 160
-; 506 421
-
-; Stash buttons
-; X   Y   Button
-; 390 465 next
-
-StashX(col)
-{
-    return 245 + 29 * col
-}
-
-StashY(row)
-{
-    return 160 + 29 * row
-}
-
-ClickStash(row, col, button := "", delay := 100)
-{
-    ClickOrMove StashX(col), StashY(row), button, delay
-}
-
-ClickStashNext(button := "", delay := 100)
-{
-    ClickOrMove 390, 465, button, delay
-}
-
-; X   Y   res = 1068 x 600
-; 10c 8r
-; 245  92
-; 508 295
-
-CubeX(col)
-{
-    return 245 + 29 * col
-}
-CubeY(row)
-{
-    return 92 + 29 * row
-}
-ClickCube(row, col, button := "", delay := 100)
-{
-    ClickOrMove CubeX(col), CubeY(row), button, delay
-}
-ClickCubeButton(button := "", delay := 100)
-{
-    ClickOrMove 375, 335, button, delay
-}
-
 IsD2Active()
 {
     title := WinGetTitle("A")
@@ -247,91 +149,7 @@ IsD2Windowed()
     color := PixelGetColor(533, 287, "Slow")
     return color != 0x000000
 }
-GetD2BitMap(save_to_file := "")
-{
-    ; Get the active game window's handle
-    hwnd := WinGetID("A")
 
-    ; Capture a screenshot of the window
-    bitmap := Gdip_BitmapFromHWND(hwnd, 1)
-
-    ; Save bitmap to a file
-    if (save_to_file) {
-        Gdip_SaveBitmapToFile(bitmap, save_to_file)
-    }
-
-    return bitmap
-}
-ARGB2RGB(argb, &r, &g, &b)
-{
-    r := Gdip_RFromARGB(argb)
-    g := Gdip_GFromARGB(argb)
-    b := Gdip_BFromARGB(argb)
-}
-RGB2Hex(r, g, b)
-{
-    return Format("{:02X}{:02X}{:02X}", r, g, b)
-}
-GetD2PixelColorInRGB(bitmap, x, y)
-{
-    argb := Gdip_GetPixel(bitmap, x, y)
-    return argb & 0xffffff
-}
-GetD2PixelColorInHex(bitmap, x, y)
-{
-    ; Get the color of the pixel at the coordinates
-    rgb := GetD2PixelColorInRGB(bitmap, x, y)
-
-    ; Convert the ARGB color to a hex value
-    ARGB2RGB(rgb, &r, &g, &b)
-    return RGB2Hex(r, g, b)
-}
-DetectD2PixelColorInRect(bitmap, x1, y1, x2, y2, color1, variation1 := 0, color2 := 0, variation2 := 0, &match_x := 0, &match_y := 0)
-{
-    Assert(bitmap, "bitmap should have value")
-
-    ARGB2RGB(color1, &r1, &g1, &b1)
-    if (color2) {
-        ARGB2RGB(color2, &r2, &g2, &b2)
-    }
-
-    loop x2 - x1 + 1
-    {
-        loop y2 - y1 + 1
-        {
-            ; Get the color of the pixel at the coordinates
-            argb := Gdip_GetPixel(bitmap, x1, y1)
-            ARGB2RGB(argb, &r, &g, &b)
-
-            ; Check if the color of the pixel is within range of any input colors
-            if (r >= r1 - variation1 && r <= r1 + variation1 && g >= g1 - variation1 && g <= g1 + variation1 && b >= b1 - variation1 && b <= b1 + variation1) {
-                match_x := x1
-                match_y := y1
-                return 1
-            }
-            if (color2 && r >= r2 - variation2 && r <= r2 + variation2 && g >= g2 - variation2 && g <= g2 + variation2 && b >= b2 - variation2 && b <= b2 + variation2) {
-                match_x := x1
-                match_y := y1
-                return 2
-            }
-
-            y1 := y1 + 1
-        }
-        x1 := x1 + 1
-    }
-    return 0
-}
-DetectColoredText(bitmap, lines, color1, variation1 := 0, color2 := 0, variation2 := 0)
-{
-    x1 := 16
-    y1 := 84
-    ; Magic number. The width to look for.
-    x2 := x1 + 8
-    ; Each line is 9 pixels tall. Gap between two lines is 6 pixels tall.
-    y2 := y1 + 9 + 15 * (lines - 1)
-
-    return DetectD2PixelColorInRect(bitmap, x1, y1, x2, y2, color1, variation1, color2, variation2)
-}
 
 
 ;;------------------------------------------------------------
@@ -366,6 +184,15 @@ AnnounceMode()
     case 4: Say "Advanced Mode = 4/Reroll"
     }
 }
+Delete::
+{
+    if (s_CurrentMode != 0)
+    {
+        StopScript("Stopping script", 0, 0)
+        return
+    }
+    Send "{Delete}"
+}
 F12::
 {
     if (s_CurrentMode != 0)
@@ -384,26 +211,14 @@ F11::
     }
     Send "{F11}"
 }
-Delete::
-{
-    if (s_CurrentMode != 0)
-    {
-        StopScript("Stopping script", 0, 0)
-        return
-    }
-    Send "{Delete}"
-}
 ; Temporary tests
 F10::
 {
     switch s_CurrentMode
     {
     case 1:
-        SendMode("Input")
-        loop {
-            ClickOrMove 555, 297, "Left", 1000
-            ClickOrMove 510, 280, "Left", 1000
-        }
+        ret := GetGameState()
+        Log("GetGameState() = " ret)
         return
     }
     Send "{F10}"
@@ -450,13 +265,13 @@ J::
     switch s_CurrentMode
     {
     case 0:
-        Char1Hell()
+        SinglePlayerChar1Hell()
         return
     case 1:
-        Char1Hell()
+        SinglePlayerChar1Hell()
         return
     case 3:
-        Char1Hell()
+        SinglePlayerChar1Hell()
         return
     case 4:
         J_4Reroll()
@@ -493,45 +308,7 @@ L::
 ;; Advanced Mode: 1/Utility
 ;;------------------------------------------------------------
 
-/* Character & level selection */
-Char1Hell()
-{
-    ClickOrMove(475, 315, "Left", 100)
-    ClickOrMove(200, 150, "Left", 0)
-    ClickOrMove(200, 150, "Left", 100)
-    ClickOrMove(475, 375, "Left", 100)
-}
 
-
-/* Test mouse position */
-TestMousePosition()
-{
-    MouseGetPos &xpos, &ypos
-    Say("The cursor is at X" xpos " Y" ypos)
-}
-
-/* Test pixel color at current mouse position + (-10,-10) */
-TestPixelColor()
-{
-    MouseGetPos &xpos, &ypos
-
-    Say("Will test pixel in ...")
-    countdown := 3
-    loop 3
-    {
-        Say(countdown)
-        Sleep(1000)
-        countdown := countdown - 1
-    }
-
-    ; color := PixelGetColor(xpos, ypos, "Alt")
-    ; color := GetPixelColorBuffered(xpos, ypos)
-
-    bitmap := GetD2BitMap("Screenshot_Test.jpg")
-    color := GetD2PixelColorInHex(bitmap, xpos, ypos)
-
-    Say("The color at X" xpos " Y" ypos " is " color)
-}
 
 /* Test if orange text */
 TestOrangeAndPurpleText()

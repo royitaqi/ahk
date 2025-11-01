@@ -1,7 +1,5 @@
 ﻿#Requires AutoHotkey v2.0.0
 
-#include ../lk.ahk
-
 Test_LK()
 {
     Test_LK_Loot()

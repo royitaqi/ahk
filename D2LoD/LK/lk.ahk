@@ -1,8 +1,20 @@
 ﻿#Requires AutoHotkey v2.0.0
 
+#include "../utils/SaveAndLoad.ahk"
+
+
 ;;------------------------------------------------------------
-;; Advanced Mode: 3/LK
+;; Hot Keys
 ;;------------------------------------------------------------
+
+
+
+
+;;------------------------------------------------------------
+;; Logic
+;;------------------------------------------------------------
+
+
 s_LK_Run_ID := 0
 K_3LK()
 {
@@ -31,7 +43,7 @@ L_3LK()
     Send "{Escape}"
     ClickOrMove 500, 265, "Left", 1500
 
-    Char1Hell()
+    SinglePlayerChar1Hell()
     if (!IsD2Active()) {
         StopScript()
     }
@@ -231,7 +243,7 @@ LK_Detect_Waypoint_And_Recover(bitmap := 0, recover := 1)
         while y <= s_Y_Max
         {
             ; Check if the left blue flame is this 10x10 area
-            if (!DetectD2PixelColorInRect(bitmap,
+            if (!DetectPixelColorInRect(bitmap,
                     x - search_box_size * (blue_flame_boxes / 2),
                     y - search_box_size * (blue_flame_boxes / 2),
                     x + search_box_size * (blue_flame_boxes / 2 + 1) - 1,
@@ -246,7 +258,7 @@ LK_Detect_Waypoint_And_Recover(bitmap := 0, recover := 1)
             ; Check if the right blue flame is in a corresponding 30x30 area
             relative_x := s_LK_Right_Blue_Flame_X1 - s_LK_Left_Blue_Flame_X1
             relative_y := s_LK_Right_Blue_Flame_Y1 - s_LK_Left_Blue_Flame_Y1
-            if (!DetectD2PixelColorInRect(bitmap,
+            if (!DetectPixelColorInRect(bitmap,
                     x + relative_x - search_box_size * (blue_flame_boxes / 2),
                     y + relative_y - search_box_size * (blue_flame_boxes / 2),
                     x + relative_x + search_box_size * (blue_flame_boxes / 2 + 1) - 1,
@@ -307,14 +319,14 @@ LK_Detect_Waypoint_And_Recover_Old(bitmap := 0, recover := 1)
         {
             score := 0
             ; Check if the yellow flame is in this 10x10 area
-            if (DetectD2PixelColorInRect(bitmap, x, y, x + search_box_size - 1, y + search_box_size - 1, 0xFFC54D, 0x40, 0x8B3000, 0x40)) {
+            if (DetectPixelColorInRect(bitmap, x, y, x + search_box_size - 1, y + search_box_size - 1, 0xFFC54D, 0x40, 0x8B3000, 0x40)) {
                 score := score + 1
             }
 
             ; Check if the right blue flame is in a 30x30 area to the top right of the waypoint fire
             relative_x_r := s_LK_Right_Blue_Flame_X1 - s_LK_Yellow_Flame_X1
             relative_y_r := s_LK_Right_Blue_Flame_Y1 - s_LK_Yellow_Flame_Y1
-            if (DetectD2PixelColorInRect(bitmap,
+            if (DetectPixelColorInRect(bitmap,
                     x + relative_x_r - search_box_size * (blue_flame_boxes / 2),
                     y + relative_y_r - search_box_size * (blue_flame_boxes / 2),
                     x + relative_x_r + search_box_size * (blue_flame_boxes / 2 + 1) - 1,
@@ -327,7 +339,7 @@ LK_Detect_Waypoint_And_Recover_Old(bitmap := 0, recover := 1)
             ; Check if the left blue flame is in a 30x30 area in its corresponding position
             relative_x_l := s_LK_Left_Blue_Flame_X1 - s_LK_Yellow_Flame_X1
             relative_y_l := s_LK_Left_Blue_Flame_Y1 - s_LK_Yellow_Flame_Y1
-            if (DetectD2PixelColorInRect(bitmap,
+            if (DetectPixelColorInRect(bitmap,
                     x + relative_x_l - search_box_size * (blue_flame_boxes / 2),
                     y + relative_y_l - search_box_size * (blue_flame_boxes / 2),
                     x + relative_x_l + search_box_size * (blue_flame_boxes / 2 + 1) - 1,
@@ -386,7 +398,7 @@ LK_Detect_On_Waypoint(bitmap := 0)
 
     confidence := 0.0
     ; Detect left blue flame
-    if (DetectD2PixelColorInRect(bitmap,
+    if (DetectPixelColorInRect(bitmap,
             s_LK_Left_Blue_Flame_X1,
             s_LK_Left_Blue_Flame_Y1,
             s_LK_Left_Blue_Flame_X1 + s_LK_Blue_Flame_Size,
@@ -395,7 +407,7 @@ LK_Detect_On_Waypoint(bitmap := 0)
         confidence := confidence + 1.0
     }
     ; Detect right blue flame
-    if (DetectD2PixelColorInRect(bitmap,
+    if (DetectPixelColorInRect(bitmap,
             s_LK_Right_Blue_Flame_X1,
             s_LK_Right_Blue_Flame_Y1,
             s_LK_Right_Blue_Flame_X1 + s_LK_Blue_Flame_Size,
@@ -404,7 +416,7 @@ LK_Detect_On_Waypoint(bitmap := 0)
         confidence := confidence + 1.0
     }
     ; Detect bottom left yellow flame
-    if (DetectD2PixelColorInRect(bitmap,
+    if (DetectPixelColorInRect(bitmap,
             s_LK_Yellow_Flame_X1,
             s_LK_Yellow_Flame_Y1,
             s_LK_Yellow_Flame_X2,
