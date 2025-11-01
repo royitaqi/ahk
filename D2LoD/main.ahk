@@ -17,6 +17,7 @@ pToken := Gdip_Startup()
 #include utils/Logs.ahk
 #include utils/ReadScreen.ahk
 #include utils/SaveAndLoad.ahk
+#include utils/Script.ahk
 #include utils/Stash.ahk
 
 #include LK/LK.ahk

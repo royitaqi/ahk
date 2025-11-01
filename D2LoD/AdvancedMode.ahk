@@ -30,7 +30,7 @@ Delete::
 {
     if (s_CurrentMode != 0)
     {
-        StopScript("Stopping script", 0, 0)
+        StopScript("Stopping script", false)
         return
     }
     Send "{Delete}"
@@ -59,7 +59,7 @@ F10::
     switch s_CurrentMode
     {
     case 1:
-        PauseGame()
+        PauseGameIfPossible()
         return
     }
     Send "{F10}"
@@ -161,22 +161,6 @@ TestOrangeAndPurpleText()
     } else {
         Say("No text detected")
     }
-}
-
-/* Stop execution of script */
-StopScript(say_reason := 0, take_action := 0, play_sound := 0)
-{
-    if (say_reason) {
-        Say(say_reason)
-    }
-    if (take_action) {
-        take_action.Call()
-    }
-    ; Sound is downloaded from https://www.youtube.com/watch?v=ii8zdA_teQE
-    if (play_sound) {
-        SoundPlay("sounds/Notification.aac", 1)
-    }
-    Reload
 }
 
 /* Delete pages which has items (PlugY's /dp can only delete empty pages) */

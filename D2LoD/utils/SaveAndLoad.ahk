@@ -1,3 +1,4 @@
+#include D2.ahk
 #include ReadScreen.ahk
 
 
@@ -162,14 +163,15 @@ GetD2State(clear_mouse := 0) {
     return "unknown"
 }
 
-PauseGame() {
+PauseGameIfPossible() {
     loop {
         bitmap := GetD2Bitmap()
-        Assert(IsGameLoaded(bitmap, true), "Game should be loaded in order to be paused")
-        if (IsGamePaused(bitmap, true)) {
+
+        ; Cannot pause game if D2 isn't active, or if the game isn't loaded, or if the game is already paused
+        if (!IsD2Active() || !IsGameLoaded(bitmap, true) || IsGamePaused(bitmap, true)) {
             break
         }
-        
+
         ; Game isn't paused yet. Press ESC to exit one layer of interaction (e.g. inventory,
         ; hireling, stats, skills, message box) or bring up pause menu.
         Send "{Escape}"

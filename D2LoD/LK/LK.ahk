@@ -39,6 +39,8 @@ K_3LK()
 }
 L_3LK()
 {
+    StopScriptWhenD2BecomeInactive()
+
     MouseGetPos &xpos, &ypos
     ClickOrMove xpos, ypos, "Left", 500
     ClickOrMove 431, 78, "Left", 100
@@ -48,58 +50,40 @@ L_3LK()
     SinglePlayerChar1Hell(true)
 
     K_3LK()
-    if (!IsD2Active()) {
-        StopScript()
-    }
 
     LK_Run1stHut()
     ;bitmap := GetD2BitMap("temp/Screenshot_LK_Detect_Orange_Text_1.jpg")
     bitmap := GetD2BitMap("")
     if (LK_Detect_Orange_Text(bitmap)) {
-        StopScript("Loot detected", () => Send("{Escape}"), 1)
-    }
-    if (!IsD2Active()) {
-        StopScript()
+        StopScript("Loot detected")
     }
 
     LK_Run2ndHut()
     ;bitmap := GetD2BitMap("temp/Screenshot_LK_Detect_Orange_Text_2.jpg")
     bitmap := GetD2BitMap()
     if (LK_Detect_Orange_Text(bitmap)) {
-        StopScript("Loot detected", () => Send("{Escape}"), 1)
-    }
-    if (!IsD2Active()) {
-        StopScript()
+        StopScript("Loot detected")
     }
 
     LK_Run3rdHut()
     ;bitmap := GetD2BitMap("temp/Screenshot_LK_Detect_Orange_Text_3.jpg")
     bitmap := GetD2BitMap()
     if (LK_Detect_Orange_Text(bitmap)) {
-        StopScript("Loot detected", () => Send("{Escape}"), 1)
-    }
-    if (!IsD2Active()) {
-        StopScript()
+        StopScript("Loot detected")
     }
 
     LK_Run4thHut()
     ;bitmap := GetD2BitMap("temp/Screenshot_LK_Detect_Orange_Text_4.jpg")
     bitmap := GetD2BitMap()
     if (LK_Detect_Orange_Text(bitmap)) {
-        StopScript("Loot detected", () => Send("{Escape}"), 1)
-    }
-    if (!IsD2Active()) {
-        StopScript()
+        StopScript("Loot detected")
     }
 
     LK_RunReturn()
     ;bitmap := GetD2BitMap("temp/Screenshot_LK_Detect_Orange_Text_R.jpg")
     bitmap := GetD2BitMap()
     if (LK_Detect_Orange_Text(bitmap)) {
-        StopScript("Loot detected", () => Send("{Escape}"), 1)
-    }
-    if (!IsD2Active()) {
-        StopScript()
+        StopScript("Loot detected")
     }
 
     loop 1 ; 1 attempt to verify that we are on waypoint, and recover if necessary
@@ -111,10 +95,7 @@ L_3LK()
     }
     if (confidence < 0.5) {
         ; All recovery attempts have failed. Give up.
-        StopScript("Failed waypoint detection after " s_LK_Run_ID " runs (confidence = " confidence ")", () => Send("{Escape}"), 1)
-    }
-    if (!IsD2Active()) {
-        StopScript()
+        StopScript("Failed waypoint detection after " s_LK_Run_ID " runs (confidence = " confidence ")")
     }
 
     ; Move mouse to waypoint
