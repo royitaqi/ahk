@@ -59,7 +59,8 @@ F10::
     switch s_CurrentMode
     {
     case 1:
-        PauseGameIfPossible()
+        LK_RestartInAct3()
+        LK_Loop()
         return
     }
     Send "{F10}"
@@ -70,7 +71,8 @@ F9::
     switch s_CurrentMode
     {
     case 1:
-        Test_LK()
+        LK_FromAct3SpawnToLK()
+        LK_Loop()
         return
     }
     Send "{F9}"
@@ -135,7 +137,7 @@ L::
     switch s_CurrentMode
     {
     case 3:
-        LK_MainLoop()
+        LK_Main()
         return
     }
     Send "L"

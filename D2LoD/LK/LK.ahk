@@ -10,15 +10,23 @@
 s_LK_Tasks := Queue()
 s_LK_Run_ID := 0
 
-LK_MainLoop() {
-    global
+LK_Main() {
+    global s_LK_Tasks
 
     StopScriptWhenD2BecomeInactive()
 
-    ; Assume we are standing on the LK waypoint and just finished a run
-    s_LK_Tasks.Clear()
+    LK_Clear()
     s_LK_Tasks.Append(LK_BackToAct4AndRestart)
+    LK_Loop()
+}
 
+LK_Clear() {
+    global s_LK_Tasks
+    s_LK_Tasks.Clear()
+}
+
+LK_Loop() {
+    global s_LK_Tasks
     loop {
         task := s_LK_Tasks.Pop()
         task.Call()
@@ -43,7 +51,8 @@ LK_RestartInAct3() {
 LK_SaveLoadAnnounce() {
     SaveAndQuit(true)
     SinglePlayerChar1Hell(true)
-    s_LK_Tasks.Append(LK_AnnounceRunID)
+    ; Immediately announce run ID after loading into the game
+    LK_AnnounceRunID()
 }
 
 LK_AnnounceRunID() {
@@ -62,7 +71,13 @@ LK_FromAct4SpawnToLK() {
 }
 
 LK_FromAct3SpawnToLK() {
-    Assert(false, "Not implemented")
+    ClickOrMove 995, 310, "Left", 1100 ; 1250
+    ClickOrMove 1050, 25, "Left", 1800 ; 2000
+    ClickOrMove 1000, 60, "Left", 1650 ; 2000
+    ClickOrMove 1060, 300, "Left", 1050 ; 2000
+    ClickOrMove 1067, 110, "", s_LK_Run_Premove_Delay
+    ClickOrMove 1067, 110, "Left", 2000
+    ClickOrMove 408, 280, "Left", 500
 
     s_LK_Tasks.Append(LK_StartRun)
 }
