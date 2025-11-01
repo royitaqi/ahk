@@ -18,7 +18,7 @@ SinglePlayerChar1Hell(wait := 0)
     ClickOrMove(475, 375, "Left", 0)
 
     if (wait) {
-
+        WaitUntilGameLoaded()
     }
 }
 
@@ -113,14 +113,14 @@ WaitUntilMainScreen() {
 }
 
 WaitUntilGameLoaded() {
-    while (!IsMainScreen(true)) {
+    while (!IsGameLoaded(true)) {
         Sleep(100)
     }
 }
 
 GetGameState(clear_mouse := 0) {
     if (IsGameLoaded(clear_mouse)) {
-        return "InGame"
+        return "GameLoaded"
     }
     if (IsMainScreen(clear_mouse)) {
         return "MainScreen"

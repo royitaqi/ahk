@@ -219,6 +219,11 @@ F10::
     case 1:
         ret := GetGameState()
         Log("GetGameState() = " ret)
+
+        SaveAndQuit(true)
+        Log("Saved")
+        SinglePlayerChar1Hell(true)
+        Log("Loaded")
         return
     }
     Send "{F10}"
