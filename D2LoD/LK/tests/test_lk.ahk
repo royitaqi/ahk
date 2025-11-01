@@ -32,12 +32,12 @@ Test_LK_Waypoint()
         Say(file " loaded")
 
         start := A_TickCount
-        confidence := LK_Detect_Waypoint_And_Recover(bitmap, recover := 0)
+        confidence := LK_DetectWaypointAndRecover(bitmap, recover := 0)
         time := A_TickCount - start
         Say("New: " confidence " (" time ")")
 
         ;start := A_TickCount
-        ;confidence := LK_Detect_Waypoint_And_Recover_Old(bitmap, recover := 0)
+        ;confidence := LK_DetectWaypointAndRecover_Old(bitmap, recover := 0)
         ;time := A_TickCount - start
         ;Say("Old: " confidence " (" time ")")
     }
