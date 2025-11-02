@@ -142,7 +142,7 @@ LK_DetectLoot(hut_name, gather_loot_func) {
     global s_LK_Loot
 
     ; Sleep for a bit to allow loot to fall on the ground and be detected.
-    Sleep(300)
+    Sleep(200)
     loot_level := LK_DetectLootInMinimap()
     if (loot_level = 0) {
         return
@@ -165,9 +165,6 @@ LK_DetectLoot(hut_name, gather_loot_func) {
     if (remaining_loot_level != loot_level) {
         Log("Successfully picked loot (level " loot_level ")")
         s_LK_Loot[hut_name][loot_level].Looted := s_LK_Loot[hut_name][loot_level].Looted + 1
-
-        ; Notify by sound
-        SoundPlay("sounds/Notification.aac")
     } else {
         LogWarning("Failed to pick up loot (level " loot_level ")")
         s_LK_Loot[hut_name][loot_level].Failed := s_LK_Loot[hut_name][loot_level].Failed + 1
@@ -178,6 +175,9 @@ LK_DetectLoot(hut_name, gather_loot_func) {
         GetD2Bitmap("tmp/Screenshot_LK_failed_loot_run_" s_LK_Run_ID "_hut_" hut_name "_level_" loot_level ".jpg")
         Send "{Alt up}"
     }
+
+    ; Play sound and wait so that a human can have the chance to interfere before leaving the game
+    SoundPlay("sounds/Notification.aac", 1)
 
     ; Have to restart anyways
     s_LK_Tasks.Clear()
@@ -252,8 +252,19 @@ LK_DetectLootInMinimap(bitmap := 0) {
         Finally adjust the minimap area to:
         - 800, 125
         - 1000, 220
+
+        --
+
+        A smaller area is:
+        > The cursor is at X=857 Y=155
+        > The cursor is at X=936 Y=191
+
+        Adjusted area is:
+        - 865, 155
+        - 935, 190
     */
-    return DetectPixelColorInRect(bitmap, 800, 125, 1000, 220, 0xA420FC, 0, 0xE07020, 0)
+    ;return DetectPixelColorInRect(bitmap, 800, 125, 1000, 220, 0xA420FC, 0, 0xE07020, 0)
+    return DetectPixelColorInRect(bitmap, 865, 155, 935, 190, 0xA420FC, 0, 0xE07020, 0)
 }
 
 LK_CheckHealth() {
