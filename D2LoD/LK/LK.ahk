@@ -14,7 +14,12 @@ s_LK_Run_ID := -1
 EmptyLootData() {
     return { Detected: 0, Looted: 0, LootCount: 0, Failed: 0 }
 }
-s_LK_Loot := [EmptyLootData(), EmptyLootData(), EmptyLootData(), EmptyLootData()]
+s_LK_Loot := [
+    [EmptyLootData(), EmptyLootData()],
+    [EmptyLootData(), EmptyLootData()],
+    [EmptyLootData(), EmptyLootData()],
+    [EmptyLootData(), EmptyLootData()]
+]
 
 LK_Main() {
     global s_LK_Tasks
@@ -67,11 +72,16 @@ LK_SaveLoadAnnounce() {
 LK_Announce() {
     global s_LK_Run_ID, s_LK_Loot
     s_LK_Run_ID := s_LK_Run_ID + 1
-    Log("Runs: " s_LK_Run_ID " | Loot: "
-        s_LK_Loot[1].Detected "=>" s_LK_Loot[1].Looted "(" s_LK_Loot[1].LootCount ")-" s_LK_Loot[1].Failed " | "
-        s_LK_Loot[2].Detected "=>" s_LK_Loot[2].Looted "(" s_LK_Loot[2].LootCount ")-" s_LK_Loot[2].Failed " | "
-        s_LK_Loot[3].Detected "=>" s_LK_Loot[3].Looted "(" s_LK_Loot[3].LootCount ")-" s_LK_Loot[3].Failed " | "
-        s_LK_Loot[4].Detected "=>" s_LK_Loot[4].Looted "(" s_LK_Loot[4].LootCount ")-" s_LK_Loot[4].Failed)
+    Log("Runs: " Format("{:3d}", s_LK_Run_ID) " | Purple Loot: "
+        s_LK_Loot[1][1].Detected "=>" s_LK_Loot[1][1].Looted "(" s_LK_Loot[1][1].LootCount ")-" s_LK_Loot[1][1].Failed " | "
+        s_LK_Loot[2][1].Detected "=>" s_LK_Loot[2][1].Looted "(" s_LK_Loot[2][1].LootCount ")-" s_LK_Loot[2][1].Failed " | "
+        s_LK_Loot[3][1].Detected "=>" s_LK_Loot[3][1].Looted "(" s_LK_Loot[3][1].LootCount ")-" s_LK_Loot[3][1].Failed " | "
+        s_LK_Loot[4][1].Detected "=>" s_LK_Loot[4][1].Looted "(" s_LK_Loot[4][1].LootCount ")-" s_LK_Loot[4][1].Failed)
+    Log("            Orange Loot: "
+        s_LK_Loot[1][2].Detected "=>" s_LK_Loot[1][2].Looted "(" s_LK_Loot[1][2].LootCount ")-" s_LK_Loot[1][2].Failed " | "
+        s_LK_Loot[2][2].Detected "=>" s_LK_Loot[2][2].Looted "(" s_LK_Loot[2][2].LootCount ")-" s_LK_Loot[2][2].Failed " | "
+        s_LK_Loot[3][2].Detected "=>" s_LK_Loot[3][2].Looted "(" s_LK_Loot[3][2].LootCount ")-" s_LK_Loot[3][2].Failed " | "
+        s_LK_Loot[4][2].Detected "=>" s_LK_Loot[4][2].Looted "(" s_LK_Loot[4][2].LootCount ")-" s_LK_Loot[4][2].Failed)
 }
 
 LK_FromAct4SpawnToLK() {
@@ -120,35 +130,39 @@ LK_DetectLoot(hut_name, gather_loot_func) {
 
     ; Sleep for a bit to allow loot to fall on the ground and be detected.
     Sleep(300)
-    if (!LK_DetectOrangeText()) {
+    loot_level := LK_DetectLootInMinimap()
+    if (loot_level = 0) {
         return
     }
 
     ; Loot detected. Try to pick it up.
-    Log("Loot detected in hut " hut_name)
-    s_LK_Loot[hut_name].Detected := s_LK_Loot[hut_name].Detected + 1
+    Log("Loot level " loot_level " detected in hut " hut_name)
+    s_LK_Loot[hut_name][loot_level].Detected := s_LK_Loot[hut_name][loot_level].Detected + 1
     gather_loot_func.Call()
 
     ; If failed to pick up the loot, stop the script and pause the game
     OpenInventory()
     loot_count := LK_TransferLootToCube()
     CloseInventory()
+    s_LK_Loot[hut_name][loot_level].LootCount := s_LK_Loot[hut_name][loot_level].LootCount + loot_count
+    Log(loot_count " loot has been transfered to cube")
 
-    ; Note down the telemetry
-    if (loot_count) {
-        Log(loot_count " loot has been transfered to cube")
-        s_LK_Loot[hut_name].Looted := s_LK_Loot[hut_name].Looted + 1
-        s_LK_Loot[hut_name].LootCount := s_LK_Loot[hut_name].LootCount + loot_count
+    ; Check if the loot has been picked up (by see what's remaining on the ground)
+    remaining_loot_level := LK_DetectLootInMinimap()
+    if (remaining_loot_level != loot_level) {
+        Log("Successfully picked loot (level " loot_level ")")
+        s_LK_Loot[hut_name][loot_level].Looted := s_LK_Loot[hut_name][loot_level].Looted + 1
+
         ; Notify by sound
         SoundPlay("sounds/Notification.aac")
     } else {
-        Log("WARNING: Failed to pick up loot")
-        s_LK_Loot[hut_name].Failed := s_LK_Loot[hut_name].Failed + 1
-        
+        LogWarning("Failed to pick up loot (level " loot_level ")")
+        s_LK_Loot[hut_name][loot_level].Failed := s_LK_Loot[hut_name][loot_level].Failed + 1
+
         ; Take a picture of the scene before moving on
         Send "{Alt down}"
         Sleep 200
-        GetD2Bitmap("tmp/Screenshot_LK_failed_loot_" s_LK_Run_ID "_" hut_name ".jpg")
+        GetD2Bitmap("tmp/Screenshot_LK_failed_loot_run_" s_LK_Run_ID "_hut_" hut_name "_level_" loot_level ".jpg")
         Send "{Alt up}"
     }
 

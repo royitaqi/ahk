@@ -8,7 +8,7 @@
 
 
 s_Log_File := "log.txt"
-s_Log_Level := 0 ; 0 = Normal, 1 = Debug
+s_Log_Level := 0 ; -1 = Warning, 0 = Normal, 1 = Debug
 
 Say(text, delay := 100) {
     Send "{Enter}"
@@ -28,8 +28,11 @@ Log(text, level := 0) {
         return
     }
 
+    if (level = -1) {
+        text := "WARNING: " text
+    }
     if (level = 1) {
-        text := "[D] " text
+        text := "DEBUG: " text
     }
 
     LogToFile(text)
@@ -37,6 +40,14 @@ Log(text, level := 0) {
     if (IsD2Active() && IsGameLoaded() && !IsGamePaused()) {
         Say(text)
     }
+}
+
+LogDebug(text) {
+    Log(text, 1)
+}
+
+LogWarning(text) {
+    Log(text, -1)
 }
 
 ClearLogFile() {

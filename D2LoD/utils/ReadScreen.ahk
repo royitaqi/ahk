@@ -72,7 +72,7 @@ DetectPixelColorInRect(bitmap, x1, y1, x2, y2, color1, variation1 := 0, color2 :
 
             if (IsLogLevelDebug()) {
                 hex := RGB2Hex(r, g, b)
-                Log("DetectPixelColorInRect(): X=" x " Y=" y " color=0x" hex, 1)
+                LogDebug("DetectPixelColorInRect(): X=" x " Y=" y " color=0x" hex)
             }
 
             ; Check if the color of the pixel is within range of any input colors
