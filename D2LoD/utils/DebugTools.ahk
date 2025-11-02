@@ -32,7 +32,7 @@ TestPixelColor()
     ; color := PixelGetColor(xpos, ypos, "Alt")
     ; color := GetPixelColorBuffered(xpos, ypos)
 
-    bitmap := GetD2BitMap("temp/Screenshot_TestPixelColor.jpg")
+    bitmap := GetD2BitMap("tmp/Screenshot_TestPixelColor.jpg")
     color := GetPixelColorInHex(bitmap, xpos, ypos)
 
     Log("The color at X=" xpos " Y=" ypos " is 0x" color)

@@ -72,23 +72,7 @@ F9::
     switch s_CurrentMode
     {
     case 1:
-        ret := IsInventoryOpen(, true)
-        Log("IsInventoryOpen() = " ret)
-        
-        OpenInventory()
-        
-        ret := IsInventoryOpen(, true)
-        Log("IsInventoryOpen() = " ret)
-
-        bitmap := GetD2Bitmap("temp/Screenshot.jpg")
-        callback(row, col, x, y) {
-            ret := IsInventorySlotEmpty(bitmap, row, col)
-            Log("IsInventorySlotEmpty(" row ", " col ") = " ret)
-            ClickOrMoveToInventorySlot(row, col)
-            Sleep 100
-        }
-        ForEachInventorySlot(callback)
-        
+        LK_TransferLootToCube()
         return
     }
     Send "{F9}"

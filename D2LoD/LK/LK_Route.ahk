@@ -1,7 +1,7 @@
 ﻿s_LK_Run_Press_Delay := 100
 s_LK_Run_Premove_Delay := 200
 s_LK_Run_Blink_Delay := 400
-s_LK_Run_Pick_Delay := 200
+s_LK_Run_Pick_Delay := 50
 
 LK_Run1stHut() {
     global

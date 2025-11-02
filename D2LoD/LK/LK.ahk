@@ -1,6 +1,7 @@
 ﻿#Requires AutoHotkey v2.0.0
 
 #include "../../data_structure/Queue.ahk"
+#include "../utils/Logs.ahk"
 #include "../utils/SaveAndLoad.ahk"
 
 #include "LK_Route.ahk"
@@ -8,13 +9,19 @@
 
 
 s_LK_Tasks := Queue()
-s_LK_Run_ID := 0
+s_LK_Run_ID := -1
+EmptyLootData() {
+    return { Detected: 0, Looted: 0, LootCount: 0, Failed: 0 }
+}
+s_LK_Loot := [EmptyLootData(), EmptyLootData(), EmptyLootData(), EmptyLootData()]
 
 LK_Main() {
     global s_LK_Tasks
 
-    StopScriptWhenD2BecomeInactive()
-
+    ;StopScriptWhenD2BecomeInactive()
+    ClearLogFile()
+    SetPlayers(7)
+    
     LK_Clear()
     s_LK_Tasks.Append(LK_BackToAct4AndRestart)
     LK_Loop()
@@ -29,6 +36,7 @@ LK_Loop() {
     global s_LK_Tasks
     loop {
         task := s_LK_Tasks.Pop()
+        Log("Running task: " task.Name)
         task.Call()
     }
 }
@@ -51,14 +59,18 @@ LK_RestartInAct3() {
 LK_SaveLoadAnnounce() {
     SaveAndQuit(true)
     SinglePlayerChar1Hell(true)
-    ; Immediately announce run ID after loading into the game
-    LK_AnnounceRunID()
+    LK_CheckHealth()
+    LK_Announce()
 }
 
-LK_AnnounceRunID() {
-    global s_LK_Run_ID
+LK_Announce() {
+    global s_LK_Run_ID, s_LK_Loot
     s_LK_Run_ID := s_LK_Run_ID + 1
-    Log("LK run " s_LK_Run_ID)
+    Log("Runs: " s_LK_Run_ID " | Loot: "
+        s_LK_Loot[1].Detected "=>" s_LK_Loot[1].Looted "(" s_LK_Loot[1].LootCount ")-" s_LK_Loot[1].Failed " | "
+        s_LK_Loot[2].Detected "=>" s_LK_Loot[2].Looted "(" s_LK_Loot[2].LootCount ")-" s_LK_Loot[2].Failed " | "
+        s_LK_Loot[3].Detected "=>" s_LK_Loot[3].Looted "(" s_LK_Loot[3].LootCount ")-" s_LK_Loot[3].Failed " | "
+        s_LK_Loot[4].Detected "=>" s_LK_Loot[4].Looted "(" s_LK_Loot[4].LootCount ")-" s_LK_Loot[4].Failed)
 }
 
 LK_FromAct4SpawnToLK() {
@@ -90,49 +102,78 @@ LK_StartRun() {
     Sleep 500
 
     s_LK_Tasks.Append(LK_Run1stHut)
-    s_LK_Tasks.Append((*) => LK_DetectLoot("1st", LK_Gather1stHutLoot))
+    s_LK_Tasks.Append((*) => LK_DetectLoot(1, LK_Gather1stHutLoot))
     s_LK_Tasks.Append(LK_Run2ndHut)
-    s_LK_Tasks.Append((*) => LK_DetectLoot("2nd", LK_Gather2ndHutLoot))
+    s_LK_Tasks.Append((*) => LK_DetectLoot(2, LK_Gather2ndHutLoot))
     s_LK_Tasks.Append(LK_Run3rdHut)
-    s_LK_Tasks.Append((*) => LK_DetectLoot("3rd", LK_Gather3rdHutLoot))
+    s_LK_Tasks.Append((*) => LK_DetectLoot(3, LK_Gather3rdHutLoot))
     s_LK_Tasks.Append(LK_Run4thHut)
-    s_LK_Tasks.Append((*) => LK_DetectLoot("4th", LK_Gather4thHutLoot))
+    s_LK_Tasks.Append((*) => LK_DetectLoot(4, LK_Gather4thHutLoot))
     s_LK_Tasks.Append(LK_RunReturn)
     s_LK_Tasks.Append(LK_WaypointRecoveryIfNeeded)
     s_LK_Tasks.Append(LK_BackToAct4AndRestart)
 }
 
 LK_DetectLoot(hut_name, gather_loot_func) {
-    if (hut_name = "1st") {
-        ; pretend that we have found loot
-    } else {
-        bitmap := GetD2BitMap()
-        if (!LK_DetectOrangeText(bitmap)) {
-            return
-        }
+    global s_LK_Loot
+
+    ; Sleep for a bit to allow loot to fall on the ground and be detected.
+    Sleep(300)
+    if (!LK_DetectOrangeText()) {
+        return
     }
 
     ; Loot detected. Try to pick it up.
-    Log("Loot detected in " hut_name " hut")
+    Log("Loot detected in hut " hut_name)
+    s_LK_Loot[hut_name].Detected := s_LK_Loot[hut_name].Detected + 1
     gather_loot_func.Call()
 
     ; If failed to pick up the loot, stop the script and pause the game
-    if (!LK_CheckLootInInventory()) {
-        StopScript("Failed to pick up loot")
+    OpenInventory()
+    loot_count := LK_TransferLootToCube()
+    CloseInventory()
+
+    ; Note down the telemetry
+    if (loot_count) {
+        Log(loot_count " loot has been transfered to cube")
+        s_LK_Loot[hut_name].Looted := s_LK_Loot[hut_name].Looted + 1
+        s_LK_Loot[hut_name].LootCount := s_LK_Loot[hut_name].LootCount + loot_count
+        ; Notify by sound
+        SoundPlay("sounds/Notification.aac")
+    } else {
+        Log("WARNING: Failed to pick up loot")
+        s_LK_Loot[hut_name].Failed := s_LK_Loot[hut_name].Failed + 1
+        
+        ; Take a picture of the scene before moving on
+        Send "{Alt down}"
+        Sleep 200
+        GetD2Bitmap("tmp/Screenshot_LK_failed_loot_" s_LK_Run_ID "_" hut_name ".jpg")
+        Send "{Alt up}"
     }
 
-    LK_TransferLootToCube()
-
+    ; Have to restart anyways
     s_LK_Tasks.Clear()
     s_LK_Tasks.Append(LK_RestartInAct3)
 }
 
-LK_CheckLootInInventory() {
-    throw Error("Not implemented")
-}
-
+/*
+    Returns the number of transfered items.
+*/
 LK_TransferLootToCube() {
-    throw Error("Not implemented")
+    cube_inventory_row := 1
+    cube_inventory_col := 8
+
+    transfered_items := 0
+    callback(row, col, x, y) {
+        if (!IsInventorySlotEmpty(, row, col)) {
+            ClickOrMoveToInventorySlot(row, col, "Left")
+            ClickOrMoveToInventorySlot(cube_inventory_row, cube_inventory_col, "Left")
+            transfered_items := transfered_items + 1
+        }
+    }
+    ForEachInventorySlot(callback, 2, 8, 4, 2)
+
+    return transfered_items
 }
 
 LK_WaypointRecoveryIfNeeded() {
@@ -145,12 +186,23 @@ LK_WaypointRecoveryIfNeeded() {
     }
 }
 
-LK_DetectOrangeText(bitmap := 0)
-{
+LK_DetectOrangeText(bitmap := 0) {
     if (!bitmap) {
-        ;bitmap := GetD2BitMap("temp/Screenshot_LK_Detect_Orange_Text.jpg")
-        bitmap := GetD2BitMap()
+        bitmap := GetD2Bitmap()
     }
-    confidence := DetectColoredText(bitmap, 5, 0xC48100, 0x20)
+    confidence := DetectColoredText(bitmap, 10, 0xC48100, 0x20)
     return confidence
+}
+
+LK_CheckHealth() {
+    bitmap := GetD2Bitmap()
+
+    /*
+        Use a health potion if current hp is below 60%.
+        > X=63 Y=534 is 0x5C0000
+    */
+     if (GetPixelColorInRGB(bitmap, 63, 534) != 0x5C0000) {
+        Press("1")
+        Log("Health potion used")
+    }
 }

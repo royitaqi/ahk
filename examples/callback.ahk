@@ -7,6 +7,7 @@ MyCallbackFunction(message) {
 
 ; Define the function that takes a function as an argument
 ExecuteWithCallback(funcToCall, data) {
+    MsgBox "Callback function name: " funcToCall.Name
     ; Call the passed function object
     funcToCall.Call(data)
 }

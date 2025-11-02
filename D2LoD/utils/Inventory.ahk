@@ -36,6 +36,16 @@ OpenInventory() {
     Assert(IsInventoryOpen(, true), "Inventory should have been opened")
 }
 
+CloseInventory() {
+    if (!IsInventoryOpen(, true)) {
+        return
+    }
+
+    Press("{Escape}")
+
+    Assert(!IsInventoryOpen(, true), "Inventory should have been closed")
+}
+
 IsInventoryOpen(bitmap := 0, clear_mouse := false) {
     if (clear_mouse) {
         ClearMouse()
@@ -87,20 +97,19 @@ IsInventorySlotEmpty(bitmap := 0, row := -1, col := -1) {
     ARGB2RGB(slot_color, &r, &g, &b)
 
     if (r = g && g = b && RGBAreClose(r, g, b, 0x08, 0x08, 0x08, 0x10)) {
-        Log("row=" row " col=" col " x=" x " y=" y " r=" r " g=" g " b=" b)
         return true
     } else {
         return false
     }
 }
 
-ForEachInventorySlot(callback) {
+ForEachInventorySlot(callback, start_row := 0, start_col := 0, row_count := s_Inventory_Rows, col_count := s_Inventory_Cols) {
     Assert(callback, "Callback shouldn't be empty")
 
-    row := 0
-    loop s_Inventory_Rows {
-        col := 0
-        loop s_Inventory_Cols {
+    row := start_row
+    loop row_count {
+        col := start_col
+        loop col_count {
             x := InventoryX(col)
             y := InventoryY(row)
             callback.Call(row, col, x, y)

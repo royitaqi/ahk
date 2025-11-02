@@ -2,6 +2,8 @@
 #include SaveAndLoad.ahk
 
 
+s_Log_File := "log.txt"
+
 Say(text, delay := 100) {
     Send "{Enter}"
     Sleep 50
@@ -12,7 +14,7 @@ Say(text, delay := 100) {
 }
 
 LogToFile(text) {
-    FileAppend(text "`n", "log.txt")
+    FileAppend(text "`n", s_Log_File)
 }
 
 Log(text) {
@@ -21,4 +23,8 @@ Log(text) {
     if (IsD2Active() && IsGameLoaded() && !IsGamePaused()) {
         Say(text)
     }
+}
+
+ClearLogFile() {
+    FileOpen(s_Log_File, "w").Close()
 }
