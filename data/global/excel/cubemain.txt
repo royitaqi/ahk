@@ -6,7 +6,7 @@ index += 5	1			100					3	hst	vps,qty=2						useitem				dur			5	5																
 index -= 1	1			100					2	hst	yps						useitem				dur			-1	-1																					yps																																																										0
 index -= 5	1			100					3	hst	yps,qty=2						useitem				dur			-5	-5																					yps																													yps																													0
 test	1			100					3	hst	vps	yps					useitem				horadric-rejuv			10000	10000																					vps																													yps																													0
-test 2	0			100					1	hst							useitem				res-pois			10000	10000	res-cold			10000	10000	res-ltng			10000	10000	res-mag			10000	10000																																																																0
+test 2	0			100					1	hst							useitem				horadric-rejuv			-10000	-10000																																																																															0
 ------ PUT ------	0																																																																																																							0
 rvl	1			100					2	hst	rvl						useitem				hp			1	1																																																																															0
 --- gems ---	0																																																																																																							0
