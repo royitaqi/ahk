@@ -71,14 +71,26 @@ LK_SaveLoadAnnounce() {
 
 LK_Announce() {
     global s_LK_Run_ID, s_LK_Loot
+    
     s_LK_Run_ID := s_LK_Run_ID + 1
-    Log("Runs: " s_LK_Run_ID
-        "   |   Purple Loot: "
+
+    total := EmptyLootData()
+    total.Detected  := s_LK_Loot[1][1].Detected + s_LK_Loot[2][1].Detected + s_LK_Loot[3][1].Detected + s_LK_Loot[4][1].Detected
+                     + s_LK_Loot[1][2].Detected + s_LK_Loot[2][2].Detected + s_LK_Loot[3][2].Detected + s_LK_Loot[4][2].Detected
+    total.Looted    := s_LK_Loot[1][1].Looted + s_LK_Loot[2][1].Looted + s_LK_Loot[3][1].Looted + s_LK_Loot[4][1].Looted
+                     + s_LK_Loot[1][2].Looted + s_LK_Loot[2][2].Looted + s_LK_Loot[3][2].Looted + s_LK_Loot[4][2].Looted
+    total.LootCount := s_LK_Loot[1][1].LootCount + s_LK_Loot[2][1].LootCount + s_LK_Loot[3][1].LootCount + s_LK_Loot[4][1].LootCount
+                     + s_LK_Loot[1][2].LootCount + s_LK_Loot[2][2].LootCount + s_LK_Loot[3][2].LootCount + s_LK_Loot[4][2].LootCount
+    total.Failed    := s_LK_Loot[1][1].Failed + s_LK_Loot[2][1].Failed + s_LK_Loot[3][1].Failed + s_LK_Loot[4][1].Failed
+                     + s_LK_Loot[1][2].Failed + s_LK_Loot[2][2].Failed + s_LK_Loot[3][2].Failed + s_LK_Loot[4][2].Failed
+
+    Log("Runs: " s_LK_Run_ID "   |   Loot: " total.Detected "=>" total.Looted "(" total.LootCount ")-" total.Failed
+        "   |   Purple: "
         s_LK_Loot[1][1].Detected "=>" s_LK_Loot[1][1].Looted "(" s_LK_Loot[1][1].LootCount ")-" s_LK_Loot[1][1].Failed " | "
         s_LK_Loot[2][1].Detected "=>" s_LK_Loot[2][1].Looted "(" s_LK_Loot[2][1].LootCount ")-" s_LK_Loot[2][1].Failed " | "
         s_LK_Loot[3][1].Detected "=>" s_LK_Loot[3][1].Looted "(" s_LK_Loot[3][1].LootCount ")-" s_LK_Loot[3][1].Failed " | "
         s_LK_Loot[4][1].Detected "=>" s_LK_Loot[4][1].Looted "(" s_LK_Loot[4][1].LootCount ")-" s_LK_Loot[4][1].Failed
-        "   |   Orange Loot: "
+        "   |   Orange: "
         s_LK_Loot[1][2].Detected "=>" s_LK_Loot[1][2].Looted "(" s_LK_Loot[1][2].LootCount ")-" s_LK_Loot[1][2].Failed " | "
         s_LK_Loot[2][2].Detected "=>" s_LK_Loot[2][2].Looted "(" s_LK_Loot[2][2].LootCount ")-" s_LK_Loot[2][2].Failed " | "
         s_LK_Loot[3][2].Detected "=>" s_LK_Loot[3][2].Looted "(" s_LK_Loot[3][2].LootCount ")-" s_LK_Loot[3][2].Failed " | "
