@@ -59,7 +59,8 @@ F10::
     switch s_CurrentMode
     {
     case 1:
-        LK_RestartInAct3()
+        LK_Clear()
+        LK_StartRun()
         LK_Loop()
         return
     }
@@ -71,8 +72,23 @@ F9::
     switch s_CurrentMode
     {
     case 1:
-        LK_FromAct3SpawnToLK()
-        LK_Loop()
+        ret := IsInventoryOpen(, true)
+        Log("IsInventoryOpen() = " ret)
+        
+        OpenInventory()
+        
+        ret := IsInventoryOpen(, true)
+        Log("IsInventoryOpen() = " ret)
+
+        bitmap := GetD2Bitmap("temp/Screenshot.jpg")
+        callback(row, col, x, y) {
+            ret := IsInventorySlotEmpty(bitmap, row, col)
+            Log("IsInventorySlotEmpty(" row ", " col ") = " ret)
+            ClickOrMoveToInventorySlot(row, col)
+            Sleep 100
+        }
+        ForEachInventorySlot(callback)
+        
         return
     }
     Send "{F9}"
@@ -256,10 +272,10 @@ NextReroll()
 
     Send "{Shift Down}"
     ClickCube(3, 2, "Right")
-    ClickInventory(0, s_CurrentColumn, "Right")
-    ClickInventory(1, s_CurrentColumn, "Right")
-    ClickInventory(2, s_CurrentColumn, "Right")
-    ClickInventory(3, s_CurrentColumn, "Right")
+    ClickOrMoveToInventorySlot(0, s_CurrentColumn, "Right")
+    ClickOrMoveToInventorySlot(1, s_CurrentColumn, "Right")
+    ClickOrMoveToInventorySlot(2, s_CurrentColumn, "Right")
+    ClickOrMoveToInventorySlot(3, s_CurrentColumn, "Right")
     ClickCubeButton("Left")
     ClickCube(3, 2)
     Send "{Shift Up}"

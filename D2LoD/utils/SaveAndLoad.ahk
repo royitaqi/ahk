@@ -1,4 +1,5 @@
 #include D2.ahk
+#include KeyboardAndMouse.ahk
 #include ReadScreen.ahk
 
 
@@ -23,10 +24,9 @@ SinglePlayerChar1Hell(wait := 0)
     }
 }
 
-IsMainScreen(bitmap := 0, clear_mouse := 0) {
+IsMainScreen(bitmap := 0, clear_mouse := false) {
     if (clear_mouse) {
-        ; Move mouse out of the way of any detection points
-        ClickOrMove(400, 250, "", 0)
+        ClearMouse()
     }
     if (!bitmap) {
         bitmap := GetD2Bitmap()
@@ -67,10 +67,9 @@ IsMainScreen(bitmap := 0, clear_mouse := 0) {
     return 1
 }
 
-IsGameLoaded(bitmap := 0, clear_mouse := 0) {
+IsGameLoaded(bitmap := 0, clear_mouse := false) {
     if (clear_mouse) {
-        ; Move mouse out of the way of any detection points
-        ClickOrMove(400, 250, "", 0)
+        ClearMouse()
     }
     if (!bitmap) {
         bitmap := GetD2Bitmap()
@@ -111,10 +110,9 @@ IsGameLoaded(bitmap := 0, clear_mouse := 0) {
     return 1
 }
 
-IsGamePaused(bitmap := 0, clear_mouse := 0) {
+IsGamePaused(bitmap := 0, clear_mouse := false) {
     if (clear_mouse) {
-        ; Move mouse out of the way of any detection points
-        ClickOrMove(400, 250, "", 0)
+        ClearMouse()
     }
     if (!bitmap) {
         bitmap := GetD2Bitmap()
@@ -146,9 +144,13 @@ WaitUntilGameLoaded() {
     }
 }
 
-GetD2State(clear_mouse := 0) {
-    ; Capture the screen only once
-    bitmap := GetD2Bitmap()
+GetD2State(bitmap := 0, clear_mouse := false) {
+    if (clear_mouse) {
+        ClearMouse()
+    }
+    if (!bitmap) {
+        bitmap := GetD2Bitmap()
+    }
 
     if (IsGameLoaded(bitmap, clear_mouse)) {
         if (IsGamePaused(bitmap, clear_mouse)) {
@@ -167,8 +169,8 @@ PauseGameIfPossible() {
     loop {
         bitmap := GetD2Bitmap()
 
-        ; Cannot pause game if D2 isn't active, or if the game isn't loaded, or if the game is already paused
-        if (!IsD2Active() || !IsGameLoaded(bitmap, true) || IsGamePaused(bitmap, true)) {
+        ; Cannot pause game if the game isn't loaded, or if the game is already paused
+        if (!IsGameLoaded(bitmap, true) || IsGamePaused(bitmap, true)) {
             break
         }
 

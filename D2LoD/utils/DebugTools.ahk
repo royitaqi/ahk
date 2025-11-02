@@ -12,7 +12,7 @@ Assert(expr, msg)
 TestMousePosition()
 {
     MouseGetPos &xpos, &ypos
-    Log("The cursor is at X" xpos " Y" ypos)
+    Log("The cursor is at X=" xpos " Y=" ypos)
 }
 
 /* Test pixel color at current mouse position + (-10,-10) */
@@ -32,7 +32,7 @@ TestPixelColor()
     ; color := PixelGetColor(xpos, ypos, "Alt")
     ; color := GetPixelColorBuffered(xpos, ypos)
 
-    bitmap := GetD2BitMap("temp/Screenshot_Test.jpg")
+    bitmap := GetD2BitMap("temp/Screenshot_TestPixelColor.jpg")
     color := GetPixelColorInHex(bitmap, xpos, ypos)
 
     Log("The color at X=" xpos " Y=" ypos " is 0x" color)

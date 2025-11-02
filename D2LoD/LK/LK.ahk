@@ -90,23 +90,49 @@ LK_StartRun() {
     Sleep 500
 
     s_LK_Tasks.Append(LK_Run1stHut)
-    s_LK_Tasks.Append(LK_DetectLoot)
+    s_LK_Tasks.Append((*) => LK_DetectLoot("1st", LK_Gather1stHutLoot))
     s_LK_Tasks.Append(LK_Run2ndHut)
-    s_LK_Tasks.Append(LK_DetectLoot)
+    s_LK_Tasks.Append((*) => LK_DetectLoot("2nd", LK_Gather2ndHutLoot))
     s_LK_Tasks.Append(LK_Run3rdHut)
-    s_LK_Tasks.Append(LK_DetectLoot)
+    s_LK_Tasks.Append((*) => LK_DetectLoot("3rd", LK_Gather3rdHutLoot))
     s_LK_Tasks.Append(LK_Run4thHut)
-    s_LK_Tasks.Append(LK_DetectLoot)
+    s_LK_Tasks.Append((*) => LK_DetectLoot("4th", LK_Gather4thHutLoot))
     s_LK_Tasks.Append(LK_RunReturn)
     s_LK_Tasks.Append(LK_WaypointRecoveryIfNeeded)
     s_LK_Tasks.Append(LK_BackToAct4AndRestart)
 }
 
-LK_DetectLoot() {
-    bitmap := GetD2BitMap("")
-    if (LK_DetectOrangeText(bitmap)) {
-        StopScript("Loot detected")
+LK_DetectLoot(hut_name, gather_loot_func) {
+    if (hut_name = "1st") {
+        ; pretend that we have found loot
+    } else {
+        bitmap := GetD2BitMap()
+        if (!LK_DetectOrangeText(bitmap)) {
+            return
+        }
     }
+
+    ; Loot detected. Try to pick it up.
+    Log("Loot detected in " hut_name " hut")
+    gather_loot_func.Call()
+
+    ; If failed to pick up the loot, stop the script and pause the game
+    if (!LK_CheckLootInInventory()) {
+        StopScript("Failed to pick up loot")
+    }
+
+    LK_TransferLootToCube()
+
+    s_LK_Tasks.Clear()
+    s_LK_Tasks.Append(LK_RestartInAct3)
+}
+
+LK_CheckLootInInventory() {
+    throw Error("Not implemented")
+}
+
+LK_TransferLootToCube() {
+    throw Error("Not implemented")
 }
 
 LK_WaypointRecoveryIfNeeded() {

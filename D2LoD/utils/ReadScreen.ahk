@@ -42,6 +42,15 @@ GetPixelColorInHex(bitmap, x, y)
     return RGB2Hex(r, g, b)
 }
 
+RGBAreClose(r1, g1, b1, r2, g2, b2, variation) {
+    return r1 >= r2 - variation
+        && r1 <= r2 + variation
+        && g1 >= g2 - variation
+        && g1 <= g2 + variation
+        && b1 >= b2 - variation
+        && b1 <= b2 + variation
+}
+
 DetectPixelColorInRect(bitmap, x1, y1, x2, y2, color1, variation1 := 0, color2 := 0, variation2 := 0, &match_x := 0, &match_y := 0)
 {
     Assert(bitmap, "bitmap should have value")
@@ -60,12 +69,12 @@ DetectPixelColorInRect(bitmap, x1, y1, x2, y2, color1, variation1 := 0, color2 :
             ARGB2RGB(argb, &r, &g, &b)
 
             ; Check if the color of the pixel is within range of any input colors
-            if (r >= r1 - variation1 && r <= r1 + variation1 && g >= g1 - variation1 && g <= g1 + variation1 && b >= b1 - variation1 && b <= b1 + variation1) {
+            if (RGBAreClose(r, g, b, r1, g1, b1, variation1)) {
                 match_x := x1
                 match_y := y1
                 return 1
             }
-            if (color2 && r >= r2 - variation2 && r <= r2 + variation2 && g >= g2 - variation2 && g <= g2 + variation2 && b >= b2 - variation2 && b <= b2 + variation2) {
+            if (color2 && RGBAreClose(r, g, b, r2, g2, b2, variation2)) {
                 match_x := x1
                 match_y := y1
                 return 2

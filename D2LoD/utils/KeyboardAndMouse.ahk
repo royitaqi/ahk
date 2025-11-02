@@ -20,3 +20,7 @@ Press(key, delay := 100)
         Sleep delay
     }
 }
+
+ClearMouse() {
+    ClickOrMove(1067, 599, "", 0)
+}
