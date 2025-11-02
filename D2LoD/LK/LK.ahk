@@ -2,6 +2,7 @@
 
 #include "../../data_structure/Queue.ahk"
 #include "../utils/Logs.ahk"
+#include "../utils/ReadScreen.ahk"
 #include "../utils/SaveAndLoad.ahk"
 
 #include "LK_Route.ahk"
@@ -192,6 +193,40 @@ LK_DetectOrangeText(bitmap := 0) {
     }
     confidence := DetectColoredText(bitmap, 10, 0xC48100, 0x20)
     return confidence
+}
+
+/*
+    Returns 1 if there is purple loot on the ground, 2 if orange loot, 0 if nothing.
+*/
+LK_DetectLootInMinimap(bitmap := 0) {
+    if (!bitmap) {
+        bitmap := GetD2Bitmap("tmp/Screenshot_LK_DetectLootInMinimap.jpg")
+    }
+
+    /*
+        Orange loot.
+        > The color at X=899 Y=174 is 0xE07020
+
+        Purple loot.
+        > The color at X=899 Y=174 is 0xA420FC
+
+        Minimap area.
+        > The cursor is at X=791 Y=126
+        > The cursor is at X=1004 Y=244
+        Rounded to:
+        - 800, 125
+        - 1000, 245
+
+        Character is at:
+        > The cursor is at X=900 Y=172
+        Rounded to:
+        - 900, 172~173
+
+        Finally adjust the minimap area to:
+        - 800, 125
+        - 1000, 220
+    */
+    return DetectPixelColorInRect(bitmap, 800, 125, 1000, 220, 0xA420FC, 0, 0xE07020, 0)
 }
 
 LK_CheckHealth() {

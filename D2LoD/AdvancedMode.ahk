@@ -72,7 +72,8 @@ F9::
     switch s_CurrentMode
     {
     case 1:
-        LK_TransferLootToCube()
+        ret := LK_DetectLootInMinimap()
+        Log("LK_DetectLootInMinimap() = " ret)
         return
     }
     Send "{F9}"

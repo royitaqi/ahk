@@ -1,6 +1,11 @@
 #include D2.ahk
 #include SaveAndLoad.ahk
 
+/*
+    On Windows, tail the log file in VS Code's terminal window by running the following:
+    > Get-Content 'D2LoD/log.txt' -Wait -Tail 10
+*/
+
 
 s_Log_File := "log.txt"
 
