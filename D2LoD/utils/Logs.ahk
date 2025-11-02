@@ -8,6 +8,7 @@
 
 
 s_Log_File := "log.txt"
+s_Log_Level := 0 ; 0 = Normal, 1 = Debug
 
 Say(text, delay := 100) {
     Send "{Enter}"
@@ -22,7 +23,15 @@ LogToFile(text) {
     FileAppend(text "`n", s_Log_File)
 }
 
-Log(text) {
+Log(text, level := 0) {
+    if (level > s_Log_Level) {
+        return
+    }
+
+    if (level = 1) {
+        text := "[D] " text
+    }
+
     LogToFile(text)
 
     if (IsD2Active() && IsGameLoaded() && !IsGamePaused()) {
@@ -32,4 +41,13 @@ Log(text) {
 
 ClearLogFile() {
     FileOpen(s_Log_File, "w").Close()
+}
+
+IsLogLevelDebug() {
+    return s_Log_Level >= 1
+}
+
+SetLogLevel(level := 0) {
+    global s_Log_Level
+    s_Log_Level := level
 }

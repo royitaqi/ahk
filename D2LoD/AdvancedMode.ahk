@@ -59,9 +59,9 @@ F10::
     switch s_CurrentMode
     {
     case 1:
-        LK_Clear()
-        LK_StartRun()
-        LK_Loop()
+        ; SetLogLevel(1)
+        ret := LK_DetectOrangeText()
+        Log("LK_DetectOrangeText() = " ret)
         return
     }
     Send "{F10}"
@@ -72,6 +72,7 @@ F9::
     switch s_CurrentMode
     {
     case 1:
+        ; SetLogLevel(1)
         ret := LK_DetectLootInMinimap()
         Log("LK_DetectLootInMinimap() = " ret)
         return

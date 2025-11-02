@@ -60,29 +60,36 @@ DetectPixelColorInRect(bitmap, x1, y1, x2, y2, color1, variation1 := 0, color2 :
         ARGB2RGB(color2, &r2, &g2, &b2)
     }
 
+    x := x1
     loop x2 - x1 + 1
     {
+        y := y1
         loop y2 - y1 + 1
         {
             ; Get the color of the pixel at the coordinates
-            argb := Gdip_GetPixel(bitmap, x1, y1)
+            argb := Gdip_GetPixel(bitmap, x, y)
             ARGB2RGB(argb, &r, &g, &b)
+
+            if (IsLogLevelDebug()) {
+                hex := RGB2Hex(r, g, b)
+                Log("DetectPixelColorInRect(): X=" x " Y=" y " color=0x" hex, 1)
+            }
 
             ; Check if the color of the pixel is within range of any input colors
             if (RGBAreClose(r, g, b, r1, g1, b1, variation1)) {
-                match_x := x1
-                match_y := y1
+                match_x := x
+                match_y := y
                 return 1
             }
             if (color2 && RGBAreClose(r, g, b, r2, g2, b2, variation2)) {
-                match_x := x1
-                match_y := y1
+                match_x := x
+                match_y := y
                 return 2
             }
 
-            y1 := y1 + 1
+            y := y + 1
         }
-        x1 := x1 + 1
+        x := x + 1
     }
     return 0
 }
