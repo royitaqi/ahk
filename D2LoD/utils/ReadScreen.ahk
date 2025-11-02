@@ -51,11 +51,36 @@ RGBAreClose(r1, g1, b1, r2, g2, b2, variation) {
         && b1 <= b2 + variation
 }
 
-DetectPixelColorInRect(bitmap, x1, y1, x2, y2, color1, variation1 := 0, color2 := 0, variation2 := 0, &match_x := 0, &match_y := 0)
-{
+DetectPixelColor(bitmap, x, y, r1, g1, b1, variation1 := 0, r2 := 0, g2 := 0, b2 := 0, variation2 := 0) {
+    Assert(bitmap, "bitmap should have value")
+
+    argb := Gdip_GetPixel(bitmap, x, y)
+    ARGB2RGB(argb, &r, &g, &b)
+
+    if (IsLogLevelDebug()) {
+        hex := RGB2Hex(r, g, b)
+        LogDebug("DetectPixelColor(): X=" x " Y=" y " color=0x" hex)
+    }
+
+    ; Check if the color of the pixel is within range of any input colors
+    if (RGBAreClose(r, g, b, r1, g1, b1, variation1)) {
+        match_x := x
+        match_y := y
+        return 1
+    }
+    if ((r2 || g2 || b2) && RGBAreClose(r, g, b, r2, g2, b2, variation2)) {
+        match_x := x
+        match_y := y
+        return 2
+    }
+    return 0
+}
+
+DetectPixelColorInRect(bitmap, x1, y1, x2, y2, color1, variation1 := 0, color2 := 0, variation2 := 0, &match_x := 0, &match_y := 0) {
     Assert(bitmap, "bitmap should have value")
 
     ARGB2RGB(color1, &r1, &g1, &b1)
+    r2 := g2 := b2 := 0
     if (color2) {
         ARGB2RGB(color2, &r2, &g2, &b2)
     }
@@ -66,27 +91,10 @@ DetectPixelColorInRect(bitmap, x1, y1, x2, y2, color1, variation1 := 0, color2 :
         y := y1
         loop y2 - y1 + 1
         {
-            ; Get the color of the pixel at the coordinates
-            argb := Gdip_GetPixel(bitmap, x, y)
-            ARGB2RGB(argb, &r, &g, &b)
-
-            if (IsLogLevelDebug()) {
-                hex := RGB2Hex(r, g, b)
-                LogDebug("DetectPixelColorInRect(): X=" x " Y=" y " color=0x" hex)
+            match := DetectPixelColor(bitmap, x, y, r1, g1, b1, variation1, r2, g2, b2, variation2)
+            if (match) {
+                return match
             }
-
-            ; Check if the color of the pixel is within range of any input colors
-            if (RGBAreClose(r, g, b, r1, g1, b1, variation1)) {
-                match_x := x
-                match_y := y
-                return 1
-            }
-            if (color2 && RGBAreClose(r, g, b, r2, g2, b2, variation2)) {
-                match_x := x
-                match_y := y
-                return 2
-            }
-
             y := y + 1
         }
         x := x + 1
@@ -94,8 +102,29 @@ DetectPixelColorInRect(bitmap, x1, y1, x2, y2, color1, variation1 := 0, color2 :
     return 0
 }
 
-DetectColoredText(bitmap, lines, color1, variation1 := 0, color2 := 0, variation2 := 0)
-{
+DetectPixelColorInVerticalLine(bitmap, x, y1, y2, color1, variation1 := 0, color2 := 0, variation2 := 0, &match_x := 0, &match_y := 0) {
+    Assert(bitmap, "bitmap should have value")
+
+    ARGB2RGB(color1, &r1, &g1, &b1)
+    if (color2) {
+        ARGB2RGB(color2, &r2, &g2, &b2)
+    }
+
+    y := y1
+    loop y2 - y1 + 1
+    {
+        match := DetectPixelColor(bitmap, x, y, r1, g1, b1, variation1, r2, g2, b2, variation2)
+        if (match) {
+            match_x := x
+            match_y := y
+            return match
+        }
+        y := y + 1
+    }
+    return 0
+}
+
+DetectColoredText(bitmap, lines, color1, variation1 := 0, color2 := 0, variation2 := 0) {
     x1 := 16
     y1 := 84
     ; Magic number. The width to look for.

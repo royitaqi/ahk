@@ -23,10 +23,9 @@
         while y <= s_Y_Max
         {
             ; Check if the left blue flame is this 10x10 area
-            if (!DetectPixelColorInRect(bitmap,
+            if (!DetectPixelColorInVerticalLine(bitmap,
                     x - search_box_size * (blue_flame_boxes / 2),
                     y - search_box_size * (blue_flame_boxes / 2),
-                    x + search_box_size * (blue_flame_boxes / 2 + 1) - 1,
                     y + search_box_size * (blue_flame_boxes / 2 + 1) - 1,
                     0x669AD4, 0x20, 0x7290FF, 0x20, &left_x, &left_y)) {
                 y := y + search_box_size
@@ -38,10 +37,9 @@
             ; Check if the right blue flame is in a corresponding 30x30 area
             relative_x := s_LK_Right_Blue_Flame_X1 - s_LK_Left_Blue_Flame_X1
             relative_y := s_LK_Right_Blue_Flame_Y1 - s_LK_Left_Blue_Flame_Y1
-            if (!DetectPixelColorInRect(bitmap,
+            if (!DetectPixelColorInVerticalLine(bitmap,
                     x + relative_x - search_box_size * (blue_flame_boxes / 2),
                     y + relative_y - search_box_size * (blue_flame_boxes / 2),
-                    x + relative_x + search_box_size * (blue_flame_boxes / 2 + 1) - 1,
                     y + relative_y + search_box_size * (blue_flame_boxes / 2 + 1) - 1,
                     0x76A9DE, 0x20, 0x6988F4, 0x20, &right_x, &right_y)) {
                 y := y + search_box_size

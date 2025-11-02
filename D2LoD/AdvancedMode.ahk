@@ -73,8 +73,8 @@ F9::
     {
     case 1:
         ; SetLogLevel(1)
-        ret := LK_DetectLootInMinimap()
-        Log("LK_DetectLootInMinimap() = " ret)
+        ret := LK_DetectWaypointAndRecover()
+        Log("LK_DetectWaypointAndRecover() = " ret)
         return
     }
     Send "{F9}"
