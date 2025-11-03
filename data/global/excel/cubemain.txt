@@ -145,25 +145,25 @@ r13	1			100	18	73	73		1	hst							useitem				horadric-low-rune			-1	-1										
 r14	1			100	18	73	74		1	hst							useitem				horadric-low-rune			-1	-1																					r14																																																										0
 r15	1			100	18	73	75		1	hst							useitem				horadric-low-rune			-1	-1																					r15																																																										0
 --- mid runes ---	0																																																																																																							0
-r16	1			100	18	73	76		1	hst							useitem				horadric-mid-rune			-1	-1																					r01																																																										0
-r17	1			100	18	73	77		1	hst							useitem				horadric-mid-rune			-3	-3																					r02																																																										0
-r18	1			100	18	73	78		1	hst							useitem				horadric-mid-rune			-9	-9																					r03																																																										0
-r19	1			100	18	73	79		1	hst							useitem				horadric-mid-rune			-27	-27																					r04																																																										0
-r20	1			100	18	73	80		1	hst							useitem				horadric-mid-rune			-81	-81																					r05																																																										0
-r21	1			100	18	73	81		1	hst							useitem				horadric-mid-rune			-243	-243																					r06																																																										0
-r22	1			100	18	73	82		1	hst							useitem				horadric-mid-rune			-486	-486																					r07																																																										0
-r23	1			100	18	73	83		1	hst							useitem				horadric-mid-rune			-972	-972																					r08																																																										0
-r24	1			100	18	73	84		1	hst							useitem				horadric-mid-rune			-1944	-1944																					r09																																																										0
-r25	1			100	18	73	85		1	hst							useitem				horadric-mid-rune			-3888	-3888																					r10																																																										0
+r16	1			100	18	73	76		1	hst							useitem				horadric-mid-rune			-1	-1																					r16																																																										0
+r17	1			100	18	73	77		1	hst							useitem				horadric-mid-rune			-3	-3																					r17																																																										0
+r18	1			100	18	73	78		1	hst							useitem				horadric-mid-rune			-9	-9																					r18																																																										0
+r19	1			100	18	73	79		1	hst							useitem				horadric-mid-rune			-27	-27																					r19																																																										0
+r20	1			100	18	73	80		1	hst							useitem				horadric-mid-rune			-81	-81																					r20																																																										0
+r21	1			100	18	73	81		1	hst							useitem				horadric-mid-rune			-243	-243																					r21																																																										0
+r22	1			100	18	73	82		1	hst							useitem				horadric-mid-rune			-486	-486																					r22																																																										0
+r23	1			100	18	73	83		1	hst							useitem				horadric-mid-rune			-972	-972																					r23																																																										0
+r24	1			100	18	73	84		1	hst							useitem				horadric-mid-rune			-1944	-1944																					r24																																																										0
+r25	1			100	18	73	85		1	hst							useitem				horadric-mid-rune			-3888	-3888																					r25																																																										0
 --- high runes ---	0																																																																																																							0
-r26	1			100	18	73	86		1	hst							useitem				horadric-high-rune			-1	-1																					r11																																																										0
-r27	1			100	18	73	87		1	hst							useitem				horadric-high-rune			-2	-2																					r12																																																										0
-r28	1			100	18	73	88		1	hst							useitem				horadric-high-rune			-4	-4																					r13																																																										0
-r29	1			100	18	73	89		1	hst							useitem				horadric-high-rune			-8	-8																					r14																																																										0
-r30	1			100	18	73	90		1	hst							useitem				horadric-high-rune			-16	-16																					r15																																																										0
-r31	1			100	18	73	91		1	hst							useitem				horadric-high-rune			-32	-32																					r13																																																										0
-r32	1			100	18	73	92		1	hst							useitem				horadric-high-rune			-64	-64																					r13																																																										0
-r33	1			100	18	73	93		1	hst							useitem				horadric-high-rune			-128	-128																					r14																																																										0
+r26	1			100	18	73	86		1	hst							useitem				horadric-high-rune			-1	-1																					r26																																																										0
+r27	1			100	18	73	87		1	hst							useitem				horadric-high-rune			-2	-2																					r27																																																										0
+r28	1			100	18	73	88		1	hst							useitem				horadric-high-rune			-4	-4																					r28																																																										0
+r29	1			100	18	73	89		1	hst							useitem				horadric-high-rune			-8	-8																					r29																																																										0
+r30	1			100	18	73	90		1	hst							useitem				horadric-high-rune			-16	-16																					r30																																																										0
+r31	1			100	18	73	91		1	hst							useitem				horadric-high-rune			-32	-32																					r31																																																										0
+r32	1			100	18	73	92		1	hst							useitem				horadric-high-rune			-64	-64																					r32																																																										0
+r33	1			100	18	73	93		1	hst							useitem				horadric-high-rune			-128	-128																					r33																																																										0
 ~~~~~~~~~ HORADRIC STACK END ~~~~~~~~~	0																																																																																																							0
 Staff of Kings + Viper amulet -> Horadric Staff	1			0	28				2	msf	vip						hst																																																																																							0
 Khalim Flail + Khalim Heart + Khalim Eye + Khalim Brain -> Super Khalim Flail	1			0	28				4	qf1	qhr	qey	qbr				qf2																																																																																							0
