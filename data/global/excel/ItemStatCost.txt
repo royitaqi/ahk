@@ -360,3 +360,15 @@ passive_mag_mastery	357		1	12											1211	431	1024		8	0	9	50																	
 passive_mag_pierce	358		1	9												2812	1024		8	0	8	0																														0
 ______horadric_stack______	359			32													1024																																			0
 horadric_rejuv	360			32													1024				32	0																	36	1	2	ModStrHstRejuv	ModStrHstRejuv									0
+horadric_emerald	361			32													1024				32	0																	36	1	2	ModStrHstEmerald	ModStrHstEmerald									0
+horadric_sapphire	362			32													1024				32	0																	36	1	2	ModStrHstSapphire	ModStrHstSapphire									0
+horadric_topaz	363			32													1024				32	0																	36	1	2	ModStrHstTopaz	ModStrHstTopaz									0
+horadric_ruby	364			32													1024				32	0																	36	1	2	ModStrHstRuby	ModStrHstRuby									0
+horadric_diamond	365			32													1024				32	0																	36	1	2	ModStrHstDiamond	ModStrHstDiamond									0
+horadric_amethyst	366			32													1024				32	0																	36	1	2	ModStrHstAmethyst	ModStrHstAmethyst									0
+horadric_skull	367			32													1024				32	0																	36	1	2	ModStrHstSkull	ModStrHstSkull									0
+horadric_low_rune	368			32													1024				32	0																	36	1	2	ModStrHstLowRune	ModStrHstLowRune									0
+horadric_mid_rune	369			32													1024				32	0																	36	1	2	ModStrHstMidRune	ModStrHstMidRune									0
+horadric_high_rune	370			32													1024				32	0																	36	1	2	ModStrHstHighRune	ModStrHstHighRune									0
+horadric_mag_jewel	371			32													1024				32	0																	36	1	2	ModStrHstMagJewel	ModStrHstMagJewel									0
+horadric_rare_jewel	372			32													1024				32	0																	36	1	2	ModStrHstRareJewel	ModStrHstRareJewel									0

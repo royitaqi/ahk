@@ -8,117 +8,162 @@ index -= 5	1			100					3	hst	yps,qty=2						useitem				dur			-5	-5														
 test	1			100					3	hst	vps	yps					useitem				horadric-rejuv			32767	32767																					vps																													yps																													0
 test 2	1			100					1	hst							useitem				horadric-rejuv			-32767	-32767																																																																															0
 ------ PUT ------	0																																																																																																							0
-rvl	1			100					2	hst	rvl						useitem				hp			1	1																																																																															0
+--- potions ---	0																																																																																																							0
+rvs	1			100					2	hst	rvs						useitem				horadric-rejuv			1	1																																																																															0
+rvl	1			100					2	hst	rvl						useitem				horadric-rejuv			3	3																																																																															0
 --- gems ---	0																																																																																																							0
-gcg	1			100					2	hst	gcg						useitem				res-pois			1	1																																																																															0
-gfg	1			100					2	hst	gfg						useitem				res-pois			1	1																																																																															0
-gsg	1			100					2	hst	gsg						useitem				res-pois			1	1																																																																															0
-glg	1			100					2	hst	glg						useitem				res-pois			1	1																																																																															0
-gpg	1			100					2	hst	gpg						useitem				res-pois			1	1																																																																															0
-gcb	1			100					2	hst	gcb						useitem				res-cold			1	1																																																																															0
-gfb	1			100					2	hst	gfb						useitem				res-cold			1	1																																																																															0
-gsb	1			100					2	hst	gsb						useitem				res-cold			1	1																																																																															0
-glb	1			100					2	hst	glb						useitem				res-cold			1	1																																																																															0
-gpb	1			100					2	hst	gpb						useitem				res-cold			1	1																																																																															0
-gcy	1			100					2	hst	gcy						useitem				res-ltng			1	1																																																																															0
-gfy	1			100					2	hst	gfy						useitem				res-ltng			1	1																																																																															0
-gsy	1			100					2	hst	gsy						useitem				res-ltng			1	1																																																																															0
-gly	1			100					2	hst	gly						useitem				res-ltng			1	1																																																																															0
-gpy	1			100					2	hst	gpy						useitem				res-ltng			1	1																																																																															0
-gcr	1			100					2	hst	gcr						useitem				res-fire			1	1																																																																															0
-gfr	1			100					2	hst	gfr						useitem				res-fire			1	1																																																																															0
-gsr	1			100					2	hst	gsr						useitem				res-fire			1	1																																																																															0
-glr	1			100					2	hst	glr						useitem				res-fire			1	1																																																																															0
-gpr	1			100					2	hst	gpr						useitem				res-fire			1	1																																																																															0
-gcw	1			100					2	hst	gcw						useitem				res-mag			1	1																																																																															0
-gfw	1			100					2	hst	gfw						useitem				res-mag			1	1																																																																															0
-gsw	1			100					2	hst	gsw						useitem				res-mag			1	1																																																																															0
-glw	1			100					2	hst	glw						useitem				res-mag			1	1																																																																															0
-gpw	1			100					2	hst	gpw						useitem				res-mag			1	1																																																																															0
-gcv	1			100					2	hst	gcv						useitem				regen-mana			1	1																																																																															0
-gfv	1			100					2	hst	gfv						useitem				regen-mana			1	1																																																																															0
-gsv	1			100					2	hst	gsv						useitem				regen-mana			1	1																																																																															0
-gzv	1			100					2	hst	gzv						useitem				regen-mana			1	1																																																																															0
-gpv	1			100					2	hst	gpv						useitem				regen-mana			1	1																																																																															0
-skc	1			100					2	hst	skc						useitem				red-dmg%			1	1																																																																															0
-skf	1			100					2	hst	skf						useitem				red-dmg%			1	1																																																																															0
-sku	1			100					2	hst	sku						useitem				red-dmg%			1	1																																																																															0
-skl	1			100					2	hst	skl						useitem				red-dmg%			1	1																																																																															0
-skz	1			100					2	hst	skz						useitem				red-dmg%			1	1																																																																															0
+gcg	1			100					2	hst	gcg						useitem				horadric-emerald			1	1																																																																															0
+gfg	1			100					2	hst	gfg						useitem				horadric-emerald			3	3																																																																															0
+gsg	1			100					2	hst	gsg						useitem				horadric-emerald			9	9																																																																															0
+glg	1			100					2	hst	glg						useitem				horadric-emerald			27	27																																																																															0
+gpg	1			100					2	hst	gpg						useitem				horadric-emerald			83	83																																																																															0
+gcb	1			100					2	hst	gcb						useitem				horadric-sapphire			1	1																																																																															0
+gfb	1			100					2	hst	gfb						useitem				horadric-sapphire			3	3																																																																															0
+gsb	1			100					2	hst	gsb						useitem				horadric-sapphire			9	9																																																																															0
+glb	1			100					2	hst	glb						useitem				horadric-sapphire			27	27																																																																															0
+gpb	1			100					2	hst	gpb						useitem				horadric-sapphire			83	83																																																																															0
+gcy	1			100					2	hst	gcy						useitem				horadric-topaz			1	1																																																																															0
+gfy	1			100					2	hst	gfy						useitem				horadric-topaz			3	3																																																																															0
+gsy	1			100					2	hst	gsy						useitem				horadric-topaz			9	9																																																																															0
+gly	1			100					2	hst	gly						useitem				horadric-topaz			27	27																																																																															0
+gpy	1			100					2	hst	gpy						useitem				horadric-topaz			83	83																																																																															0
+gcr	1			100					2	hst	gcr						useitem				horadric-ruby			1	1																																																																															0
+gfr	1			100					2	hst	gfr						useitem				horadric-ruby			3	3																																																																															0
+gsr	1			100					2	hst	gsr						useitem				horadric-ruby			9	9																																																																															0
+glr	1			100					2	hst	glr						useitem				horadric-ruby			27	27																																																																															0
+gpr	1			100					2	hst	gpr						useitem				horadric-ruby			83	83																																																																															0
+gcw	1			100					2	hst	gcw						useitem				horadric-diamond			1	1																																																																															0
+gfw	1			100					2	hst	gfw						useitem				horadric-diamond			3	3																																																																															0
+gsw	1			100					2	hst	gsw						useitem				horadric-diamond			9	9																																																																															0
+glw	1			100					2	hst	glw						useitem				horadric-diamond			27	27																																																																															0
+gpw	1			100					2	hst	gpw						useitem				horadric-diamond			83	83																																																																															0
+gcv	1			100					2	hst	gcv						useitem				horadric-amethyst			1	1																																																																															0
+gfv	1			100					2	hst	gfv						useitem				horadric-amethyst			3	3																																																																															0
+gsv	1			100					2	hst	gsv						useitem				horadric-amethyst			9	9																																																																															0
+gzv	1			100					2	hst	gzv						useitem				horadric-amethyst			27	27																																																																															0
+gpv	1			100					2	hst	gpv						useitem				horadric-amethyst			83	83																																																																															0
+skc	1			100					2	hst	skc						useitem				horadric-skull			1	1																																																																															0
+skf	1			100					2	hst	skf						useitem				horadric-skull			3	3																																																																															0
+sku	1			100					2	hst	sku						useitem				horadric-skull			9	9																																																																															0
+skl	1			100					2	hst	skl						useitem				horadric-skull			27	27																																																																															0
+skz	1			100					2	hst	skz						useitem				horadric-skull			83	83																																																																															0
 --- jewels ---	0																																																																																																							0
-jew,mag	1			100					2	hst	jew,mag						useitem				gold%			1	1																																																																															0
---- runes ---	0																																																																																																							0
-r01	1			100					2	hst	r01						useitem				addxp			1	1																																																																															0
-r02	1			100					2	hst	r02						useitem				addxp			1	1																																																																															0
-r03	1			100					2	hst	r03						useitem				addxp			1	1																																																																															0
-r04	1			100					2	hst	r04						useitem				addxp			1	1																																																																															0
-r05	1			100					2	hst	r05						useitem				addxp			1	1																																																																															0
-r06	1			100					2	hst	r06						useitem				addxp			1	1																																																																															0
-r07	1			100					2	hst	r07						useitem				addxp			1	1																																																																															0
-r08	1			100					2	hst	r08						useitem				addxp			1	1																																																																															0
-r09	1			100					2	hst	r09						useitem				addxp			1	1																																																																															0
-r10	1			100					2	hst	r10						useitem				addxp			1	1																																																																															0
-r11	1			100					2	hst	r11						useitem				addxp			1	1																																																																															0
-r12	1			100					2	hst	r12						useitem				addxp			1	1																																																																															0
-r13	1			100					2	hst	r13						useitem				addxp			1	1																																																																															0
-r14	1			100					2	hst	r14						useitem				addxp			1	1																																																																															0
-r15	1			100					2	hst	r15						useitem				addxp			1	1																																																																															0
+jew,mag	1			100					2	hst	jew,mag						useitem				horadric-mag-jewel			1	1																																																																															0
+jew,rare	1			100					2	hst	jew,rare						useitem				horadric-rare-jewel			1	1																																																																															0
+--- low runes ---	0																																																																																																							0
+r01	1			100					2	hst	r01						useitem				horadric-low-rune			1	1																																																																															0
+r02	1			100					2	hst	r02						useitem				horadric-low-rune			1	1																																																																															0
+r03	1			100					2	hst	r03						useitem				horadric-low-rune			1	1																																																																															0
+r04	1			100					2	hst	r04						useitem				horadric-low-rune			1	1																																																																															0
+r05	1			100					2	hst	r05						useitem				horadric-low-rune			1	1																																																																															0
+r06	1			100					2	hst	r06						useitem				horadric-low-rune			1	1																																																																															0
+r07	1			100					2	hst	r07						useitem				horadric-low-rune			1	1																																																																															0
+r08	1			100					2	hst	r08						useitem				horadric-low-rune			1	1																																																																															0
+r09	1			100					2	hst	r09						useitem				horadric-low-rune			1	1																																																																															0
+r10	1			100					2	hst	r10						useitem				horadric-low-rune			1	1																																																																															0
+r11	1			100					2	hst	r11						useitem				horadric-low-rune			1	1																																																																															0
+r12	1			100					2	hst	r12						useitem				horadric-low-rune			1	1																																																																															0
+r13	1			100					2	hst	r13						useitem				horadric-low-rune			1	1																																																																															0
+r14	1			100					2	hst	r14						useitem				horadric-low-rune			1	1																																																																															0
+r15	1			100					2	hst	r15						useitem				horadric-low-rune			1	1																																																																															0
+--- mid runes ---	0																																																																																																							0
+r16	1			100					2	hst	r16						useitem				horadric-mid-rune			1	1																																																																															0
+r17	1			100					2	hst	r17						useitem				horadric-mid-rune			3	3																																																																															0
+r18	1			100					2	hst	r18						useitem				horadric-mid-rune			9	9																																																																															0
+r19	1			100					2	hst	r19						useitem				horadric-mid-rune			27	27																																																																															0
+r20	1			100					2	hst	r20						useitem				horadric-mid-rune			81	81																																																																															0
+r21	1			100					2	hst	r21						useitem				horadric-mid-rune			243	243																																																																															0
+r22	1			100					2	hst	r22						useitem				horadric-mid-rune			486	486																																																																															0
+r23	1			100					2	hst	r23						useitem				horadric-mid-rune			972	972																																																																															0
+r24	1			100					2	hst	r24						useitem				horadric-mid-rune			1944	1944																																																																															0
+r25	1			100					2	hst	r25						useitem				horadric-mid-rune			3888	3888																																																																															0
+--- high runes ---	0																																																																																																							0
+r26	1			100					2	hst	r26						useitem				horadric-high-rune			1	1																																																																															0
+r27	1			100					2	hst	r27						useitem				horadric-high-rune			2	2																																																																															0
+r28	1			100					2	hst	r28						useitem				horadric-high-rune			4	4																																																																															0
+r29	1			100					2	hst	r29						useitem				horadric-high-rune			8	8																																																																															0
+r30	1			100					2	hst	r30						useitem				horadric-high-rune			16	16																																																																															0
+r31	1			100					2	hst	r31						useitem				horadric-high-rune			32	32																																																																															0
+r32	1			100					2	hst	r32						useitem				horadric-high-rune			64	64																																																																															0
+r33	1			100					2	hst	r33						useitem				horadric-high-rune			128	128																																																																															0
 ------ GET ------	0																																																																																																							0
-rvl	1			100	18	73	99		1	hst							useitem				hp			-1	-1																					rvl																																																										0
+--- potions ---	0																																																																																																							0
+rvl	1			100	18	73	99		1	hst							useitem				hp			-3	-3																					rvl																																																										0
 --- gems ---	0																																																																																																							0
-gcg	1			100	18	73	101		1	hst							useitem				res-pois			-1	-1																					gcg																																																										0
-gfg	1			100	18	73	102		1	hst							useitem				res-pois			-1	-1																					gfg																																																										0
-gsg	1			100	18	73	103		1	hst							useitem				res-pois			-1	-1																					gsg																																																										0
-glg	1			100	18	73	104		1	hst							useitem				res-pois			-1	-1																					glg																																																										0
-gpg	1			100	18	73	105		1	hst							useitem				res-pois			-1	-1																					gpg																																																										0
-gcb	1			100	18	73	106		1	hst							useitem				res-cold			-1	-1																					gcb																																																										0
-gfb	1			100	18	73	107		1	hst							useitem				res-cold			-1	-1																					gfb																																																										0
-gsb	1			100	18	73	108		1	hst							useitem				res-cold			-1	-1																					gsb																																																										0
-glb	1			100	18	73	109		1	hst							useitem				res-cold			-1	-1																					glb																																																										0
-gpb	1			100	18	73	110		1	hst							useitem				res-cold			-1	-1																					gpb																																																										0
-gcy	1			100	18	73	111		1	hst							useitem				res-ltng			-1	-1																					gcy																																																										0
-gfy	1			100	18	73	112		1	hst							useitem				res-ltng			-1	-1																					gfy																																																										0
-gsy	1			100	18	73	113		1	hst							useitem				res-ltng			-1	-1																					gsy																																																										0
-gly	1			100	18	73	114		1	hst							useitem				res-ltng			-1	-1																					gly																																																										0
-gpy	1			100	18	73	115		1	hst							useitem				res-ltng			-1	-1																					gpy																																																										0
-gcr	1			100	18	73	116		1	hst							useitem				res-fire			-1	-1																					gcr																																																										0
-gfr	1			100	18	73	117		1	hst							useitem				res-fire			-1	-1																					gfr																																																										0
-gsr	1			100	18	73	118		1	hst							useitem				res-fire			-1	-1																					gsr																																																										0
-glr	1			100	18	73	119		1	hst							useitem				res-fire			-1	-1																					glr																																																										0
-gpr	1			100	18	73	120		1	hst							useitem				res-fire			-1	-1																					gpr																																																										0
-gcw	1			100	18	73	121		1	hst							useitem				res-mag			-1	-1																					gcw																																																										0
-gfw	1			100	18	73	122		1	hst							useitem				res-mag			-1	-1																					gfw																																																										0
-gsw	1			100	18	73	123		1	hst							useitem				res-mag			-1	-1																					gsw																																																										0
-glw	1			100	18	73	124		1	hst							useitem				res-mag			-1	-1																					glw																																																										0
-gpw	1			100	18	73	125		1	hst							useitem				res-mag			-1	-1																					gpw																																																										0
-gcv	1			100	18	73	126		1	hst							useitem				regen-mana			-1	-1																					gcv																																																										0
-gfv	1			100	18	73	127		1	hst							useitem				regen-mana			-1	-1																					gfv																																																										0
-gsv	1			100	18	73	128		1	hst							useitem				regen-mana			-1	-1																					gsv																																																										0
-gzv	1			100	18	73	129		1	hst							useitem				regen-mana			-1	-1																					gzv																																																										0
-gpv	1			100	18	73	130		1	hst							useitem				regen-mana			-1	-1																					gpv																																																										0
-skc	1			100	18	73	131		1	hst							useitem				red-dmg%			-1	-1																					skc																																																										0
-skf	1			100	18	73	132		1	hst							useitem				red-dmg%			-1	-1																					skf																																																										0
-sku	1			100	18	73	133		1	hst							useitem				red-dmg%			-1	-1																					sku																																																										0
-skl	1			100	18	73	134		1	hst							useitem				red-dmg%			-1	-1																					skl																																																										0
-skz	1			100	18	73	135		1	hst							useitem				red-dmg%			-1	-1																					skz																																																										0
+gcg	1			100	18	73	101		1	hst							useitem				horadric-emerald			-1	-1																					gcg																																																										0
+gfg	1			100	18	73	102		1	hst							useitem				horadric-emerald			-3	-3																					gfg																																																										0
+gsg	1			100	18	73	103		1	hst							useitem				horadric-emerald			-9	-9																					gsg																																																										0
+glg	1			100	18	73	104		1	hst							useitem				horadric-emerald			-27	-27																					glg																																																										0
+gpg	1			100	18	73	105		1	hst							useitem				horadric-emerald			-83	-83																					gpg																																																										0
+gcb	1			100	18	73	106		1	hst							useitem				horadric-sapphire			-1	-1																					gcb																																																										0
+gfb	1			100	18	73	107		1	hst							useitem				horadric-sapphire			-3	-3																					gfb																																																										0
+gsb	1			100	18	73	108		1	hst							useitem				horadric-sapphire			-9	-9																					gsb																																																										0
+glb	1			100	18	73	109		1	hst							useitem				horadric-sapphire			-27	-27																					glb																																																										0
+gpb	1			100	18	73	110		1	hst							useitem				horadric-sapphire			-83	-83																					gpb																																																										0
+gcy	1			100	18	73	111		1	hst							useitem				horadric-topaz			-1	-1																					gcy																																																										0
+gfy	1			100	18	73	112		1	hst							useitem				horadric-topaz			-3	-3																					gfy																																																										0
+gsy	1			100	18	73	113		1	hst							useitem				horadric-topaz			-9	-9																					gsy																																																										0
+gly	1			100	18	73	114		1	hst							useitem				horadric-topaz			-27	-27																					gly																																																										0
+gpy	1			100	18	73	115		1	hst							useitem				horadric-topaz			-83	-83																					gpy																																																										0
+gcr	1			100	18	73	116		1	hst							useitem				horadric-ruby			-1	-1																					gcr																																																										0
+gfr	1			100	18	73	117		1	hst							useitem				horadric-ruby			-3	-3																					gfr																																																										0
+gsr	1			100	18	73	118		1	hst							useitem				horadric-ruby			-9	-9																					gsr																																																										0
+glr	1			100	18	73	119		1	hst							useitem				horadric-ruby			-27	-27																					glr																																																										0
+gpr	1			100	18	73	120		1	hst							useitem				horadric-ruby			-83	-83																					gpr																																																										0
+gcw	1			100	18	73	121		1	hst							useitem				horadric-diamond			-1	-1																					gcw																																																										0
+gfw	1			100	18	73	122		1	hst							useitem				horadric-diamond			-3	-3																					gfw																																																										0
+gsw	1			100	18	73	123		1	hst							useitem				horadric-diamond			-9	-9																					gsw																																																										0
+glw	1			100	18	73	124		1	hst							useitem				horadric-diamond			-27	-27																					glw																																																										0
+gpw	1			100	18	73	125		1	hst							useitem				horadric-diamond			-83	-83																					gpw																																																										0
+gcv	1			100	18	73	126		1	hst							useitem				horadric-amethyst			-1	-1																					gcv																																																										0
+gfv	1			100	18	73	127		1	hst							useitem				horadric-amethyst			-3	-3																					gfv																																																										0
+gsv	1			100	18	73	128		1	hst							useitem				horadric-amethyst			-9	-9																					gsv																																																										0
+gzv	1			100	18	73	129		1	hst							useitem				horadric-amethyst			-27	-27																					gzv																																																										0
+gpv	1			100	18	73	130		1	hst							useitem				horadric-amethyst			-83	-83																					gpv																																																										0
+skc	1			100	18	73	131		1	hst							useitem				horadric-skull			-1	-1																					skc																																																										0
+skf	1			100	18	73	132		1	hst							useitem				horadric-skull			-3	-3																					skf																																																										0
+sku	1			100	18	73	133		1	hst							useitem				horadric-skull			-9	-9																					sku																																																										0
+skl	1			100	18	73	134		1	hst							useitem				horadric-skull			-27	-27																					skl																																																										0
+skz	1			100	18	73	135		1	hst							useitem				horadric-skull			-83	-83																					skz																																																										0
 --- jewels ---	0																																																																																																							0
-jew,mag	1			100	18	73	98		1	hst							useitem				gold%			-1	-1																					jew,mag																																																										0
---- runes ---	0																																																																																																							0
-r01	1			100	18	73	81		1	hst							useitem				addxp			-1	-1																					r01																																																										0
-r02	1			100	18	73	82		1	hst							useitem				addxp			-1	-1																					r02																																																										0
-r03	1			100	18	73	83		1	hst							useitem				addxp			-1	-1																					r03																																																										0
-r04	1			100	18	73	84		1	hst							useitem				addxp			-1	-1																					r04																																																										0
-r05	1			100	18	73	85		1	hst							useitem				addxp			-1	-1																					r05																																																										0
-r06	1			100	18	73	86		1	hst							useitem				addxp			-1	-1																					r06																																																										0
-r07	1			100	18	73	87		1	hst							useitem				addxp			-1	-1																					r07																																																										0
-r08	1			100	18	73	88		1	hst							useitem				addxp			-1	-1																					r08																																																										0
-r09	1			100	18	73	89		1	hst							useitem				addxp			-1	-1																					r09																																																										0
-r10	1			100	18	73	90		1	hst							useitem				addxp			-1	-1																					r10																																																										0
-r11	1			100	18	73	91		1	hst							useitem				addxp			-1	-1																					r11																																																										0
-r12	1			100	18	73	92		1	hst							useitem				addxp			-1	-1																					r12																																																										0
-r13	1			100	18	73	93		1	hst							useitem				addxp			-1	-1																					r13																																																										0
-r14	1			100	18	73	94		1	hst							useitem				addxp			-1	-1																					r14																																																										0
-r15	1			100	18	73	95		1	hst							useitem				addxp			-1	-1																					r15																																																										0
+jew,mag	1			100	18	73	97		1	hst							useitem				horadric-mag-jewel			-1	-1																					jew,mag																																																										0
+jew,rare	1			100	18	73	98		1	hst							useitem				horadric-rare-jewel			-1	-1																					jew,mag																																																										0
+--- low runes ---	0																																																																																																							0
+r01	1			100	18	73	61		1	hst							useitem				horadric-low-rune			-1	-1																					r01																																																										0
+r02	1			100	18	73	62		1	hst							useitem				horadric-low-rune			-1	-1																					r02																																																										0
+r03	1			100	18	73	63		1	hst							useitem				horadric-low-rune			-1	-1																					r03																																																										0
+r04	1			100	18	73	64		1	hst							useitem				horadric-low-rune			-1	-1																					r04																																																										0
+r05	1			100	18	73	65		1	hst							useitem				horadric-low-rune			-1	-1																					r05																																																										0
+r06	1			100	18	73	66		1	hst							useitem				horadric-low-rune			-1	-1																					r06																																																										0
+r07	1			100	18	73	67		1	hst							useitem				horadric-low-rune			-1	-1																					r07																																																										0
+r08	1			100	18	73	68		1	hst							useitem				horadric-low-rune			-1	-1																					r08																																																										0
+r09	1			100	18	73	69		1	hst							useitem				horadric-low-rune			-1	-1																					r09																																																										0
+r10	1			100	18	73	70		1	hst							useitem				horadric-low-rune			-1	-1																					r10																																																										0
+r11	1			100	18	73	71		1	hst							useitem				horadric-low-rune			-1	-1																					r11																																																										0
+r12	1			100	18	73	72		1	hst							useitem				horadric-low-rune			-1	-1																					r12																																																										0
+r13	1			100	18	73	73		1	hst							useitem				horadric-low-rune			-1	-1																					r13																																																										0
+r14	1			100	18	73	74		1	hst							useitem				horadric-low-rune			-1	-1																					r14																																																										0
+r15	1			100	18	73	75		1	hst							useitem				horadric-low-rune			-1	-1																					r15																																																										0
+--- mid runes ---	0																																																																																																							0
+r16	1			100	18	73	76		1	hst							useitem				horadric-mid-rune			-1	-1																					r01																																																										0
+r17	1			100	18	73	77		1	hst							useitem				horadric-mid-rune			-3	-3																					r02																																																										0
+r18	1			100	18	73	78		1	hst							useitem				horadric-mid-rune			-9	-9																					r03																																																										0
+r19	1			100	18	73	79		1	hst							useitem				horadric-mid-rune			-27	-27																					r04																																																										0
+r20	1			100	18	73	80		1	hst							useitem				horadric-mid-rune			-81	-81																					r05																																																										0
+r21	1			100	18	73	81		1	hst							useitem				horadric-mid-rune			-243	-243																					r06																																																										0
+r22	1			100	18	73	82		1	hst							useitem				horadric-mid-rune			-486	-486																					r07																																																										0
+r23	1			100	18	73	83		1	hst							useitem				horadric-mid-rune			-972	-972																					r08																																																										0
+r24	1			100	18	73	84		1	hst							useitem				horadric-mid-rune			-1944	-1944																					r09																																																										0
+r25	1			100	18	73	85		1	hst							useitem				horadric-mid-rune			-3888	-3888																					r10																																																										0
+--- high runes ---	0																																																																																																							0
+r26	1			100	18	73	86		1	hst							useitem				horadric-high-rune			-1	-1																					r11																																																										0
+r27	1			100	18	73	87		1	hst							useitem				horadric-high-rune			-2	-2																					r12																																																										0
+r28	1			100	18	73	88		1	hst							useitem				horadric-high-rune			-4	-4																					r13																																																										0
+r29	1			100	18	73	89		1	hst							useitem				horadric-high-rune			-8	-8																					r14																																																										0
+r30	1			100	18	73	90		1	hst							useitem				horadric-high-rune			-16	-16																					r15																																																										0
+r31	1			100	18	73	91		1	hst							useitem				horadric-high-rune			-32	-32																					r13																																																										0
+r32	1			100	18	73	92		1	hst							useitem				horadric-high-rune			-64	-64																					r13																																																										0
+r33	1			100	18	73	93		1	hst							useitem				horadric-high-rune			-128	-128																					r14																																																										0
 ~~~~~~~~~ HORADRIC STACK END ~~~~~~~~~	0																																																																																																							0
 Staff of Kings + Viper amulet -> Horadric Staff	1			0	28				2	msf	vip						hst																																																																																							0
 Khalim Flail + Khalim Heart + Khalim Eye + Khalim Brain -> Super Khalim Flail	1			0	28				4	qf1	qhr	qey	qbr				qf2																																																																																							0

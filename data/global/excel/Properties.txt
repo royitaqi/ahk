@@ -268,4 +268,16 @@ ethereal	1			23																															0
 oskill	1			22	item_nonclassskill																										Skill	min level	max level	none	0
 state	1			24	state																										state	1	1		0
 randclassskill	1		3	36	item_addclassskills																														0
-horadric-rejuv	1			1	horadric_rejuv																													none	0
+horadric-rejuv	1			1	horadric_rejuv																														0
+horadric-emerald	1			1	horadric_emerald																														0
+horadric-sapphire	1			1	horadric_sapphire																														0
+horadric-topaz	1			1	horadric_topaz																														0
+horadric-ruby	1			1	horadric_ruby																														0
+horadric-diamond	1			1	horadric_diamond																														0
+horadric-amethyst	1			1	horadric_amethyst																														0
+horadric-skull	1			1	horadric_skull																														0
+horadric-low-rune	1			1	horadric_low_rune																														0
+horadric-mid-rune	1			1	horadric_mid_rune																														0
+horadric-high-rune	1			1	horadric_high_rune																														0
+horadric-mag-jewel	1			1	horadric_mag_jewel																														0
+horadric-rare-jewel	1			1	horadric_rare_jewel																														0
