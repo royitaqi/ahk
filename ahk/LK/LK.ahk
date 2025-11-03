@@ -1,6 +1,6 @@
 ﻿#Requires AutoHotkey v2.0.0
 
-#include "../../data_structure/Queue.ahk"
+#include "../data_structure/Queue.ahk"
 #include "../utils/Logs.ahk"
 #include "../utils/ReadScreen.ahk"
 #include "../utils/SaveAndLoad.ahk"

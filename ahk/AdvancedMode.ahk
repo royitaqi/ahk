@@ -72,9 +72,9 @@ F9::
     switch s_CurrentMode
     {
     case 1:
-        ; SetLogLevel(1)
-        ret := LK_DetectWaypointAndRecover()
-        Log("LK_DetectWaypointAndRecover() = " ret)
+        loop {
+            ClickOrMove 376, 337, "Left", 0
+        }
         return
     }
     Send "{F9}"
