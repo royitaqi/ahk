@@ -1,12 +1,8 @@
 description	enabled	ladder	min diff	version	op	param	value	class	numinputs	input 1	input 2	input 3	input 4	input 5	input 6	input 7	output	lvl	plvl	ilvl	mod 1	mod 1 chance	mod 1 param	mod 1 min	mod 1 max	mod 2	mod 2 chance	mod 2 param	mod 2 min	mod 2 max	mod 3	mod 3 chance	mod 3 param	mod 3 min	mod 3 max	mod 4	mod 4 chance	mod 4 param	mod 4 min	mod 4 max	mod 5	mod 5 chance	mod 5 param	mod 5 min	mod 5 max	output b	b lvl	b plvl	b ilvl	b mod 1	b mod 1 chance	b mod 1 param	b mod 1 min	b mod 1 max	b mod 2	b mod 2 chance	b mod 2 param	b mod 2 min	b mod 2 max	b mod 3	b mod 3 chance	b mod 3 param	b mod 3 min	b mod 3 max	b mod 4	b mod 4 chance	b mod 4 param	b mod 4 min	b mod 4 max	b mod 5	b mod 5 chance	b mod 5 param	b mod 5 min	b mod 5 max	output c	c lvl	c plvl	c ilvl	c mod 1	c mod 1 chance	c mod 1 param	c mod 1 min	c mod 1 max	c mod 2	c mod 2 chance	c mod 2 param	c mod 2 min	c mod 2 max	c mod 3	c mod 3 chance	c mod 3 param	c mod 3 min	c mod 3 max	c mod 4	c mod 4 chance	c mod 4 param	c mod 4 min	c mod 4 max	c mod 5	c mod 5 chance	c mod 5 param	c mod 5 min	c mod 5 max	*eol
 ~~~~~~~~~ HORADRIC STACK ~~~~~~~~~	0									hst																																																																																														0
 init (hst)	1			100					2	vps	yps						hst				hp			-10	-10	mana			-10	-10	res-all			-10	-10	res-pois			-25	-25	swing1			-50	-50	vps																													yps																													0
-index += 1	1			100					2	hst	vps						useitem				dur			1	1																					vps																																																										0
-index += 5	1			100					3	hst	vps,qty=2						useitem				dur			5	5																					vps																													vps																													0
-index -= 1	1			100					2	hst	yps						useitem				dur			-1	-1																					yps																																																										0
-index -= 5	1			100					3	hst	yps,qty=2						useitem				dur			-5	-5																					yps																													yps																													0
-test	0			100					2	hst	hp5						useitem				horadric-rejuv			1426	1426	horadric-amethyst			543	543	horadric-skull			553	553	horadric-low-rune			1383	1383	horadric-mag-jewel			434	434	hp5																																																										0
-test 2	0			100					2	hst	mp5						useitem				horadric-emerald			464	464	horadric-sapphire			468	468	horadric-topaz			461	461	horadric-ruby			468	468	horadric-diamond			575	575	mp5																																																										0
+transfer	0			100					2	hst	hp5						useitem				horadric-rejuv			1426	1426	horadric-amethyst			543	543	horadric-skull			553	553	horadric-low-rune			1383	1383	horadric-mag-jewel			434	434	hp5																																																										0
+transfer 2	0			100					2	hst	mp5						useitem				horadric-emerald			464	464	horadric-sapphire			468	468	horadric-topaz			461	461	horadric-ruby			468	468	horadric-diamond			575	575	mp5																																																										0
 ------ PUT ------	0																																																																																																							0
 --- potions ---	0																																																																																																							0
 rvs	1			100					2	hst	rvs						useitem				horadric-rejuv			1	1																																																																															0
@@ -88,82 +84,43 @@ r32	1			100					2	hst	r32						useitem				horadric-high-rune			64	64												
 r33	1			100					2	hst	r33						useitem				horadric-high-rune			128	128																																																																															0
 ------ GET ------	0																																																																																																							0
 --- potions ---	0																																																																																																							0
-rvl	1			100	18	73	99		1	hst							useitem				horadric-rejuv			-3	-3																					rvl																																																										0
---- gems ---	0																																																																																																							0
-gcg	1			100	18	73	101		1	hst							useitem				horadric-emerald			-1	-1																					gcg																																																										0
-gfg	1			100	18	73	102		1	hst							useitem				horadric-emerald			-3	-3																					gfg																																																										0
-gsg	1			100	18	73	103		1	hst							useitem				horadric-emerald			-9	-9																					gsg																																																										0
-glg	1			100	18	73	104		1	hst							useitem				horadric-emerald			-27	-27																					glg																																																										0
-gpg	1			100	18	73	105		1	hst							useitem				horadric-emerald			-83	-83																					gpg																																																										0
-gcb	1			100	18	73	106		1	hst							useitem				horadric-sapphire			-1	-1																					gcb																																																										0
-gfb	1			100	18	73	107		1	hst							useitem				horadric-sapphire			-3	-3																					gfb																																																										0
-gsb	1			100	18	73	108		1	hst							useitem				horadric-sapphire			-9	-9																					gsb																																																										0
-glb	1			100	18	73	109		1	hst							useitem				horadric-sapphire			-27	-27																					glb																																																										0
-gpb	1			100	18	73	110		1	hst							useitem				horadric-sapphire			-83	-83																					gpb																																																										0
-gcy	1			100	18	73	111		1	hst							useitem				horadric-topaz			-1	-1																					gcy																																																										0
-gfy	1			100	18	73	112		1	hst							useitem				horadric-topaz			-3	-3																					gfy																																																										0
-gsy	1			100	18	73	113		1	hst							useitem				horadric-topaz			-9	-9																					gsy																																																										0
-gly	1			100	18	73	114		1	hst							useitem				horadric-topaz			-27	-27																					gly																																																										0
-gpy	1			100	18	73	115		1	hst							useitem				horadric-topaz			-83	-83																					gpy																																																										0
-gcr	1			100	18	73	116		1	hst							useitem				horadric-ruby			-1	-1																					gcr																																																										0
-gfr	1			100	18	73	117		1	hst							useitem				horadric-ruby			-3	-3																					gfr																																																										0
-gsr	1			100	18	73	118		1	hst							useitem				horadric-ruby			-9	-9																					gsr																																																										0
-glr	1			100	18	73	119		1	hst							useitem				horadric-ruby			-27	-27																					glr																																																										0
-gpr	1			100	18	73	120		1	hst							useitem				horadric-ruby			-83	-83																					gpr																																																										0
-gcw	1			100	18	73	121		1	hst							useitem				horadric-diamond			-1	-1																					gcw																																																										0
-gfw	1			100	18	73	122		1	hst							useitem				horadric-diamond			-3	-3																					gfw																																																										0
-gsw	1			100	18	73	123		1	hst							useitem				horadric-diamond			-9	-9																					gsw																																																										0
-glw	1			100	18	73	124		1	hst							useitem				horadric-diamond			-27	-27																					glw																																																										0
-gpw	1			100	18	73	125		1	hst							useitem				horadric-diamond			-83	-83																					gpw																																																										0
-gcv	1			100	18	73	126		1	hst							useitem				horadric-amethyst			-1	-1																					gcv																																																										0
-gfv	1			100	18	73	127		1	hst							useitem				horadric-amethyst			-3	-3																					gfv																																																										0
-gsv	1			100	18	73	128		1	hst							useitem				horadric-amethyst			-9	-9																					gsv																																																										0
-gzv	1			100	18	73	129		1	hst							useitem				horadric-amethyst			-27	-27																					gzv																																																										0
-gpv	1			100	18	73	130		1	hst							useitem				horadric-amethyst			-83	-83																					gpv																																																										0
-skc	1			100	18	73	131		1	hst							useitem				horadric-skull			-1	-1																					skc																																																										0
-skf	1			100	18	73	132		1	hst							useitem				horadric-skull			-3	-3																					skf																																																										0
-sku	1			100	18	73	133		1	hst							useitem				horadric-skull			-9	-9																					sku																																																										0
-skl	1			100	18	73	134		1	hst							useitem				horadric-skull			-27	-27																					skl																																																										0
-skz	1			100	18	73	135		1	hst							useitem				horadric-skull			-83	-83																					skz																																																										0
---- jewels ---	0																																																																																																							0
-jew,mag	1			100	18	73	97		1	hst							useitem				horadric-mag-jewel			-1	-1																					jew,mag																																																										0
-jew,rar	1			100	18	73	98		1	hst							useitem				horadric-rare-jewel			-1	-1																					jew,rar																																																										0
+rvl	1			100					1	hst							useitem				horadric-rejuv			-6	-6																					rvl																													rvl																													0
 --- low runes ---	0																																																																																																							0
-r01	1			100	18	73	61		1	hst							useitem				horadric-low-rune			-1	-1																					r01																																																										0
-r02	1			100	18	73	62		1	hst							useitem				horadric-low-rune			-1	-1																					r02																																																										0
-r03	1			100	18	73	63		1	hst							useitem				horadric-low-rune			-1	-1																					r03																																																										0
-r04	1			100	18	73	64		1	hst							useitem				horadric-low-rune			-1	-1																					r04																																																										0
-r05	1			100	18	73	65		1	hst							useitem				horadric-low-rune			-1	-1																					r05																																																										0
-r06	1			100	18	73	66		1	hst							useitem				horadric-low-rune			-1	-1																					r06																																																										0
-r07	1			100	18	73	67		1	hst							useitem				horadric-low-rune			-1	-1																					r07																																																										0
-r08	1			100	18	73	68		1	hst							useitem				horadric-low-rune			-1	-1																					r08																																																										0
-r09	1			100	18	73	69		1	hst							useitem				horadric-low-rune			-1	-1																					r09																																																										0
-r10	1			100	18	73	70		1	hst							useitem				horadric-low-rune			-1	-1																					r10																																																										0
-r11	1			100	18	73	71		1	hst							useitem				horadric-low-rune			-1	-1																					r11																																																										0
-r12	1			100	18	73	72		1	hst							useitem				horadric-low-rune			-1	-1																					r12																																																										0
-r13	1			100	18	73	73		1	hst							useitem				horadric-low-rune			-1	-1																					r13																																																										0
-r14	1			100	18	73	74		1	hst							useitem				horadric-low-rune			-1	-1																					r14																																																										0
-r15	1			100	18	73	75		1	hst							useitem				horadric-low-rune			-1	-1																					r15																																																										0
+r01	1			100					2	hst	hp1						useitem				horadric-low-rune			-2	-2																					r01																													r01																													0
+r02	1			100					3	hst	hp1,qty=2						useitem				horadric-low-rune			-2	-2																					r02																													r02																													0
+r03	1			100					4	hst	hp1,qty=3						useitem				horadric-low-rune			-2	-2																					r03																													r03																													0
+r04	1			100					5	hst	hp1,qty=4						useitem				horadric-low-rune			-2	-2																					r04																													r04																													0
+r05	1			100					2	hst	hp2						useitem				horadric-low-rune			-2	-2																					r05																													r05																													0
+r06	1			100					3	hst	hp2	hp1					useitem				horadric-low-rune			-2	-2																					r06																													r06																													0
+r07	1			100					4	hst	hp2	hp1,qty=2					useitem				horadric-low-rune			-2	-2																					r07																													r07																													0
+r08	1			100					5	hst	hp2	hp1,qty=3					useitem				horadric-low-rune			-2	-2																					r08																													r08																													0
+r09	1			100					6	hst	hp2	hp1,qty=4					useitem				horadric-low-rune			-2	-2																					r09																													r09																													0
+r10	1			100					2	hst	hp3						useitem				horadric-low-rune			-2	-2																					r10																													r10																													0
+r11	1			100					3	hst	hp3	hp1					useitem				horadric-low-rune			-2	-2																					r11																													r11																													0
+r12	1			100					4	hst	hp3	hp1,qty=2					useitem				horadric-low-rune			-2	-2																					r12																													r12																													0
+r13	1			100					5	hst	hp3	hp1,qty=3					useitem				horadric-low-rune			-2	-2																					r13																													r13																													0
+r14	1			100					6	hst	hp3	hp1,qty=4					useitem				horadric-low-rune			-2	-2																					r14																													r14																													0
+r15	1			100					3	hst	hp3	hp2					useitem				horadric-low-rune			-2	-2																					r15																													r15																													0
 --- mid runes ---	0																																																																																																							0
-r16	1			100	18	73	76		1	hst							useitem				horadric-mid-rune			-1	-1																					r16																																																										0
-r17	1			100	18	73	77		1	hst							useitem				horadric-mid-rune			-3	-3																					r17																																																										0
-r18	1			100	18	73	78		1	hst							useitem				horadric-mid-rune			-9	-9																					r18																																																										0
-r19	1			100	18	73	79		1	hst							useitem				horadric-mid-rune			-27	-27																					r19																																																										0
-r20	1			100	18	73	80		1	hst							useitem				horadric-mid-rune			-81	-81																					r20																																																										0
-r21	1			100	18	73	81		1	hst							useitem				horadric-mid-rune			-243	-243																					r21																																																										0
-r22	1			100	18	73	82		1	hst							useitem				horadric-mid-rune			-486	-486																					r22																																																										0
-r23	1			100	18	73	83		1	hst							useitem				horadric-mid-rune			-972	-972																					r23																																																										0
-r24	1			100	18	73	84		1	hst							useitem				horadric-mid-rune			-1944	-1944																					r24																																																										0
-r25	1			100	18	73	85		1	hst							useitem				horadric-mid-rune			-3888	-3888																					r25																																																										0
+r16	1			100					4	hst	hp3	hp2	hp1				useitem				horadric-mid-rune			-2	-2																					r16																													r16																													0
+r17	1			100					5	hst	hp3	hp2	hp1,qty=2				useitem				horadric-mid-rune			-6	-6																					r17																													r17																													0
+r18	1			100					6	hst	hp3	hp2	hp1,qty=3				useitem				horadric-mid-rune			-18	-18																					r18																													r18																													0
+r19	1			100					7	hst	hp3	hp2	hp1,qty=4				useitem				horadric-mid-rune			-54	-54																					r19																													r19																													0
+r20	1			100					3	hst	hp3,qty=2						useitem				horadric-mid-rune			-162	-162																					r20																													r20																													0
+r21	1			100					4	hst	hp3,qty=2	hp1					useitem				horadric-mid-rune			-486	-486																					r21																													r21																													0
+r22	1			100					5	hst	hp3,qty=2	hp1,qty=2					useitem				horadric-mid-rune			-972	-972																					r22																													r22																													0
+r23	1			100					6	hst	hp3,qty=2	hp1,qty=3					useitem				horadric-mid-rune			-1944	-1944																					r23																													r23																													0
+r24	1			100					7	hst	hp3,qty=2	hp1,qty=4					useitem				horadric-mid-rune			-3888	-3888																					r24																													r24																													0
+r25	1			100					4	hst	hp3,qty=2	hp2					useitem				horadric-mid-rune			-7776	-7776																					r25																													r25																													0
 --- high runes ---	0																																																																																																							0
-r26	1			100	18	73	86		1	hst							useitem				horadric-high-rune			-1	-1																					r26																																																										0
-r27	1			100	18	73	87		1	hst							useitem				horadric-high-rune			-2	-2																					r27																																																										0
-r28	1			100	18	73	88		1	hst							useitem				horadric-high-rune			-4	-4																					r28																																																										0
-r29	1			100	18	73	89		1	hst							useitem				horadric-high-rune			-8	-8																					r29																																																										0
-r30	1			100	18	73	90		1	hst							useitem				horadric-high-rune			-16	-16																					r30																																																										0
-r31	1			100	18	73	91		1	hst							useitem				horadric-high-rune			-32	-32																					r31																																																										0
-r32	1			100	18	73	92		1	hst							useitem				horadric-high-rune			-64	-64																					r32																																																										0
-r33	1			100	18	73	93		1	hst							useitem				horadric-high-rune			-128	-128																					r33																																																										0
+r26	1			100					5	hst	hp3,qty=2	hp2	hp1				useitem				horadric-high-rune			-2	-2																					r26																													r26																													0
+r27	1			100					6	hst	hp3,qty=2	hp2	hp1,qty=2				useitem				horadric-high-rune			-4	-4																					r27																													r27																													0
+r28	1			100					7	hst	hp3,qty=2	hp2	hp1,qty=3				useitem				horadric-high-rune			-8	-8																					r28																													r28																													0
+r29	1			100					8	hst	hp3,qty=2	hp2	hp1,qty=4				useitem				horadric-high-rune			-16	-16																					r29																													r29																													0
+r30	1			100					4	hst	hp3,qty=3						useitem				horadric-high-rune			-32	-32																					r30																													r30																													0
+r31	1			100					5	hst	hp3,qty=3	hp1					useitem				horadric-high-rune			-64	-64																					r31																													r31																													0
+r32	1			100					6	hst	hp3,qty=3	hp1,qty=2					useitem				horadric-high-rune			-128	-128																					r32																													r32																													0
+r33	1			100					7	hst	hp3,qty=3	hp1,qty=3					useitem				horadric-high-rune			-256	-256																					r33																													r33																													0
 ~~~~~~~~~ HORADRIC STACK END ~~~~~~~~~	0																																																																																																							0
 Staff of Kings + Viper amulet -> Horadric Staff	1			0	28				2	msf	vip						hst																																																																																							0
 Khalim Flail + Khalim Heart + Khalim Eye + Khalim Brain -> Super Khalim Flail	1			0	28				4	qf1	qhr	qey	qbr				qf2																																																																																							0
