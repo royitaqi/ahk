@@ -31,7 +31,7 @@ OpenInventory() {
         return
     }
 
-    Press(s_Inventory_Hotkey)
+    Press(s_Inventory_Hotkey, 200)
 
     Assert(IsInventoryOpen(, true), "Inventory should have been opened")
 }
@@ -41,7 +41,7 @@ CloseInventory() {
         return
     }
 
-    Press("{Escape}")
+    Press("{Escape}", 200)
 
     Assert(!IsInventoryOpen(, true), "Inventory should have been closed")
 }
