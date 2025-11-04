@@ -5,8 +5,8 @@ index += 1	1			100					2	hst	vps						useitem				dur			1	1																					v
 index += 5	1			100					3	hst	vps,qty=2						useitem				dur			5	5																					vps																													vps																													0
 index -= 1	1			100					2	hst	yps						useitem				dur			-1	-1																					yps																																																										0
 index -= 5	1			100					3	hst	yps,qty=2						useitem				dur			-5	-5																					yps																													yps																													0
-test	0			100					3	hst	vps	yps					useitem				horadric-rejuv			32767	32767																					vps																													yps																													0
-test 2	0			100					1	hst							useitem				horadric-rejuv			-32767	-32767																																																																															0
+test	0			100					2	hst	hp5						useitem				horadric-rejuv			1426	1426	horadric-amethyst			543	543	horadric-skull			553	553	horadric-low-rune			1383	1383	horadric-mag-jewel			434	434	hp5																																																										0
+test 2	0			100					2	hst	mp5						useitem				horadric-emerald			464	464	horadric-sapphire			468	468	horadric-topaz			461	461	horadric-ruby			468	468	horadric-diamond			575	575	mp5																																																										0
 ------ PUT ------	0																																																																																																							0
 --- potions ---	0																																																																																																							0
 rvs	1			100					2	hst	rvs						useitem				horadric-rejuv			1	1																																																																															0
