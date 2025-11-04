@@ -4,6 +4,7 @@
 Assert(expr, msg)
 {
     if (!expr) {
+        LogError(msg)
         Throw Error("msg", -1)
     }
 }

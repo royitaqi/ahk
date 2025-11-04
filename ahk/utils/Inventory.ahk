@@ -27,23 +27,31 @@ ClickOrMoveToInventorySlot(row, col, button := "")
 }
 
 OpenInventory() {
-    if (IsInventoryOpen(, true)) {
-        return
+    attempts := 0
+    while (!IsInventoryOpen(, true)) {
+        if (attempts > 3) {
+            Assert(false, "Inventory should have been opened (after " attempts " attempts)")
+        }
+        if (attempts > 0) {
+            LogWarning("Inventory should have been opened (after " attempts " attempts)")
+        }
+        Press(s_Inventory_Hotkey)
+        attempts := attempts + 1
     }
-
-    Press(s_Inventory_Hotkey, 200)
-
-    Assert(IsInventoryOpen(, true), "Inventory should have been opened")
 }
 
 CloseInventory() {
-    if (!IsInventoryOpen(, true)) {
-        return
+    attempts := 0
+    while (IsInventoryOpen(, true)) {
+        if (attempts > 3) {
+            Assert(false, "Inventory should have been closed (after " attempts " attempts)")
+        }
+        if (attempts > 0) {
+            LogWarning("Inventory should have been closed (after " attempts " attempts)")
+        }
+        Press("{Escape}")
+        attempts := attempts + 1
     }
-
-    Press("{Escape}", 200)
-
-    Assert(!IsInventoryOpen(, true), "Inventory should have been closed")
 }
 
 IsInventoryOpen(bitmap := 0, clear_mouse := false) {
