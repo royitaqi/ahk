@@ -53,28 +53,24 @@ F11::
     }
     Send "{F11}"
 }
-; Temporary tests
+; Temporary
 F10::
 {
     switch s_CurrentMode
     {
     case 1:
-        ; SetLogLevel(1)
-        ret := LK_DetectOrangeText()
-        Log("LK_DetectOrangeText() = " ret)
+        OpenInventory()
         return
     }
     Send "{F10}"
 }
-; Unit tests
+; Temporary
 F9::
 {
     switch s_CurrentMode
     {
     case 1:
-        loop {
-            ClickOrMove 376, 337, "Left", 0
-        }
+        ClearMouse()
         return
     }
     Send "{F9}"

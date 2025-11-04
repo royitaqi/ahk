@@ -26,31 +26,33 @@ ClickOrMoveToInventorySlot(row, col, button := "")
     ClickOrMove InventoryX(col), InventoryY(row), button
 }
 
-OpenInventory() {
-    attempts := 0
+OpenInventory(timeout := 1000) {
+    if (IsInventoryOpen(, true)) {
+        return
+    }
+
+    Press(s_Inventory_Hotkey)
+
+    waited := 0
     while (!IsInventoryOpen(, true)) {
-        if (attempts > 3) {
-            Assert(false, "Inventory should have been opened (after " attempts " attempts)")
-        }
-        if (attempts > 0) {
-            LogWarning("Inventory should have been opened (after " attempts " attempts)")
-        }
-        Press(s_Inventory_Hotkey)
-        attempts := attempts + 1
+        Assert(timeout = 0 || waited < timeout, "Timed out while trying to open inventory")
+        Sleep(100)
+        waited := waited + 100
     }
 }
 
-CloseInventory() {
-    attempts := 0
+CloseInventory(timeout := 1000) {
+    if (!IsInventoryOpen(, true)) {
+        return
+    }
+
+    Press("{Escape}")
+
+    waited := 0
     while (IsInventoryOpen(, true)) {
-        if (attempts > 3) {
-            Assert(false, "Inventory should have been closed (after " attempts " attempts)")
-        }
-        if (attempts > 0) {
-            LogWarning("Inventory should have been closed (after " attempts " attempts)")
-        }
-        Press("{Escape}")
-        attempts := attempts + 1
+        Assert(timeout = 0 || waited < timeout, "Timed out while trying to close inventory")
+        Sleep(100)
+        waited := waited + 100
     }
 }
 
