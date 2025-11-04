@@ -227,7 +227,7 @@ LK_DetectOrangeText(bitmap := 0) {
 */
 LK_DetectLootInMinimap(bitmap := 0) {
     if (!bitmap) {
-        bitmap := GetD2Bitmap("tmp/Screenshot_LK_DetectLootInMinimap.jpg")
+        bitmap := GetD2Bitmap()
     }
 
     /*
@@ -263,7 +263,6 @@ LK_DetectLootInMinimap(bitmap := 0) {
         - 865, 155
         - 935, 190
     */
-    ;return DetectPixelColorInRect(bitmap, 800, 125, 1000, 220, 0xA420FC, 0, 0xE07020, 0)
     return DetectPixelColorInRect(bitmap, 865, 155, 935, 190, 0xA420FC, 0, 0xE07020, 0)
 }
 
