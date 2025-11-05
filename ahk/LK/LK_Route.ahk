@@ -23,7 +23,12 @@ LK_Run1stHut() {
 }
 
 LK_Gather1stHutLoot() {
-    ClickOrMove 876, 424, "Left", 2000
+    ClickOrMove 417, 312, "", s_LK_Run_Premove_Delay
+    ClickOrMove 417, 312, "Left", 500
+    ClickOrMove 934, 327, "", s_LK_Run_Premove_Delay
+    ClickOrMove 934, 327, "Left", 1000
+    ClickOrMove 613, 344, "", s_LK_Run_Premove_Delay
+    ClickOrMove 613, 344, "Left", 500
 }
 
 LK_Run2ndHut() {

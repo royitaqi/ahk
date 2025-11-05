@@ -70,7 +70,9 @@ F9::
     switch s_CurrentMode
     {
     case 1:
-        ClearMouse()
+        LK_Run1stHut()
+        Sleep(500)
+        LK_Gather1stHutLoot()
         return
     }
     Send "{F9}"
