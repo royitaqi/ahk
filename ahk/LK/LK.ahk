@@ -42,7 +42,7 @@ LK_Loop() {
     global s_LK_Tasks
     loop {
         task := s_LK_Tasks.Pop()
-        Log("Running task: " task.Name)
+        LogDebug("Running task: " task.Name)
         task.Call()
     }
 }
