@@ -2,7 +2,8 @@
 
 #include "../data_structure/Queue.ahk"
 #include "../utils/Health.ahk"
-#include "../utils/Logs.ahk"
+#include "../utils/Log.ahk"
+#include "../utils/Loot.ahk"
 #include "../utils/ReadScreen.ahk"
 #include "../utils/SaveAndLoad.ahk"
 
@@ -49,7 +50,7 @@ LK_Loop() {
 }
 
 LK_BackToAct4AndRestart() {
-    ClickOrMove 536, 278, "", s_LK_Run_Premove_Delay
+    ClickOrMove 536, 278, "", s_Premove_Delay
     ClickOrMove 536, 278, "Left", 500
     ClickOrMove 431, 78, "Left", 100
     ClickOrMove 427, 142, "Left", 1000
@@ -112,7 +113,7 @@ LK_FromAct3SpawnToLK() {
     ClickOrMove 1050, 25, "Left", 1800 ; 2000
     ClickOrMove 1000, 60, "Left", 1650 ; 2000
     ClickOrMove 1060, 300, "Left", 1050 ; 2000
-    ClickOrMove 1067, 110, "", s_LK_Run_Premove_Delay
+    ClickOrMove 1067, 110, "", s_Premove_Delay
     ClickOrMove 1067, 110, "Left", 2000
     ClickOrMove 408, 280, "Left", 500
 

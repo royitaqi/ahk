@@ -17,10 +17,10 @@
     search_box_size := 10
     blue_flame_boxes := 3 ; must be an odd number
     x := 0
-    while x <= s_X_Max
+    while x <= s_Max_X
     {
         y := 0
-        while y <= s_Y_Max
+        while y <= s_Max_Y
         {
             ; Check if the left blue flame is this 10x10 area
             if (!DetectPixelColorInVerticalLine(bitmap,
@@ -58,9 +58,9 @@
             }
 
             ; Blink there
-            Press "C", s_LK_Run_Press_Delay
-            ClickOrMove x, y, "", s_LK_Run_Premove_Delay
-            ClickOrMove x, y, "Right", s_LK_Run_Blink_Delay
+            Press "C", s_Press_Delay
+            ClickOrMove x, y, "", s_Premove_Delay
+            ClickOrMove x, y, "Right", s_Blink_Delay
 
             ; Return the detected confidence
             confidence := LK_DetectOnWaypoint()

@@ -1,4 +1,4 @@
-#include DebugTools.ahk
+#include Debug.ahk
 #include KeyboardAndMouse.ahk
 #include SaveAndLoad.ahk
 

@@ -8,7 +8,7 @@
 
 
 s_Log_File := "log.txt"
-s_Log_Level := 0 ; -9 = Error, -3 = Warning, -1 = Important, 0 = Normal, 1 = Debug
+s_Log_Level := 0 ; -3=Error, -2=Warning, -1=Important, 0=Normal, 1=Debug, 2=Verbose
 
 Say(text, delay := 100) {
     Send "{Enter}"
@@ -29,10 +29,10 @@ Log(text, level := 0) {
         return
     }
 
-    if (level = -9) {
+    if (level = -3) {
         text := "ERROR: " text
     }
-    if (level = -3) {
+    if (level = -2) {
         text := "WARNING: " text
     }
     if (level = -1) {
@@ -40,6 +40,9 @@ Log(text, level := 0) {
     }
     if (level = 1) {
         text := "DEBUG: " text
+    }
+    if (level = 2) {
+        text := "VERBOSE: " text
     }
 
     LogToFile(text)
@@ -50,11 +53,11 @@ Log(text, level := 0) {
 }
 
 LogError(text) {
-    Log(text, -9)
+    Log(text, -3)
 }
 
 LogWarning(text) {
-    Log(text, -3)
+    Log(text, -2)
 }
 
 LogImportant(text) {
@@ -65,6 +68,10 @@ LogDebug(text) {
     Log(text, 1)
 }
 
+LogVerbose(text) {
+    Log(text, 2)
+}
+
 ClearLogFile() {
     FileOpen(s_Log_File, "w").Close()
 }
@@ -73,7 +80,16 @@ IsLogLevelDebug() {
     return s_Log_Level >= 1
 }
 
-SetLogLevel(level := 0) {
+LogLevelDebug() {
     global s_Log_Level
-    s_Log_Level := level
+    s_Log_Level := 1
+}
+
+IsLogLevelVerbose() {
+    return s_Log_Level >= 2
+}
+
+LogLevelVerbose() {
+    global s_Log_Level
+    s_Log_Level := 2
 }

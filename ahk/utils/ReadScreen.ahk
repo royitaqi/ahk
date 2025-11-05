@@ -1,5 +1,5 @@
-s_Purple := 0xA420FC
-s_Orange := 0xE07020
+s_Max_X := 1068
+s_Max_Y := 600
 
 GetD2Bitmap(save_to_file := "")
 {
@@ -62,7 +62,7 @@ DetectPixelColor(bitmap, x, y, r1, g1, b1, variation1 := 0, r2 := 0, g2 := 0, b2
 
     if (IsLogLevelDebug()) {
         hex := RGB2Hex(r, g, b)
-        LogDebug("DetectPixelColor(): X=" x " Y=" y " color=0x" hex)
+        LogVerbose("DetectPixelColor(): X=" x " Y=" y " color=0x" hex)
     }
 
     ; Check if the color of the pixel is within range of any input colors
@@ -180,8 +180,4 @@ DetectColorInMinimap(bitmap := 0, color1 := 0, variation1 := 0, color2 := 0, var
         - 935, 190
     */
     return DetectPixelColorInRect(bitmap, 865, 155, 935, 190, color1, variation1, color2, variation2)
-}
-
-DetectLootInMinimap() {
-    return DetectColorInMinimap(, s_Purple, 0, s_Orange, 0)
 }

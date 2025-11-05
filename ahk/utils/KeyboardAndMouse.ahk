@@ -1,6 +1,3 @@
-s_X_Max := 1068
-s_Y_Max := 600
-
 ClickOrMove(x, y, button := "", delay := 100)
 {
     if (button != "") {
@@ -22,5 +19,5 @@ Press(key, delay := 100)
 }
 
 ClearMouse() {
-    ClickOrMove(1067, 599, "", 0)
+    ClickOrMove(s_Max_X - 1, s_Max_Y - 1, "", 0)
 }

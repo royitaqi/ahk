@@ -70,7 +70,9 @@ F9::
     switch s_CurrentMode
     {
     case 1:
-        CheckHealth([[110, 1]])
+        ; LogLevelDebug()
+        ret := PickUpLootOnGround()
+        Log("PickUpLootOnGround() = " ret)
         return
     }
     Send "{F9}"

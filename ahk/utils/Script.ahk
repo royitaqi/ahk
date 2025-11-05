@@ -1,5 +1,5 @@
 #include D2.ahk
-#include Logs.ahk
+#include Log.ahk
 
 
 StopScript(msg := "", try_to_pause_and_notify := true)

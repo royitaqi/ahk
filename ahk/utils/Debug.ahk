@@ -1,4 +1,4 @@
-#include Logs.ahk
+#include Log.ahk
 
 
 Assert(expr, msg)
