@@ -162,7 +162,8 @@ LK_DetectLoot(hut_name, gather_loot_func) {
 
     ; Check if the loot has been picked up (by see what's remaining on the ground)
     remaining_loot_level := LK_DetectLootInMinimap()
-    if (remaining_loot_level != loot_level) {
+    looted := remaining_loot_level != loot_level
+    if (looted) {
         Log("Successfully picked loot (level " loot_level ")")
         s_LK_Loot[hut_name][loot_level].Looted := s_LK_Loot[hut_name][loot_level].Looted + 1
     } else {
@@ -170,14 +171,18 @@ LK_DetectLoot(hut_name, gather_loot_func) {
         s_LK_Loot[hut_name][loot_level].Failed := s_LK_Loot[hut_name][loot_level].Failed + 1
 
         ; Take a picture of the scene before moving on
-        Send "{Alt down}"
-        Sleep 200
-        GetD2Bitmap("tmp/Screenshot_LK_failed_loot_run_" s_LK_Run_ID "_hut_" hut_name "_level_" loot_level ".jpg")
-        Send "{Alt up}"
-    }
+        now := FormatTime(A_Now, "HHmm")
+        Press("{Alt down}", 200)
+        GetD2Bitmap("tmp/" now "_Screenshot_LK_failed_loot_run_" s_LK_Run_ID "_hut_" hut_name "_level_" loot_level ".jpg")
+        Press("{Alt up}", 0)
 
-    ; Play sound and wait so that a human can have the chance to interfere before leaving the game
-    SoundPlay("sounds/Notification.aac", 1)
+        if (loot_level = 1) {
+            ; Play sound and wait so that a human can have the chance to interfere before moving on
+            SoundPlay("sounds/Notification.aac", 1)
+            Sleep(1000)
+            SoundPlay("sounds/Notification.aac", 1)
+        }
+    }
 
     ; Have to restart anyways
     s_LK_Tasks.Clear()
