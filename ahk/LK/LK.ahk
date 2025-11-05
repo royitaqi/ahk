@@ -150,10 +150,23 @@ LK_DetectLoot(hut_name, gather_loot_func) {
         return
     }
 
-    ; Loot detected. Try to pick it up.
+    ; Loot detected. Try to pick it up by the planned route.
     Log("Loot level " loot_level " detected in hut " hut_name)
     s_LK_Loot[hut_name][loot_level].Detected := s_LK_Loot[hut_name][loot_level].Detected + 1
     gather_loot_func.Call()
+
+    ; If the pick up via planned route didn't work, try Alt+Click to pick up for 3 times.
+    loop 3 {
+        remaining_loot_level := DetectLootInMinimap()
+        looted := remaining_loot_level != loot_level
+        if (looted) {
+            break
+        }
+
+        Log("Attempting to pick up loot by Alt+Click")
+        detected := PickUpLootOnGround()
+        Log("Was loot detected by holding Alt: " detected)
+    }
 
     ; If failed to pick up the loot, stop the script and pause the game
     OpenInventory()
