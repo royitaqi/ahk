@@ -73,9 +73,8 @@ F9::
         LK_Run1stHut()
         LK_Run2ndHut()
         LK_Run3rdHut()
-        LK_Run4thHut()
         Sleep(500)
-        LK_Gather4thHutLoot()
+        LK_Gather3rdHutLoot()
         return
     }
     Send "{F9}"

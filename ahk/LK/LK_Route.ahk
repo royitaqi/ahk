@@ -69,7 +69,12 @@ LK_Run3rdHut() {
 }
 
 LK_Gather3rdHutLoot() {
-    ClickOrMove 744, 375, "Left", 1500
+    ; Walk to the chest
+    ClickOrMove 744, 375, "", s_LK_Run_Premove_Delay
+    ClickOrMove 744, 375, "Left", 1200
+    ; Walk around 
+    ClickOrMove 432, 305, "", s_LK_Run_Premove_Delay
+    ClickOrMove 432, 305, "Left", 500
 }
 
 LK_Run4thHut() {
