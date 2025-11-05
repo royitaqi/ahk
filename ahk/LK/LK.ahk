@@ -1,6 +1,7 @@
 ﻿#Requires AutoHotkey v2.0.0
 
 #include "../data_structure/Queue.ahk"
+#include "../utils/Health.ahk"
 #include "../utils/Logs.ahk"
 #include "../utils/ReadScreen.ahk"
 #include "../utils/SaveAndLoad.ahk"
@@ -65,7 +66,7 @@ LK_RestartInAct3() {
 LK_SaveLoadAnnounce() {
     SaveAndQuit(true)
     SinglePlayerChar1Hell(true)
-    LK_CheckHealth()
+    CheckHealth([[30, 4], [70, 1]])
     LK_Announce()
 }
 
@@ -269,17 +270,4 @@ LK_DetectLootInMinimap(bitmap := 0) {
         - 935, 190
     */
     return DetectPixelColorInRect(bitmap, 865, 155, 935, 190, 0xA420FC, 0, 0xE07020, 0)
-}
-
-LK_CheckHealth() {
-    bitmap := GetD2Bitmap()
-
-    /*
-        Use a health potion if current hp is below 60%.
-        > X=63 Y=534 is 0x5C0000
-    */
-     if (GetPixelColorInRGB(bitmap, 63, 534) != 0x5C0000) {
-        Press("1")
-        Log("Health potion used")
-    }
 }

@@ -70,11 +70,7 @@ F9::
     switch s_CurrentMode
     {
     case 1:
-        LK_Run1stHut()
-        LK_Run2ndHut()
-        LK_Run3rdHut()
-        Sleep(500)
-        LK_Gather3rdHutLoot()
+        CheckHealth([[110, 1]])
         return
     }
     Send "{F9}"
