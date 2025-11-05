@@ -14,7 +14,7 @@
 s_LK_Tasks := Queue()
 s_LK_Run_ID := -1
 EmptyLootData() {
-    return { Detected: 0, Looted: 0, LootCount: 0, Failed: 0 }
+    return { Detected: 0, LootedPlanned: 0, LootedAltClick: 0, Failed: 0 }
 }
 s_LK_Loot := [
     [EmptyLootData(), EmptyLootData()],
@@ -73,30 +73,30 @@ LK_SaveLoadAnnounce() {
 
 LK_Announce() {
     global s_LK_Run_ID, s_LK_Loot
-    
+
     s_LK_Run_ID := s_LK_Run_ID + 1
 
     total := EmptyLootData()
-    total.Detected  := s_LK_Loot[1][1].Detected + s_LK_Loot[2][1].Detected + s_LK_Loot[3][1].Detected + s_LK_Loot[4][1].Detected
-                     + s_LK_Loot[1][2].Detected + s_LK_Loot[2][2].Detected + s_LK_Loot[3][2].Detected + s_LK_Loot[4][2].Detected
-    total.Looted    := s_LK_Loot[1][1].Looted + s_LK_Loot[2][1].Looted + s_LK_Loot[3][1].Looted + s_LK_Loot[4][1].Looted
-                     + s_LK_Loot[1][2].Looted + s_LK_Loot[2][2].Looted + s_LK_Loot[3][2].Looted + s_LK_Loot[4][2].Looted
-    total.LootCount := s_LK_Loot[1][1].LootCount + s_LK_Loot[2][1].LootCount + s_LK_Loot[3][1].LootCount + s_LK_Loot[4][1].LootCount
-                     + s_LK_Loot[1][2].LootCount + s_LK_Loot[2][2].LootCount + s_LK_Loot[3][2].LootCount + s_LK_Loot[4][2].LootCount
-    total.Failed    := s_LK_Loot[1][1].Failed + s_LK_Loot[2][1].Failed + s_LK_Loot[3][1].Failed + s_LK_Loot[4][1].Failed
-                     + s_LK_Loot[1][2].Failed + s_LK_Loot[2][2].Failed + s_LK_Loot[3][2].Failed + s_LK_Loot[4][2].Failed
+    total.Detected       := s_LK_Loot[1][1].Detected + s_LK_Loot[2][1].Detected + s_LK_Loot[3][1].Detected + s_LK_Loot[4][1].Detected
+                          + s_LK_Loot[1][2].Detected + s_LK_Loot[2][2].Detected + s_LK_Loot[3][2].Detected + s_LK_Loot[4][2].Detected
+    total.LootedPlanned  := s_LK_Loot[1][1].LootedPlanned + s_LK_Loot[2][1].LootedPlanned + s_LK_Loot[3][1].LootedPlanned + s_LK_Loot[4][1].LootedPlanned
+                          + s_LK_Loot[1][2].LootedPlanned + s_LK_Loot[2][2].LootedPlanned + s_LK_Loot[3][2].LootedPlanned + s_LK_Loot[4][2].LootedPlanned
+    total.LootedAltClick := s_LK_Loot[1][1].LootedAltClick + s_LK_Loot[2][1].LootedAltClick + s_LK_Loot[3][1].LootedAltClick + s_LK_Loot[4][1].LootedAltClick
+                          + s_LK_Loot[1][2].LootedAltClick + s_LK_Loot[2][2].LootedAltClick + s_LK_Loot[3][2].LootedAltClick + s_LK_Loot[4][2].LootedAltClick
+    total.Failed         := s_LK_Loot[1][1].Failed + s_LK_Loot[2][1].Failed + s_LK_Loot[3][1].Failed + s_LK_Loot[4][1].Failed
+                          + s_LK_Loot[1][2].Failed + s_LK_Loot[2][2].Failed + s_LK_Loot[3][2].Failed + s_LK_Loot[4][2].Failed
 
-    Log("Runs: " s_LK_Run_ID "   |   Loot: " total.Detected "=>" total.Looted "(" total.LootCount ")-" total.Failed
+    Log("Runs: " s_LK_Run_ID "   |   Loot: " total.Detected "=>" total.LootedPlanned "/" total.LootedAltClick "-" total.Failed
         "   |   Purple: "
-        s_LK_Loot[1][1].Detected "=>" s_LK_Loot[1][1].Looted "(" s_LK_Loot[1][1].LootCount ")-" s_LK_Loot[1][1].Failed " | "
-        s_LK_Loot[2][1].Detected "=>" s_LK_Loot[2][1].Looted "(" s_LK_Loot[2][1].LootCount ")-" s_LK_Loot[2][1].Failed " | "
-        s_LK_Loot[3][1].Detected "=>" s_LK_Loot[3][1].Looted "(" s_LK_Loot[3][1].LootCount ")-" s_LK_Loot[3][1].Failed " | "
-        s_LK_Loot[4][1].Detected "=>" s_LK_Loot[4][1].Looted "(" s_LK_Loot[4][1].LootCount ")-" s_LK_Loot[4][1].Failed
+        s_LK_Loot[1][1].Detected "=>" s_LK_Loot[1][1].LootedPlanned "/" s_LK_Loot[1][1].LootedAltClick "-" s_LK_Loot[1][1].Failed " | "
+        s_LK_Loot[2][1].Detected "=>" s_LK_Loot[2][1].LootedPlanned "/" s_LK_Loot[2][1].LootedAltClick "-" s_LK_Loot[2][1].Failed " | "
+        s_LK_Loot[3][1].Detected "=>" s_LK_Loot[3][1].LootedPlanned "/" s_LK_Loot[3][1].LootedAltClick "-" s_LK_Loot[3][1].Failed " | "
+        s_LK_Loot[4][1].Detected "=>" s_LK_Loot[4][1].LootedPlanned "/" s_LK_Loot[4][1].LootedAltClick "-" s_LK_Loot[4][1].Failed
         "   |   Orange: "
-        s_LK_Loot[1][2].Detected "=>" s_LK_Loot[1][2].Looted "(" s_LK_Loot[1][2].LootCount ")-" s_LK_Loot[1][2].Failed " | "
-        s_LK_Loot[2][2].Detected "=>" s_LK_Loot[2][2].Looted "(" s_LK_Loot[2][2].LootCount ")-" s_LK_Loot[2][2].Failed " | "
-        s_LK_Loot[3][2].Detected "=>" s_LK_Loot[3][2].Looted "(" s_LK_Loot[3][2].LootCount ")-" s_LK_Loot[3][2].Failed " | "
-        s_LK_Loot[4][2].Detected "=>" s_LK_Loot[4][2].Looted "(" s_LK_Loot[4][2].LootCount ")-" s_LK_Loot[4][2].Failed)
+        s_LK_Loot[1][2].Detected "=>" s_LK_Loot[1][2].LootedPlanned "/" s_LK_Loot[1][2].LootedAltClick "-" s_LK_Loot[1][2].Failed " | "
+        s_LK_Loot[2][2].Detected "=>" s_LK_Loot[2][2].LootedPlanned "/" s_LK_Loot[2][2].LootedAltClick "-" s_LK_Loot[2][2].Failed " | "
+        s_LK_Loot[3][2].Detected "=>" s_LK_Loot[3][2].LootedPlanned "/" s_LK_Loot[3][2].LootedAltClick "-" s_LK_Loot[3][2].Failed " | "
+        s_LK_Loot[4][2].Detected "=>" s_LK_Loot[4][2].LootedPlanned "/" s_LK_Loot[4][2].LootedAltClick "-" s_LK_Loot[4][2].Failed)
 }
 
 LK_FromAct4SpawnToLK() {
@@ -149,38 +149,47 @@ LK_DetectLoot(hut_name, gather_loot_func) {
     if (loot_level = 0) {
         return
     }
-
-    ; Loot detected. Try to pick it up by the planned route.
+    ; Loot detected
     Log("Loot level " loot_level " detected in hut " hut_name)
     s_LK_Loot[hut_name][loot_level].Detected := s_LK_Loot[hut_name][loot_level].Detected + 1
+
+    ; Try to pick it up by the planned route.
     gather_loot_func.Call()
-
-    ; If the pick up via planned route didn't work, try Alt+Click to pick up for 3 times.
-    loop 3 {
-        remaining_loot_level := DetectLootInMinimap()
-        looted := remaining_loot_level != loot_level
-        if (looted) {
-            break
-        }
-
-        Log("Attempting to pick up loot by Alt+Click")
-        detected := PickUpLootOnGround()
-        Log("Was loot detected by holding Alt: " detected)
+    remaining_loot_level := DetectLootInMinimap()
+    looted := (remaining_loot_level = 0)
+    if (looted) {
+        ; Looted by planned route
+        s_LK_Loot[hut_name][loot_level].LootedPlanned := s_LK_Loot[hut_name][loot_level].LootedPlanned + 1
     }
 
-    ; If failed to pick up the loot, stop the script and pause the game
+    ; Try to pick it up by Alt + Click for 3 times.
+    if (!looted) {
+        loop 3 {
+            Log("Attempting to pick up loot by Alt + Click")
+            detected := PickUpLootOnGround()
+            Log("Was loot detected by holding Alt: " detected)
+
+            remaining_loot_level := DetectLootInMinimap()
+            looted := (remaining_loot_level = 0)
+            if (looted) {
+                s_LK_Loot[hut_name][loot_level].LootedAltClick := s_LK_Loot[hut_name][loot_level].LootedAltClick + 1
+                break
+            }
+        }
+    }
+
+    ; Transfer loot from inventory to cube.
+    ; NOTE: This has to be done no matter the loot was collected or not, because other items could have been accidentally picked up.
     OpenInventory()
     loot_count := LK_TransferLootToCube()
     CloseInventory()
-    s_LK_Loot[hut_name][loot_level].LootCount := s_LK_Loot[hut_name][loot_level].LootCount + loot_count
     Log(loot_count " loot has been transfered to cube")
 
     ; Check if the loot has been picked up (by see what's remaining on the ground)
     remaining_loot_level := DetectLootInMinimap()
-    looted := remaining_loot_level != loot_level
+    looted := (remaining_loot_level = 0)
     if (looted) {
-        Log("Successfully picked loot (level " loot_level ")")
-        s_LK_Loot[hut_name][loot_level].Looted := s_LK_Loot[hut_name][loot_level].Looted + 1
+        Log("Successfully picked up loot (level " loot_level ")")
     } else {
         LogWarning("Failed to pick up loot (level " loot_level ")")
         s_LK_Loot[hut_name][loot_level].Failed := s_LK_Loot[hut_name][loot_level].Failed + 1
