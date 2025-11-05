@@ -1,3 +1,6 @@
+s_Purple := 0xA420FC
+s_Orange := 0xE07020
+
 GetD2Bitmap(save_to_file := "")
 {
     ; Get the active game window's handle
@@ -133,4 +136,52 @@ DetectColoredText(bitmap, lines, color1, variation1 := 0, color2 := 0, variation
     y2 := y1 + 9 + 15 * (lines - 1)
 
     return DetectPixelColorInRect(bitmap, x1, y1, x2, y2, color1, variation1, color2, variation2)
+}
+
+/*
+    Returns 1 if color1 is found in minimap, 2 if color2, 0 if none.
+*/
+DetectColorInMinimap(bitmap := 0, color1 := 0, variation1 := 0, color2 := 0, variation2 := 0) {
+    if (!bitmap) {
+        bitmap := GetD2Bitmap()
+    }
+
+    /*
+        Orange loot.
+        > The color at X=899 Y=174 is 0xE07020
+
+        Purple loot.
+        > The color at X=899 Y=174 is 0xA420FC
+
+        Minimap area.
+        > The cursor is at X=791 Y=126
+        > The cursor is at X=1004 Y=244
+        Rounded to:
+        - 800, 125
+        - 1000, 245
+
+        Character is at:
+        > The cursor is at X=900 Y=172
+        Rounded to:
+        - 900, 172~173
+
+        Finally adjust the minimap area to:
+        - 800, 125
+        - 1000, 220
+
+        --
+
+        A smaller area is:
+        > The cursor is at X=857 Y=155
+        > The cursor is at X=936 Y=191
+
+        Adjusted area is:
+        - 865, 155
+        - 935, 190
+    */
+    return DetectPixelColorInRect(bitmap, 865, 155, 935, 190, color1, variation1, color2, variation2)
+}
+
+DetectLootInMinimap() {
+    return DetectColorInMinimap(, s_Purple, 0, s_Orange, 0)
 }

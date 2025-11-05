@@ -144,7 +144,7 @@ LK_DetectLoot(hut_name, gather_loot_func) {
 
     ; Sleep for a bit to allow loot to fall on the ground and be detected.
     Sleep(200)
-    loot_level := LK_DetectLootInMinimap()
+    loot_level := DetectLootInMinimap()
     if (loot_level = 0) {
         return
     }
@@ -162,7 +162,7 @@ LK_DetectLoot(hut_name, gather_loot_func) {
     Log(loot_count " loot has been transfered to cube")
 
     ; Check if the loot has been picked up (by see what's remaining on the ground)
-    remaining_loot_level := LK_DetectLootInMinimap()
+    remaining_loot_level := DetectLootInMinimap()
     looted := remaining_loot_level != loot_level
     if (looted) {
         Log("Successfully picked loot (level " loot_level ")")
@@ -226,48 +226,4 @@ LK_DetectOrangeText(bitmap := 0) {
     }
     confidence := DetectColoredText(bitmap, 10, 0xC48100, 0x20)
     return confidence
-}
-
-/*
-    Returns 1 if there is purple loot on the ground, 2 if orange loot, 0 if nothing.
-*/
-LK_DetectLootInMinimap(bitmap := 0) {
-    if (!bitmap) {
-        bitmap := GetD2Bitmap()
-    }
-
-    /*
-        Orange loot.
-        > The color at X=899 Y=174 is 0xE07020
-
-        Purple loot.
-        > The color at X=899 Y=174 is 0xA420FC
-
-        Minimap area.
-        > The cursor is at X=791 Y=126
-        > The cursor is at X=1004 Y=244
-        Rounded to:
-        - 800, 125
-        - 1000, 245
-
-        Character is at:
-        > The cursor is at X=900 Y=172
-        Rounded to:
-        - 900, 172~173
-
-        Finally adjust the minimap area to:
-        - 800, 125
-        - 1000, 220
-
-        --
-
-        A smaller area is:
-        > The cursor is at X=857 Y=155
-        > The cursor is at X=936 Y=191
-
-        Adjusted area is:
-        - 865, 155
-        - 935, 190
-    */
-    return DetectPixelColorInRect(bitmap, 865, 155, 935, 190, 0xA420FC, 0, 0xE07020, 0)
 }
