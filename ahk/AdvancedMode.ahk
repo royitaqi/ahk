@@ -71,8 +71,11 @@ F9::
     {
     case 1:
         LK_Run1stHut()
+        LK_Run2ndHut()
+        LK_Run3rdHut()
+        LK_Run4thHut()
         Sleep(500)
-        LK_Gather1stHutLoot()
+        LK_Gather4thHutLoot()
         return
     }
     Send "{F9}"

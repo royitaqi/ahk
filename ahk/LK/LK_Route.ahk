@@ -94,8 +94,17 @@ LK_Gather4thHutLoot() {
     Press "C", s_LK_Run_Press_Delay
     ClickOrMove 329, 217, "", s_LK_Run_Premove_Delay
     ClickOrMove 329, 217, "Right", s_LK_Run_Blink_Delay
-    ; Run towards the other chest
-    ClickOrMove 947, 367, "Left", 1500
+    ; Pick up around the chest
+    ClickOrMove 639, 244, "", s_LK_Run_Premove_Delay
+    ClickOrMove 639, 244, "Left", 500
+
+    ; Blink to the second chest
+    Press "C", s_LK_Run_Press_Delay
+    ClickOrMove 795, 367, "", s_LK_Run_Premove_Delay
+    ClickOrMove 795, 367, "Right", s_LK_Run_Blink_Delay
+    ; Pick up around the chest
+    ClickOrMove 632, 355, "", s_LK_Run_Premove_Delay
+    ClickOrMove 632, 355, "Left", 500
 }
 
 LK_RunReturn()
