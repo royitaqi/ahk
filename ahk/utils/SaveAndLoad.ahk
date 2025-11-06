@@ -5,6 +5,7 @@
 
 SaveAndQuit(wait := 0) {
     Send "{Escape}"
+    ClickOrMove 500, 265, "", s_Premove_Delay
     ClickOrMove 500, 265, "Left", 0
 
     if (wait) {
