@@ -50,9 +50,10 @@ CheckHealth(strategy) {
         if (is_health_below_percentage) {
             Press("" potion "")
             Log("Potion " potion " used")
-            break
+            return potion
         }
 
         i := i + 1
     }
+    return 0
 }

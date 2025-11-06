@@ -22,6 +22,7 @@ s_LK_Loot := [
     [EmptyLootData(), EmptyLootData()],
     [EmptyLootData(), EmptyLootData()]
 ]
+s_Potions_Used := 0
 
 LK_Main() {
     global s_LK_Tasks
@@ -36,8 +37,9 @@ LK_Main() {
 }
 
 LK_Clear() {
-    global s_LK_Tasks
+    global
     s_LK_Tasks.Clear()
+    s_Potions_Used := 0
 }
 
 LK_Loop() {
@@ -67,8 +69,12 @@ LK_RestartInAct3() {
 LK_SaveLoadAnnounce() {
     SaveAndQuit(true)
     SinglePlayerChar1Hell(true)
-    CheckHealth([[30, 4], [70, 1]])
+    potion_used := CheckHealth([[30, 4], [70, 1]])
     LK_Announce()
+
+    if (potion_used) {
+        s_Potions_Used := s_Potions_Used + 1
+    }
 }
 
 LK_Announce() {
@@ -76,17 +82,21 @@ LK_Announce() {
 
     s_LK_Run_ID := s_LK_Run_ID + 1
 
-    total := EmptyLootData()
-    total.Detected       := s_LK_Loot[1][1].Detected + s_LK_Loot[2][1].Detected + s_LK_Loot[3][1].Detected + s_LK_Loot[4][1].Detected
-                          + s_LK_Loot[1][2].Detected + s_LK_Loot[2][2].Detected + s_LK_Loot[3][2].Detected + s_LK_Loot[4][2].Detected
-    total.LootedPlanned  := s_LK_Loot[1][1].LootedPlanned + s_LK_Loot[2][1].LootedPlanned + s_LK_Loot[3][1].LootedPlanned + s_LK_Loot[4][1].LootedPlanned
-                          + s_LK_Loot[1][2].LootedPlanned + s_LK_Loot[2][2].LootedPlanned + s_LK_Loot[3][2].LootedPlanned + s_LK_Loot[4][2].LootedPlanned
-    total.LootedAltClick := s_LK_Loot[1][1].LootedAltClick + s_LK_Loot[2][1].LootedAltClick + s_LK_Loot[3][1].LootedAltClick + s_LK_Loot[4][1].LootedAltClick
-                          + s_LK_Loot[1][2].LootedAltClick + s_LK_Loot[2][2].LootedAltClick + s_LK_Loot[3][2].LootedAltClick + s_LK_Loot[4][2].LootedAltClick
-    total.Failed         := s_LK_Loot[1][1].Failed + s_LK_Loot[2][1].Failed + s_LK_Loot[3][1].Failed + s_LK_Loot[4][1].Failed
-                          + s_LK_Loot[1][2].Failed + s_LK_Loot[2][2].Failed + s_LK_Loot[3][2].Failed + s_LK_Loot[4][2].Failed
+    purple := EmptyLootData()
+    orange := EmptyLootData()
+    purple.Detected       := s_LK_Loot[1][1].Detected + s_LK_Loot[2][1].Detected + s_LK_Loot[3][1].Detected + s_LK_Loot[4][1].Detected
+    orange.Detected       := s_LK_Loot[1][2].Detected + s_LK_Loot[2][2].Detected + s_LK_Loot[3][2].Detected + s_LK_Loot[4][2].Detected
+    purple.LootedPlanned  := s_LK_Loot[1][1].LootedPlanned + s_LK_Loot[2][1].LootedPlanned + s_LK_Loot[3][1].LootedPlanned + s_LK_Loot[4][1].LootedPlanned
+    orange.LootedPlanned  := s_LK_Loot[1][2].LootedPlanned + s_LK_Loot[2][2].LootedPlanned + s_LK_Loot[3][2].LootedPlanned + s_LK_Loot[4][2].LootedPlanned
+    purple.LootedAltClick := s_LK_Loot[1][1].LootedAltClick + s_LK_Loot[2][1].LootedAltClick + s_LK_Loot[3][1].LootedAltClick + s_LK_Loot[4][1].LootedAltClick
+    orange.LootedAltClick := s_LK_Loot[1][2].LootedAltClick + s_LK_Loot[2][2].LootedAltClick + s_LK_Loot[3][2].LootedAltClick + s_LK_Loot[4][2].LootedAltClick
+    purple.Failed         := s_LK_Loot[1][1].Failed + s_LK_Loot[2][1].Failed + s_LK_Loot[3][1].Failed + s_LK_Loot[4][1].Failed
+    orange.Failed         := s_LK_Loot[1][2].Failed + s_LK_Loot[2][2].Failed + s_LK_Loot[3][2].Failed + s_LK_Loot[4][2].Failed
 
-    Log("Runs: " s_LK_Run_ID "   |   Loot: " total.Detected "=>" total.LootedPlanned "/" total.LootedAltClick "-" total.Failed
+    Log("Runs: " s_LK_Run_ID
+        "   |   P: " purple.Detected "=>" purple.LootedPlanned "/" purple.LootedAltClick "-" purple.Failed
+            "   O: " orange.Detected "=>" orange.LootedPlanned "/" orange.LootedAltClick "-" orange.Failed
+            "   HP: " s_Potions_Used
         "   |   Purple: "
         s_LK_Loot[1][1].Detected "=>" s_LK_Loot[1][1].LootedPlanned "/" s_LK_Loot[1][1].LootedAltClick "-" s_LK_Loot[1][1].Failed " | "
         s_LK_Loot[2][1].Detected "=>" s_LK_Loot[2][1].LootedPlanned "/" s_LK_Loot[2][1].LootedAltClick "-" s_LK_Loot[2][1].Failed " | "
