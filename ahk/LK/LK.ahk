@@ -67,12 +67,13 @@ LK_RestartInAct3() {
 }
 
 LK_SaveLoadAnnounce() {
+    global s_Potions_Used
+
     SaveAndQuit(true)
     SinglePlayerChar1Hell(true)
-    potion_used := CheckHealth([[30, 4], [70, 1]])
     LK_Announce()
 
-    if (potion_used) {
+    if (CheckHealth([[30, 4], [70, 1]])) {
         s_Potions_Used := s_Potions_Used + 1
     }
 }
