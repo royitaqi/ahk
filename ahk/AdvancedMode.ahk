@@ -24,6 +24,7 @@ AnnounceMode()
     case 2: Say "Advanced Mode = 2/Gamble"
     case 3: Say "Advanced Mode = 3/LK"
     case 4: Say "Advanced Mode = 4/Reroll"
+    case 5: Say "Advanced Mode = 5/Pindle"
     }
 }
 Delete::
@@ -138,6 +139,9 @@ L::
     {
     case 3:
         LK_Main()
+        return
+    case 5:
+        P_Main()
         return
     }
     Send "L"

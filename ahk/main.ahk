@@ -23,6 +23,8 @@ pToken := Gdip_Startup()
 #include LK/LK.ahk
 #include LK/tests/test_lk.ahk
 
+#include P/P.ahk
+
 #include AdvancedMode.ahk
 #include HoradricStack.ahk
 #include QuickCast.ahk

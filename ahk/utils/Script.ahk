@@ -11,12 +11,15 @@ StopScript(msg := "", try_to_pause_and_notify := true)
 
     ; Try to pause the game and play notification sound
     if (try_to_pause_and_notify) {
+        LogDebug("Trying to pause the game and play notification sound")
         PauseGameIfPossible()
         SoundPlay("sounds/Notification.aac", 1)
     }
 
     ; Actually stop the script
     Reload
+    Sleep 1000
+    throw "Should have reloaded"
 }
 
 

@@ -26,10 +26,10 @@ SinglePlayerChar1Hell(wait := 0)
 }
 
 IsMainScreen(bitmap := 0, clear_mouse := false) {
-    if (clear_mouse) {
-        ClearMouse()
-    }
     if (!bitmap) {
+        if (clear_mouse) {
+            ClearMouse()
+        }
         bitmap := GetD2Bitmap()
     }
 
@@ -69,10 +69,10 @@ IsMainScreen(bitmap := 0, clear_mouse := false) {
 }
 
 IsGameLoaded(bitmap := 0, clear_mouse := false) {
-    if (clear_mouse) {
-        ClearMouse()
-    }
     if (!bitmap) {
+        if (clear_mouse) {
+            ClearMouse()
+        }
         bitmap := GetD2Bitmap()
     }
 
@@ -112,10 +112,10 @@ IsGameLoaded(bitmap := 0, clear_mouse := false) {
 }
 
 IsGamePaused(bitmap := 0, clear_mouse := false) {
-    if (clear_mouse) {
-        ClearMouse()
-    }
     if (!bitmap) {
+        if (clear_mouse) {
+            ClearMouse()
+        }
         bitmap := GetD2Bitmap()
     }
 
@@ -146,10 +146,10 @@ WaitUntilGameLoaded() {
 }
 
 GetD2State(bitmap := 0, clear_mouse := false) {
-    if (clear_mouse) {
-        ClearMouse()
-    }
     if (!bitmap) {
+        if (clear_mouse) {
+            ClearMouse()
+        }
         bitmap := GetD2Bitmap()
     }
 
@@ -167,6 +167,7 @@ GetD2State(bitmap := 0, clear_mouse := false) {
 }
 
 PauseGameIfPossible() {
+    ClearMouse()
     loop {
         bitmap := GetD2Bitmap()
 
