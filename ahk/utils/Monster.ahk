@@ -6,3 +6,9 @@ DetectBloodMarbleInRect() {
     throw "Not implemented"
 }
 
+DetectBossInMinimap(bitmap := 0) {
+    /*
+        > The color at X=270 Y=314 is 0x18FC00
+    */
+    return DetectColorInMinimap(bitmap, 0x18FC00, 0)
+}

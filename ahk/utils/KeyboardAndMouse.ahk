@@ -18,7 +18,7 @@ ClickOrMove(x, y, button := "", delay := 100)
     }
 }
 
-Press(key, delay := 100)
+Press(key, delay := s_Press_Delay)
 {
     Send key
     if (delay != 0) {

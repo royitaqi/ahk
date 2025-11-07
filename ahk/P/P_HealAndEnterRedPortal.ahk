@@ -8,8 +8,31 @@
     Click "Right"
     Sleep 400
     
+    /*
+        Portal positions:
+        - 900, 285 (Anya is in the corner)
+        - 1050, 315 (Anya is in the middle)
+    */
+    c_Portal1_X := 900
+    c_Portal1_Y := 285
+    c_Portal2_X := 1063
+    c_Portal2_Y := 320
+    bitmap := GetD2Bitmap()
+    color1 := GetPixelColorInRGB(bitmap, c_Portal1_X, c_Portal1_Y)
+    color2 := GetPixelColorInRGB(bitmap, c_Portal2_X, c_Portal2_Y)
+    ARGB2RGB(color1, &r1, &g1, &b1)
+    ARGB2RGB(color2, &r2, &g2, &b2)
+    redness1 := r1 * 2 - g1 - b1
+    redness2 := r2 * 2 - g2 - b2
+    if (redness1 > redness2) {
+        portal_x := c_Portal1_X
+        portal_y := c_Portal1_Y
+    } else {
+        portal_x := c_Portal2_X
+        portal_y := c_Portal2_Y
+    }
     ; Click the red portal
-    ClickOrMove2(900, 285, "Left")
+    ClickOrMove2(portal_x, portal_y, "Left")
 
     ; Detect that we have entered the Temple
     loop {
