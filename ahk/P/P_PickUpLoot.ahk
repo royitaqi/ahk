@@ -47,7 +47,7 @@
         s_P_Loot.Failed := s_P_Loot.Failed + 1
 
         ; Take a picture of the scene before moving on
-        now := FormatTime(A_Now, "HHmm")
+        now := FormatTime(A_Now, "HHmmss")
         Press("{Alt down}", 200)
         GetD2Bitmap("tmp/" now "_Screenshot_P_failed_loot_run_" s_P_Run_ID "_level_" loot_level ".jpg")
         Press("{Alt up}", 0)

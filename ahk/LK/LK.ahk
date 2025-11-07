@@ -22,13 +22,12 @@ s_LK_Loot := [
     [EmptyLootData(), EmptyLootData()],
     [EmptyLootData(), EmptyLootData()]
 ]
-s_Potions_Used := 0
+s_LK_Potions_Used := 0
 s_LK_Loot_Detected_by_Text := 0
 
 LK_Main() {
     global s_LK_Tasks
 
-    ;StopScriptWhenD2BecomeInactive()
     ClearLogFile()
     SetPlayers(7)
     
@@ -40,7 +39,7 @@ LK_Main() {
 LK_Clear() {
     global
     s_LK_Tasks.Clear()
-    s_Potions_Used := 0
+    s_LK_Potions_Used := 0
 }
 
 LK_Loop() {
@@ -68,14 +67,14 @@ LK_RestartInAct3() {
 }
 
 LK_SaveLoadAnnounce() {
-    global s_Potions_Used
+    global s_LK_Potions_Used
 
     SaveAndQuit(true)
     SinglePlayerChar1Hell(true)
     LK_Announce()
 
     if (CheckHealth([[30, 4], [70, 1]])) {
-        s_Potions_Used := s_Potions_Used + 1
+        s_LK_Potions_Used := s_LK_Potions_Used + 1
     }
 }
 
@@ -98,7 +97,7 @@ LK_Announce() {
     Log("Runs: " s_LK_Run_ID
         "   |   P: " purple.Detected "=>" purple.LootedPlanned "/" purple.LootedAltClick "-" purple.Failed
             "   O: " orange.Detected "=>" orange.LootedPlanned "/" orange.LootedAltClick "-" orange.Failed
-            "   HP: " s_Potions_Used
+            "   HP: " s_LK_Potions_Used
             "   T: " s_LK_Loot_Detected_by_Text
         "   |   Purple: "
         s_LK_Loot[1][1].Detected "=>" s_LK_Loot[1][1].LootedPlanned "/" s_LK_Loot[1][1].LootedAltClick "-" s_LK_Loot[1][1].Failed " | "
@@ -160,11 +159,9 @@ LK_DetectLoot(hut_name, gather_loot_func) {
     Sleep(200)
     loot_level := DetectLootInMinimap()
     loot_level_by_text := LK_DetectOrangeText()
-    if (loot_level_by_text > 0) {
+    if (loot_level_by_text > 0 && loot_level = 0) {
         s_LK_Loot_Detected_by_Text := s_LK_Loot_Detected_by_Text + 1
-        if (loot_level = 0) {
-            GetD2Bitmap("tmp/" FormatTime(A_Now, "HHmm") "_Screenshot_LK_failed_to_detect_loot_run_" s_LK_Run_ID "_hut_" hut_name "_level_" loot_level "_by_text_" loot_level_by_text ".jpg")
-        }
+        GetD2Bitmap("tmp/" FormatTime(A_Now, "HHmmss") "_Screenshot_LK_failed_to_detect_loot_run_" s_LK_Run_ID "_hut_" hut_name "_level_" loot_level "_by_text_" loot_level_by_text ".jpg")
     }
     if (loot_level = 0) {
         return
@@ -216,7 +213,7 @@ LK_DetectLoot(hut_name, gather_loot_func) {
 
         ; Take a picture of the scene before moving on
         Press("{Alt down}", 200)
-        GetD2Bitmap("tmp/" FormatTime(A_Now, "HHmm") "_Screenshot_LK_failed_loot_run_" s_LK_Run_ID "_hut_" hut_name "_level_" loot_level ".jpg")
+        GetD2Bitmap("tmp/" FormatTime(A_Now, "HHmmss") "_Screenshot_LK_failed_loot_run_" s_LK_Run_ID "_hut_" hut_name "_level_" loot_level ".jpg")
         Press("{Alt up}", 0)
 
         if (loot_level = 1) {

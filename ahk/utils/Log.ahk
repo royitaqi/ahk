@@ -20,8 +20,7 @@ Say(text, delay := 100) {
 }
 
 LogToFile(text) {
-    now := FormatTime(A_Now, "HH:mm")
-    FileAppend(now " - " text "`n", s_Log_File)
+    FileAppend(FormatTime(A_Now, "HH:mm:ss") " - " text "`n", s_Log_File)
 }
 
 Log(text, level := 0) {

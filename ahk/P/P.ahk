@@ -15,7 +15,7 @@
 s_P_Tasks := Queue()
 s_P_Run_ID := -1
 s_P_Loot := { Detected: 0, Looted: 0, Failed: 0 }
-s_Potions_Used := 0
+s_P_Potions_Used := 0
 
 P_Main() {
     global s_P_Tasks
@@ -60,6 +60,6 @@ P_Announce() {
 
     Log("Runs: " s_P_Run_ID
         "   |   P: " s_P_Loot.Detected "=>" s_P_Loot.Looted "-" s_P_Loot.Failed
-            "   HP: " s_Potions_Used
+            "   HP: " s_P_Potions_Used
     )
 }
