@@ -23,6 +23,7 @@ s_LK_Loot := [
     [EmptyLootData(), EmptyLootData()]
 ]
 s_Potions_Used := 0
+s_LK_Loot_Detected_by_Text := 0
 
 LK_Main() {
     global s_LK_Tasks
@@ -79,7 +80,7 @@ LK_SaveLoadAnnounce() {
 }
 
 LK_Announce() {
-    global s_LK_Run_ID, s_LK_Loot
+    global s_LK_Run_ID, s_LK_Loot, s_LK_Loot_Detected_by_Text
 
     s_LK_Run_ID := s_LK_Run_ID + 1
 
@@ -98,6 +99,7 @@ LK_Announce() {
         "   |   P: " purple.Detected "=>" purple.LootedPlanned "/" purple.LootedAltClick "-" purple.Failed
             "   O: " orange.Detected "=>" orange.LootedPlanned "/" orange.LootedAltClick "-" orange.Failed
             "   HP: " s_Potions_Used
+            "   T: " s_LK_Loot_Detected_by_Text
         "   |   Purple: "
         s_LK_Loot[1][1].Detected "=>" s_LK_Loot[1][1].LootedPlanned "/" s_LK_Loot[1][1].LootedAltClick "-" s_LK_Loot[1][1].Failed " | "
         s_LK_Loot[2][1].Detected "=>" s_LK_Loot[2][1].LootedPlanned "/" s_LK_Loot[2][1].LootedAltClick "-" s_LK_Loot[2][1].Failed " | "
@@ -152,11 +154,18 @@ LK_StartRun() {
 }
 
 LK_DetectLoot(hut_name, gather_loot_func) {
-    global s_LK_Loot
+    global s_LK_Loot, s_LK_Loot_Detected_by_Text
 
     ; Sleep for a bit to allow loot to fall on the ground and be detected.
     Sleep(200)
     loot_level := DetectLootInMinimap()
+    loot_level_by_text := LK_DetectOrangeText()
+    if (loot_level_by_text > 0) {
+        s_LK_Loot_Detected_by_Text := s_LK_Loot_Detected_by_Text + 1
+        if (loot_level = 0) {
+            GetD2Bitmap("tmp/" FormatTime(A_Now, "HHmm") "_Screenshot_LK_failed_to_detect_loot_run_" s_LK_Run_ID "_hut_" hut_name "_level_" loot_level "_by_text_" loot_level_by_text ".jpg")
+        }
+    }
     if (loot_level = 0) {
         return
     }
@@ -206,9 +215,8 @@ LK_DetectLoot(hut_name, gather_loot_func) {
         s_LK_Loot[hut_name][loot_level].Failed := s_LK_Loot[hut_name][loot_level].Failed + 1
 
         ; Take a picture of the scene before moving on
-        now := FormatTime(A_Now, "HHmm")
         Press("{Alt down}", 200)
-        GetD2Bitmap("tmp/" now "_Screenshot_LK_failed_loot_run_" s_LK_Run_ID "_hut_" hut_name "_level_" loot_level ".jpg")
+        GetD2Bitmap("tmp/" FormatTime(A_Now, "HHmm") "_Screenshot_LK_failed_loot_run_" s_LK_Run_ID "_hut_" hut_name "_level_" loot_level ".jpg")
         Press("{Alt up}", 0)
 
         if (loot_level = 1) {
