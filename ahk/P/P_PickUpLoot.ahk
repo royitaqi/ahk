@@ -19,7 +19,7 @@
     ; Try to pick it up by Alt + Click for 3 times.
     loop 3 {
         LogVerbose("Attempting to pick up loot")
-        detected := PickUpLootOnGround(c_Max_Loot_Level, 500)
+        detected := PickUpLootOnGround(c_Max_Loot_Level, 1000)
         LogVerbose("Was loot detected by holding Alt: " detected)
 
         remaining_loot_level := DetectLootInMinimap(c_Max_Loot_Level)
