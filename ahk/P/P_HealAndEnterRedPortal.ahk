@@ -1,4 +1,7 @@
-﻿P_HealAndEnterRedPortal() {
+﻿#include ../utils/Hireling.ahk
+
+
+P_HealAndEnterRedPortal() {
     ; Talk to Malah to heal
     ClickOrMove2(158, 184, "Left", , 1000)
 
@@ -8,6 +11,12 @@
     Click "Right"
     Sleep 400
     
+    ; Check that the hireling is alive
+    if (!CheckHirelingAlive()) {
+        StopScript("Hireling is dead. Re-hire isn't implemented.", true)
+    }
+    LogVerbose("Hireling is alive")
+
     /*
         Portal positions:
         - 900, 285 (Anya is in the corner)
@@ -32,7 +41,7 @@
         portal_y := c_Portal2_Y
     }
     ; Click the red portal
-    ClickOrMove2(portal_x, portal_y, "Left")
+    ClickOrMove2(portal_x, portal_y, "Left", , 1000)
 
     ; Detect that we have entered the Temple
     loop {

@@ -14,6 +14,7 @@ GetD2Bitmap(save_to_file := "")
         Gdip_SaveBitmapToFile(bitmap, save_to_file)
     }
 
+    ; TODO: Implement something to call Gdip_DisposeImage() to dispose the bitmap
     return bitmap
 }
 
@@ -62,7 +63,7 @@ DetectPixelColor(bitmap, x, y, r1, g1, b1, variation1 := 0, r2 := 0, g2 := 0, b2
 
     if (IsLogLevelDebug()) {
         hex := RGB2Hex(r, g, b)
-        LogVerbose("DetectPixelColor(): X=" x " Y=" y " color=0x" hex)
+        LogDebug("DetectPixelColor(): X=" x " Y=" y " color=0x" hex)
     }
 
     ; Check if the color of the pixel is within range of any input colors

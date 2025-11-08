@@ -1,14 +1,22 @@
 #include D2.ahk
 #include SaveAndLoad.ahk
 
+
 /*
     On Windows, tail the log file in VS Code's terminal window by running the following:
     > Get-Content 'D2LoD/log.txt' -Wait -Tail 10
 */
-
-
 s_Log_File := "log.txt"
-s_Log_Level := 0 ; -3=Error, -2=Warning, -1=Important, 0=Normal, 1=Debug, 2=Verbose
+
+/*
+    -3 = Error
+    -2 = Warning
+    -1 = Important
+     0 = Info
+     1 = Verbose    - Often used by business level scripts (e.g. LK, P)
+     2 = Debug      - Often used by util scripts
+*/
+s_Log_Level := 0
 
 Say(text, delay := 100) {
     Send "{Enter}"
@@ -21,6 +29,10 @@ Say(text, delay := 100) {
 
 LogToFile(text) {
     FileAppend(FormatTime(A_Now, "HH:mm:ss") " - " text "`n", s_Log_File)
+}
+
+ClearLogFile() {
+    FileOpen(s_Log_File, "w").Close()
 }
 
 Log(text, level := 0) {
@@ -38,15 +50,16 @@ Log(text, level := 0) {
         text := "IMPORTANT: " text
     }
     if (level = 1) {
-        text := "DEBUG: " text
+        text := "VERBOSE: " text
     }
     if (level = 2) {
-        text := "VERBOSE: " text
+        text := "DEBUG: " text
     }
 
     LogToFile(text)
 
-    if (IsD2Active() && IsGameLoaded() && !IsGamePaused()) {
+    ; Only log to screen if it's at or above INFO level, and message can be typed into the game.
+    if (level <= 0 && IsD2Active() && IsGameLoaded() && !IsGamePaused()) {
         Say(text)
     }
 }
@@ -54,41 +67,32 @@ Log(text, level := 0) {
 LogError(text) {
     Log(text, -3)
 }
-
 LogWarning(text) {
     Log(text, -2)
 }
-
 LogImportant(text) {
     Log(text, -1)
 }
-
-LogDebug(text) {
+LogVerbose(text) {
     Log(text, 1)
 }
-
-LogVerbose(text) {
+LogDebug(text) {
     Log(text, 2)
 }
 
-ClearLogFile() {
-    FileOpen(s_Log_File, "w").Close()
-}
-
-IsLogLevelDebug() {
-    return s_Log_Level >= 1
-}
-
-LogLevelDebug() {
-    global s_Log_Level
-    s_Log_Level := 1
-}
 
 IsLogLevelVerbose() {
+    return s_Log_Level >= 1
+}
+IsLogLevelDebug() {
     return s_Log_Level >= 2
 }
 
 LogLevelVerbose() {
+    global s_Log_Level
+    s_Log_Level := 1
+}
+LogLevelDebug() {
     global s_Log_Level
     s_Log_Level := 2
 }

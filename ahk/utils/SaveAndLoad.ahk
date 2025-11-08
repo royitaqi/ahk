@@ -3,7 +3,7 @@
 #include ReadScreen.ahk
 
 
-SaveAndQuit(wait := 0) {
+SaveAndQuit(wait := true) {
     Send "{Escape}"
     ClickOrMove 500, 265, "", s_Premove_Delay
     ClickOrMove 500, 265, "Left", 0
@@ -13,7 +13,7 @@ SaveAndQuit(wait := 0) {
     }
 }
 
-SinglePlayerChar1Hell(wait := 0)
+SinglePlayerChar1Hell(wait := true)
 {
     ClickOrMove(475, 315, "Left", 100)
     ClickOrMove(200, 150, "Left", 0)

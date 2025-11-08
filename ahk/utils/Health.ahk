@@ -1,8 +1,13 @@
+#include ../data_structure/Types.ahk
+
+
 /*
-    The strategy should be array of arrays, each inner array having two elements:
-    - [1] Health percentages (10-90). Note: Always put low health percentage strategy first.
-    - [2] Which potion to use (1-4)
-    The percentages will be checked in order. For any percentage, if the health is below that, the corresponding potion will be used and the loop terminated.
+    The strategy should be an array of health-percentage/action pairs. Each pair has two elements:
+    - [1] Health percentage (10-90). If the actual health of the character is below this percentage, the following action will be taken.
+    - [2] Action. If it's a number (1-4), it indicates which potion to use (1-4). If it's a function, it will be invoked.
+    Note: The percentages will be checked in order. Lower health percentage pairs should always be put in front of higher health percentage pairs.
+
+    Returns the index of the action that is taken (start from 1), or 0 if none is taken.
 */
 CheckHealth(strategy) {
     /*
@@ -34,11 +39,9 @@ CheckHealth(strategy) {
 
     bitmap := GetD2Bitmap()
     
-    n := strategy.Length
-    i := 1
-    loop n {
-        percentage := strategy[i][1]
-        potion := strategy[i][2]
+    for i, pair in strategy {
+        percentage := pair[1]
+        action := pair[2]
         Assert(pixels.Has(percentage), "Given percentage (" percentage ") is not supported")
 
         pixel := pixels[percentage]
@@ -48,9 +51,17 @@ CheckHealth(strategy) {
         is_health_below_percentage := (GetPixelColorInRGB(bitmap, 70, y) != color)
 
         if (is_health_below_percentage) {
-            Press("" potion "")
-            Log("Potion " potion " used")
-            return potion
+            msg := "Health is lower than " percentage "%."
+            if (IsInteger(action)) {
+                Press("" action "")
+                Log(msg " Potion " action " used.")
+                return i
+            }
+            else if (IsFunction(action)) {
+                action.Call()
+                Log(msg " Action [" action.Name "] taken.")
+                return i
+            }
         }
 
         i := i + 1

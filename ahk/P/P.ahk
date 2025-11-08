@@ -20,6 +20,7 @@ s_P_Potions_Used := 0
 P_Main() {
     global s_P_Tasks
 
+    LogLevelVerbose()
     ClearLogFile()
     SetPlayers(1)
     
@@ -27,30 +28,34 @@ P_Main() {
     P_Loop()
 }
 
-
 P_Loop() {
     global s_P_Tasks
     loop {
         task := s_P_Tasks.Pop()
-        LogDebug("Running task: " task.Name)
+        LogVerbose("Running task: " task.Name)
         task.Call()
     }
 }
 
 P_SaveLoadAnnounce() {
-    SaveAndQuit(true)
-    SinglePlayerChar1Hell(true)
-    P_Announce()
+    s_P_Tasks.Append(SaveAndQuit)
+    s_P_Tasks.Append(SinglePlayerChar1Hell)
+    s_P_Tasks.Append(P_Announce)
 
     s_P_Tasks.Append(P_RunOnce)
 }
 
 P_RunOnce() {
-    P_HealAndEnterRedPortal()
-    P_TeleportToPindleAndKill()
-    P_PickUpLoot()
+    s_P_Tasks.Append(P_HealAndEnterRedPortal)
+    s_P_Tasks.Append(P_TeleportToPindleAndKill)
+    s_P_Tasks.Append(P_PickUpLoot)
 
     s_P_Tasks.Append(P_SaveLoadAnnounce)
+}
+
+P_EmergencyRestart() {
+    s_P_Tasks.Clear()
+    P_SaveLoadAnnounce()
 }
 
 P_Announce() {

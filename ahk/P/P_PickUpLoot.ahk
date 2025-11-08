@@ -7,7 +7,7 @@
     Sleep(1000)
     loot_level := DetectLootInMinimap(c_Max_Loot_Level)
     if (loot_level = 0) {
-        Log("No loot is detected")
+        LogVerbose("No loot is detected")
         return
     }
     Log("Loot detected (level=" loot_level ")")
@@ -18,15 +18,17 @@
 
     ; Try to pick it up by Alt + Click for 3 times.
     loop 3 {
-        Log("Attempting to pick up loot")
+        LogVerbose("Attempting to pick up loot")
         detected := PickUpLootOnGround(c_Max_Loot_Level, 500)
-        Log("Was loot detected by holding Alt: " detected)
+        LogVerbose("Was loot detected by holding Alt: " detected)
 
         remaining_loot_level := DetectLootInMinimap(c_Max_Loot_Level)
         looted := (remaining_loot_level = 0)
         if (looted) {
             break
         }
+
+        CheckHealth([[40, P_EmergencyRestart]])
     }
 
     ; Transfer loot from inventory to cube.
@@ -34,7 +36,7 @@
     OpenInventory()
     loot_count := P_TransferLootToCube()
     CloseInventory()
-    Log(loot_count " loot has been transfered to cube")
+    LogVerbose(loot_count " loot has been transfered to cube")
 
     ; Check if the loot has been picked up (by see what's remaining on the ground)
     remaining_loot_level := DetectLootInMinimap(c_Max_Loot_Level)
@@ -61,8 +63,7 @@
     }
 
     ; Have to restart anyways
-    s_P_Tasks.Clear()
-    s_P_Tasks.Append(P_SaveLoadAnnounce)
+    P_EmergencyRestart()
 }
 
 /*

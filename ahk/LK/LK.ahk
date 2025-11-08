@@ -31,22 +31,16 @@ LK_Main() {
     ClearLogFile()
     SetPlayers(7)
     
-    LK_Clear()
+    s_LK_Tasks.Clear()
     s_LK_Tasks.Append(LK_BackToAct4AndRestart)
     LK_Loop()
-}
-
-LK_Clear() {
-    global
-    s_LK_Tasks.Clear()
-    s_LK_Potions_Used := 0
 }
 
 LK_Loop() {
     global s_LK_Tasks
     loop {
         task := s_LK_Tasks.Pop()
-        LogDebug("Running task: " task.Name)
+        LogVerbose("Running task: " task.Name)
         task.Call()
     }
 }
