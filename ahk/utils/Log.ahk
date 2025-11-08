@@ -27,8 +27,17 @@ Say(text, delay := 100) {
     Sleep delay
 }
 
+s_Log_To_File_Buffer := ""
 LogToFile(text) {
-    FileAppend(FormatTime(A_Now, "HH:mm:ss") " - " text "`n", s_Log_File)
+    global s_Log_To_File_Buffer
+    line := s_Log_To_File_Buffer "" FormatTime(A_Now, "HH:mm:ss") " - " text "`n"
+    try {
+        FileAppend(line, s_Log_File)
+        s_Log_To_File_Buffer := ""
+    }
+    catch Error {
+        s_Log_To_File_Buffer := line
+    }
 }
 
 ClearLogFile() {

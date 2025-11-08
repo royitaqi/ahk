@@ -27,6 +27,8 @@ DetectLootInMinimap(max_loot_level := 2) {
 /*
     1 = purple only
     2 = purple and orange
+
+    Returns true if loot is detected on the ground by holding Alt, false otherwise.
 */
 PickUpLootOnGround(max_loot_level := 2, walk_delay := 2000) {
     c_Max_X := 787
@@ -80,4 +82,29 @@ PickUpLootOnGround(max_loot_level := 2, walk_delay := 2000) {
     Press("{Alt up}", 200)
 
     return true
+}
+
+/*
+    from_row, from_col: The top left corner of the loot area in the inventory.
+    from_rows, from_cols: The height and width of the loot area in the inventory.
+    to_row, to_col: The slot where the cube is.
+
+    Returns the number of loot transfered.
+*/
+TransferLootFromInventoryIntoCube(from_row, from_col, from_rows, from_cols, to_row, to_col) {
+    OpenInventory()
+
+    transfered_items := 0
+    callback(row, col, x, y) {
+        if (!IsInventorySlotEmpty(, row, col)) {
+            ClickOrMoveToInventorySlot(row, col, "Left")
+            ClickOrMoveToInventorySlot(to_row, to_col, "Left")
+            transfered_items := transfered_items + 1
+        }
+    }
+    ForEachInventorySlot(callback, from_row, from_col, from_rows, from_cols)
+
+    CloseInventory()
+
+    return transfered_items
 }

@@ -1,5 +1,8 @@
 #Requires AutoHotkey v2.0.0
 
+
+nil := ""
+
 IsBoolean(x) {
     return x = 1 || x = 0
 }
