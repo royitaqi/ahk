@@ -6,7 +6,8 @@ s_Max_X := 1068
 s_Max_Y := 600
 s_Hud_Y := 600
 
-GetD2Bitmap(save_to_file := "")
+GetD2Bitmap := GetD2BitmapImpl
+GetD2BitmapImpl(save_to_file := "")
 {
     ; Get the active game window's handle
     hwnd := WinGetID("A")

@@ -22,7 +22,6 @@ StopScript(msg := "", try_to_pause_and_notify := true)
     throw "Should have reloaded"
 }
 
-
 StopScriptWhenD2BecomeInactive()
 {
     Impl() {
@@ -31,4 +30,8 @@ StopScriptWhenD2BecomeInactive()
         }
     }
     SetTimer(Impl, 1000)
+}
+
+IsMainScript() {
+    return A_ScriptFullPath = A_ScriptDir "\" A_ScriptName
 }

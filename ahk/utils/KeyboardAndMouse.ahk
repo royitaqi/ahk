@@ -5,8 +5,8 @@ s_Cast_Delay := 400
 s_Blink_Delay := 400
 s_Pick_Delay := 50
 
-
-ClickOrMove(x, y, button := "", delay := 100)
+ClickOrMove := ClickOrMoveImpl
+ClickOrMoveImpl(x, y, button := "", delay := 100)
 {
     if (button != "") {
         Click x, y, button
@@ -18,7 +18,8 @@ ClickOrMove(x, y, button := "", delay := 100)
     }
 }
 
-Press(key, delay := s_Press_Delay)
+Press := PressImpl
+PressImpl(key, delay := s_Press_Delay)
 {
     Send key
     if (delay != 0) {
@@ -26,11 +27,13 @@ Press(key, delay := s_Press_Delay)
     }
 }
 
-ClearMouse() {
+ClearMouse := ClearMouseImpl
+ClearMouseImpl() {
     ClickOrMove(s_Max_X - 1, s_Max_Y - 1, "", 0)
 }
 
-ClickOrMove2(x, y, button := "", premove_delay := s_Premove_Delay, click_delay := s_Click_Delay) {
+ClickOrMove2 := ClickOrMove2Impl
+ClickOrMove2Impl(x, y, button := "", premove_delay := s_Premove_Delay, click_delay := s_Click_Delay) {
     MouseMove(x, y)
     if (premove_delay) {
         Sleep(premove_delay)
