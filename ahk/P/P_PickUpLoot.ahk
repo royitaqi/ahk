@@ -51,7 +51,7 @@
         ; Take a picture of the scene before moving on
         now := FormatTime(A_Now, "HHmmss")
         Press("{Alt down}", 200)
-        GetD2Bitmap("tmp/" now "_Screenshot_P_failed_loot_run_" s_P_Run_ID "_level_" loot_level ".jpg")
+        GetD2Bitmap("tmp/" now "_Screenshot_P_failed_loot_run_" s_P_Run_ID "_level_" loot_level ".bmp")
         Press("{Alt up}", 0)
 
         if (loot_level = 1) {

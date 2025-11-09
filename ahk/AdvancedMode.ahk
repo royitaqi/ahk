@@ -151,20 +151,6 @@ L::
 ;; Advanced Mode: 1/Utility
 ;;------------------------------------------------------------
 
-
-
-/* Test if orange text */
-TestOrangeAndPurpleText()
-{
-    bitmap := GetD2BitMap("D:/Downloads/a.jpg")
-    ret := DetectColoredText(bitmap, 3, 0xC48100, 0x20)
-    if (ret) {
-        Say("Text detected: " ret)
-    } else {
-        Say("No text detected")
-    }
-}
-
 /* Delete pages which has items (PlugY's /dp can only delete empty pages) */
 TooglePages()
 {

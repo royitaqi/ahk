@@ -155,7 +155,7 @@ LK_DetectLoot(hut_name, gather_loot_func) {
     loot_level_by_text := LK_DetectOrangeText()
     if (loot_level_by_text > 0 && loot_level = 0) {
         s_LK_Loot_Detected_by_Text := s_LK_Loot_Detected_by_Text + 1
-        GetD2Bitmap("tmp/" FormatTime(A_Now, "HHmmss") "_Screenshot_LK_failed_to_detect_loot_run_" s_LK_Run_ID "_hut_" hut_name "_level_" loot_level "_by_text_" loot_level_by_text ".jpg")
+        GetD2Bitmap("tmp/" FormatTime(A_Now, "HHmmss") "_Screenshot_LK_failed_to_detect_loot_run_" s_LK_Run_ID "_hut_" hut_name "_level_" loot_level "_by_text_" loot_level_by_text ".bmp")
     }
     if (loot_level = 0) {
         return
@@ -207,7 +207,7 @@ LK_DetectLoot(hut_name, gather_loot_func) {
 
         ; Take a picture of the scene before moving on
         Press("{Alt down}", 200)
-        GetD2Bitmap("tmp/" FormatTime(A_Now, "HHmmss") "_Screenshot_LK_failed_loot_run_" s_LK_Run_ID "_hut_" hut_name "_level_" loot_level ".jpg")
+        GetD2Bitmap("tmp/" FormatTime(A_Now, "HHmmss") "_Screenshot_LK_failed_loot_run_" s_LK_Run_ID "_hut_" hut_name "_level_" loot_level ".bmp")
         Press("{Alt up}", 0)
 
         if (loot_level = 1) {
