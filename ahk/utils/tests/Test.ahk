@@ -4,5 +4,6 @@
 #include Test_Loot_DetectLootInMinimap.ahk
 #include Test_Loot_PickUpLootOnGround.ahk
 #include Test_ReadScreen_DetectColorInMinimap.ahk
+#include Test_ReadScreen_GetD2Bitmap.ahk
 
 ReportPass("Test.ahk")

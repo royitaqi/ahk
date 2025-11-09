@@ -34,6 +34,11 @@ MockD2Bitmaps(files*) {
     }
 }
 
+DoNotMockD2Bitmaps() {
+    global GetD2Bitmap
+    GetD2Bitmap := GetD2BitmapImpl
+}
+
 RunTest(test) {
     global s_Tests_Ran, s_Mocked_D2Bitmaps
 
