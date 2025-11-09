@@ -32,6 +32,6 @@ StopScriptWhenD2BecomeInactive()
     SetTimer(Impl, 1000)
 }
 
-IsMainScript() {
-    return A_ScriptFullPath = A_ScriptDir "\" A_ScriptName
+IsMainScript(scriptname) {
+    return A_ScriptName = scriptname
 }

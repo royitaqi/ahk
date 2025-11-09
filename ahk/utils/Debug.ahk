@@ -1,11 +1,12 @@
 #include Log.ahk
 
 
-Assert(expr, msg)
+Assert(expr, msg := "Assertion failed")
 {
     if (!expr) {
         LogError(msg)
-        Throw Error("msg", -1)
+        ; -1 makes AHK show the calling function instead of this function
+        throw Error(msg, -1)
     }
 }
 

@@ -5,7 +5,7 @@
 #include ReadScreen.ahk
 
 
-s_Unit_Testing := false
+s_Tests_Ran := []
 s_Mocked_D2Bitmaps := []
 
 ClickOrMove := Noop
@@ -33,8 +33,20 @@ MockD2Bitmaps(files*) {
     }
 }
 
-ReportPass() {
-    if (IsMainScript()) {
-        MsgBox "All tests passed."
+RunTest(test) {
+    global s_Tests_Ran
+    s_Tests_Ran.Push(test.Name)
+    test.Call()
+}
+
+ReportPass(scriptname) {
+    global s_Tests_Ran
+    if (IsMainScript(scriptname)) {
+        result := "Ran tests:`n"
+        for test in s_Tests_Ran {
+            result := result "- " test "`n"
+        }
+        result := result "`nTotally " s_Tests_Ran.Length " tests ran. All tests passed."
+        MsgBox result
     }
 }
