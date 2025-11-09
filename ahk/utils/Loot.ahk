@@ -1,3 +1,7 @@
+#include Inventory.ahk
+#include Log.ahk
+
+
 s_Purple_Minimap := 0xA420FC
 s_Orange_Minimap := 0xE07020
 
@@ -30,13 +34,7 @@ DetectLootInMinimap(max_loot_level := 2) {
 
     Returns true if loot is detected on the ground by holding Alt, false otherwise.
 */
-PickUpLootOnGround(max_loot_level := 2, walk_delay := 2000) {
-    c_Max_X := 787
-    c_Min_X := s_Max_X - c_Max_X
-
-    c_Min_Y := 60
-    c_Max_Y := s_Max_Y - 60
-
+PickUpLootOnGround(max_loot_level := 2, walk_delay := 1000) {
     if (max_loot_level = 1) {
         color2 := 0
     } else {
@@ -54,28 +52,28 @@ PickUpLootOnGround(max_loot_level := 2, walk_delay := 2000) {
 
         Let's take 20 stride in X. That's at least 4 lines in <100 pixels.
     */
-    c_X_Stride := 5
+    c_X_Stride := 40
 
+    bitmap1 := GetD2Bitmap()
     Press("{Alt down}", 200)
-    bitmap := GetD2Bitmap()
+    bitmap2 := GetD2Bitmap()
 
     ; Find the top-left most pixel that has a loot color
-    x := c_Min_X
-    while (x <= c_Max_X) {
-        LogDebug("Detecting vertical line X=" x)
-        match := DetectPixelColorInVerticalLine(bitmap, x, c_Min_Y, c_Max_Y, s_Purple_Text, 0, color2, 0, &match_x, &match_y)
-        if (match) {
-            break
-        }
-        x += c_X_Stride
-    }
+    match := VerticalStridePattern(
+        DetectColorCallback(
+            [[bitmap1, false], [bitmap2, true]],
+            s_Purple_Text, 0,
+            color2, 0
+        ),
+        c_X_Stride, , , , s_Hud_Y, &match_x, &match_y
+    )
 
     if (!match) {
         Press("{Alt up}", 200)
         return false
     }
 
-    LogDebug("Loot detected on round: X=" match_x ", Y=" match_y ", match=" match)
+    LogDebug("Loot detected on round: X=" match_x ", Y=" match_y ", match=" match[2])
 
     ClickOrMove(match_x, match_y, "", s_Premove_Delay)
     ClickOrMove(match_x, match_y, "Left", walk_delay)
