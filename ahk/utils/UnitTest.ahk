@@ -30,7 +30,7 @@ MockD2Bitmaps(files*) {
     for file in files {
         bitmap := Gdip_CreateBitmapFromFile(file)
         Assert(bitmap, "Cannot load test bitmap from file: " file)
-        s_Mocked_D2Bitmaps.Push(bitmap)
+        s_Mocked_D2Bitmaps.Push(D2Bitmap(bitmap))
     }
 }
 

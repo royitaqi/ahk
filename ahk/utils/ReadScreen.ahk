@@ -54,16 +54,16 @@ RGB2Hex(r, g, b)
     return Format("{:02X}{:02X}{:02X}", r, g, b)
 }
 
-GetPixelColorInRGB(bitmap, x, y)
+GetPixelColorInRGB(d2bitmap, x, y)
 {
-    argb := Gdip_GetPixel(bitmap, x, y)
+    argb := Gdip_GetPixel(d2bitmap.val, x, y)
     return argb & 0xffffff
 }
 
-GetPixelColorInHex(bitmap, x, y)
+GetPixelColorInHex(d2bitmap, x, y)
 {
     ; Get the color of the pixel at the coordinates
-    rgb := GetPixelColorInRGB(bitmap, x, y)
+    rgb := GetPixelColorInRGB(d2bitmap, x, y)
 
     ; Convert the ARGB color to a hex value
     ARGB2RGB(rgb, &r, &g, &b)
@@ -79,10 +79,10 @@ RGBAreClose(r1, g1, b1, r2, g2, b2, variation) {
         && b1 <= b2 + variation
 }
 
-DetectPixelColor(bitmap, x, y, r1, g1, b1, variation1 := 0, r2 := 0, g2 := 0, b2 := 0, variation2 := 0) {
-    Assert(bitmap, "bitmap should have value")
+DetectPixelColor(d2bitmap, x, y, r1, g1, b1, variation1 := 0, r2 := 0, g2 := 0, b2 := 0, variation2 := 0) {
+    Assert(d2bitmap, "d2bitmap should have value")
 
-    argb := Gdip_GetPixel(bitmap, x, y)
+    argb := Gdip_GetPixel(d2bitmap.val, x, y)
     ARGB2RGB(argb, &r, &g, &b)
 
     if (IsLogLevelDebug()) {
@@ -104,8 +104,8 @@ DetectPixelColor(bitmap, x, y, r1, g1, b1, variation1 := 0, r2 := 0, g2 := 0, b2
     return 0
 }
 
-DetectPixelColorInRect(bitmap, x1, y1, x2, y2, color1, variation1 := 0, color2 := 0, variation2 := 0, &match_x := 0, &match_y := 0) {
-    Assert(bitmap, "bitmap should have value")
+DetectPixelColorInRect(d2bitmap, x1, y1, x2, y2, color1, variation1 := 0, color2 := 0, variation2 := 0, &match_x := 0, &match_y := 0) {
+    Assert(d2bitmap, "d2bitmap should have value")
 
     ARGB2RGB(color1, &r1, &g1, &b1)
     r2 := g2 := b2 := 0
@@ -119,7 +119,7 @@ DetectPixelColorInRect(bitmap, x1, y1, x2, y2, color1, variation1 := 0, color2 :
         y := y1
         loop y2 - y1 + 1
         {
-            match := DetectPixelColor(bitmap, x, y, r1, g1, b1, variation1, r2, g2, b2, variation2)
+            match := DetectPixelColor(d2bitmap, x, y, r1, g1, b1, variation1, r2, g2, b2, variation2)
             if (match) {
                 match_x := x
                 match_y := y
@@ -134,8 +134,8 @@ DetectPixelColorInRect(bitmap, x1, y1, x2, y2, color1, variation1 := 0, color2 :
 /*
     Returns 1 or 2 if the corresponding color is detected. Otherwise return 0.
 */
-DetectPixelColorInRect2(bitmap, x1, y1, x2, y2, color1, variation1 := 0, color2 := 0, variation2 := 0, &match_x := 0, &match_y := 0) {
-    ret := RectanglePattern(DetectColorCallback([[bitmap, true]], color1, variation1, color2, variation2), x1, y1, x2, y2, &match_x, &match_y)
+DetectPixelColorInRect2(d2bitmap, x1, y1, x2, y2, color1, variation1 := 0, color2 := 0, variation2 := 0, &match_x := 0, &match_y := 0) {
+    ret := RectanglePattern(DetectColorCallback([[d2bitmap, true]], color1, variation1, color2, variation2), x1, y1, x2, y2, &match_x, &match_y)
     if (ret) {
         return ret[1]
     } else {
@@ -143,8 +143,8 @@ DetectPixelColorInRect2(bitmap, x1, y1, x2, y2, color1, variation1 := 0, color2 
     }
 }
 
-DetectPixelColorInVerticalLine(bitmap, x, y1, y2, color1, variation1 := 0, color2 := 0, variation2 := 0, &match_x := 0, &match_y := 0) {
-    Assert(bitmap, "bitmap should have value")
+DetectPixelColorInVerticalLine(d2bitmap, x, y1, y2, color1, variation1 := 0, color2 := 0, variation2 := 0, &match_x := 0, &match_y := 0) {
+    Assert(d2bitmap, "bitmad2bitmapp should have value")
 
     ARGB2RGB(color1, &r1, &g1, &b1)
     if (color2) {
@@ -154,7 +154,7 @@ DetectPixelColorInVerticalLine(bitmap, x, y1, y2, color1, variation1 := 0, color
     y := y1
     loop y2 - y1 + 1
     {
-        match := DetectPixelColor(bitmap, x, y, r1, g1, b1, variation1, r2, g2, b2, variation2)
+        match := DetectPixelColor(d2bitmap, x, y, r1, g1, b1, variation1, r2, g2, b2, variation2)
         if (match) {
             match_x := x
             match_y := y
@@ -165,7 +165,7 @@ DetectPixelColorInVerticalLine(bitmap, x, y1, y2, color1, variation1 := 0, color
     return 0
 }
 
-DetectColoredText(bitmap, lines, color1, variation1 := 0, color2 := 0, variation2 := 0) {
+DetectColoredText(d2bitmap, lines, color1, variation1 := 0, color2 := 0, variation2 := 0) {
     x1 := 16
     y1 := 84
     ; Magic number. The width to look for.
@@ -173,15 +173,15 @@ DetectColoredText(bitmap, lines, color1, variation1 := 0, color2 := 0, variation
     ; Each line is 9 pixels tall. Gap between two lines is 6 pixels tall.
     y2 := y1 + 9 + 15 * (lines - 1)
 
-    return DetectPixelColorInRect(bitmap, x1, y1, x2, y2, color1, variation1, color2, variation2)
+    return DetectPixelColorInRect(d2bitmap, x1, y1, x2, y2, color1, variation1, color2, variation2)
 }
 
 /*
     Returns 1 if color1 is found in minimap, 2 if color2, 0 if none.
 */
-DetectColorInMinimap(bitmap := 0, color1 := 0, variation1 := 0, color2 := 0, variation2 := 0) {
-    if (!bitmap) {
-        bitmap := GetD2Bitmap()
+DetectColorInMinimap(d2bitmap := 0, color1 := 0, variation1 := 0, color2 := 0, variation2 := 0) {
+    if (!d2bitmap) {
+        d2bitmap := GetD2Bitmap()
     }
 
     /*
@@ -221,7 +221,7 @@ DetectColorInMinimap(bitmap := 0, color1 := 0, variation1 := 0, color2 := 0, var
         - 865, 150
         - 935, 190
     */
-    return DetectPixelColorInRect2(bitmap, 865, 150, 935, 190, color1, variation1, color2, variation2)
+    return DetectPixelColorInRect2(d2bitmap, 865, 150, 935, 190, color1, variation1, color2, variation2)
 }
 
 
@@ -285,9 +285,9 @@ DetectColorCallback(bitmap_config, color1 := 0, variation1 := 0, color2 := 0, va
         ret.Length := n
         good := 0
         for i, cfg in bitmap_config {
-            bitmap := cfg[1]
+            d2bitmap := cfg[1]
             should_detect := cfg[2]
-            ret[i] := DetectPixelColor(cfg[1], x, y, r1, g1, b1, variation1, r2, g2, b2, variation2)
+            ret[i] := DetectPixelColor(d2bitmap, x, y, r1, g1, b1, variation1, r2, g2, b2, variation2)
             if ((ret[i] != 0) = should_detect) {
                 good := good + 1
             }
