@@ -22,12 +22,14 @@ GetD2BitmapImpl(save_to_file := "")
 
     ; Save bitmap to a file
     if (save_to_file) {
-        Gdip_SaveBitmapToFile(bitmap, save_to_file)
+        SaveD2Bitmap(bitmap, save_to_file)
     }
 
     ; TODO: Implement something to call Gdip_DisposeImage() to dispose the bitmap
     return bitmap
 }
+
+SaveD2Bitmap := Gdip_SaveBitmapToFile
 
 ARGB2RGB(argb, &r, &g, &b)
 {

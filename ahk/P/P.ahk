@@ -15,13 +15,15 @@
 s_P_Tasks := nil
 s_P_Run_ID := nil
 s_P_Loot := nil
+s_P_Loot_Caught_by_Text := nil
 s_P_Potions_Used := nil
 
 P_Clear() {
-    global s_P_Tasks, s_P_Run_ID, s_P_Loot, s_P_Potions_Used
+    global s_P_Tasks, s_P_Run_ID, s_P_Loot, s_P_Potions_Used, s_P_Loot_Caught_by_Text
     s_P_Tasks := Queue()
     s_P_Run_ID := -1
     s_P_Loot := { Detected: 0, Looted: 0, Failed: 0 }
+    s_P_Loot_Caught_by_Text := 0
     s_P_Potions_Used := 0
 }
 
@@ -75,5 +77,6 @@ P_Announce() {
     Log("Runs: " s_P_Run_ID
         "   |   P: " s_P_Loot.Detected "=>" s_P_Loot.Looted "-" s_P_Loot.Failed
             "   HP: " s_P_Potions_Used
+            "   T: " s_P_Loot_Caught_by_Text
     )
 }

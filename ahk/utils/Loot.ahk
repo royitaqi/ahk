@@ -19,13 +19,35 @@ s_Pick_Delay := 50
     1 = purple only
     2 = purple and orange
 */
-DetectLootInMinimap(max_loot_level := 2) {
-    if (max_loot_level = 1) {
-        return DetectColorInMinimap(, s_Purple_Minimap, 0)
-    } else {
-        return DetectColorInMinimap(, s_Purple_Minimap, 0, s_Orange_Minimap, 0)
+DetectLootInMinimap(bitmap := 0, max_loot_level := 2) {
+    if (!bitmap) {
+        bitmap := GetD2Bitmap()
     }
-    
+
+    if (max_loot_level = 1) {
+        return DetectColorInMinimap(bitmap, s_Purple_Minimap, 0)
+    } else {
+        return DetectColorInMinimap(bitmap, s_Purple_Minimap, 0, s_Orange_Minimap, 0)
+    }
+}
+
+DetectLootByText(bitmap := 0, lines := 10, chars := 1, max_loot_level := 2) {
+    if (!bitmap) {
+        bitmap := GetD2Bitmap()
+    }
+
+    x1 := 16
+    y1 := 84
+    ; Magic number. The width to look for.
+    x2 := x1 + 8 * chars
+    ; Each line is 9 pixels tall. Gap between two lines is 6 pixels tall.
+    y2 := y1 + 9 + 15 * (lines - 1)
+
+    if (max_loot_level = 1) {
+        return DetectPixelColorInRect2(bitmap, x1, y1, x2, y2, s_Purple_Text, 0)
+    } else {
+        return DetectPixelColorInRect2(bitmap, x1, y1, x2, y2, s_Purple_Text, 0, s_Orange_Text, 0)
+    }
 }
 
 /*

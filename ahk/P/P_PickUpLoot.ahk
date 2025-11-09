@@ -5,7 +5,13 @@
 
     ; Sleep for a bit to allow loot to fall on the ground and be detected.
     Sleep(1000)
-    loot_level := DetectLootInMinimap(c_Max_Loot_Level)
+    bitmap := GetD2Bitmap()
+    loot_level := DetectLootInMinimap(bitmap, c_Max_Loot_Level)
+    loot_level_by_text := DetectLootByText(bitmap, c_Max_Loot_Level)
+    if (loot_level_by_text > 0 && loot_level = 0) {
+        s_P_Loot_Caught_by_Text := s_P_Loot_Caught_by_Text + 1
+        SaveD2Bitmap(bitmap, "tmp/" FormatTime(A_Now, "HHmmss") "_Screenshot_P_failed_to_detect_loot_run_" s_LK_Run_ID "_level_" loot_level "_caught_by_text_" loot_level_by_text ".bmp")
+    }
     if (loot_level = 0) {
         LogVerbose("No loot is detected")
         return
@@ -29,7 +35,7 @@
             loot_count := loot_count + transfered_count
         }
 
-        remaining_loot_level := DetectLootInMinimap(c_Max_Loot_Level)
+        remaining_loot_level := DetectLootInMinimap(, c_Max_Loot_Level)
         looted := (remaining_loot_level = 0)
         if (looted) {
             break
@@ -40,7 +46,7 @@
     LogVerbose(loot_count " loot has been transfered to cube")
 
     ; Check if the loot has been picked up (by see what's remaining on the ground)
-    remaining_loot_level := DetectLootInMinimap(c_Max_Loot_Level)
+    remaining_loot_level := DetectLootInMinimap(, c_Max_Loot_Level)
     looted := (remaining_loot_level = 0)
     if (looted) {
         Log("Successfully picked up loot (level " loot_level ")")

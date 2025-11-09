@@ -15,12 +15,12 @@ Test_Loot_DetectLootInMinimap_1() {
         "Test_Loot_PickUpLootOnGround_Test3_NoAlt.bmp",
         "Test_Loot_PickUpLootOnGround_Test3_HoldAlt.bmp",
     )
-    Assert(DetectLootInMinimap(1) = 0, "Should not detect loot")
-    Assert(DetectLootInMinimap(1) = 0, "Should not detect loot")
-    Assert(DetectLootInMinimap(1) = 1, "Should detect purple loot")
-    Assert(DetectLootInMinimap(1) = 1, "Should detect purple loot")
-    Assert(DetectLootInMinimap(2) = 1, "Should detect purple loot")
-    Assert(DetectLootInMinimap(2) = 1, "Should detect purple loot")
+    Assert(DetectLootInMinimap(, 1) = 0, "Should not detect loot")
+    Assert(DetectLootInMinimap(, 1) = 0, "Should not detect loot")
+    Assert(DetectLootInMinimap(, 1) = 1, "Should detect purple loot")
+    Assert(DetectLootInMinimap(, 1) = 1, "Should detect purple loot")
+    Assert(DetectLootInMinimap(, 2) = 1, "Should detect purple loot")
+    Assert(DetectLootInMinimap(, 2) = 1, "Should detect purple loot")
 }
 RunTest(Test_Loot_DetectLootInMinimap_1)
 
