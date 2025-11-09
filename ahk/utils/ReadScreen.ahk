@@ -195,8 +195,12 @@ DetectColorInMinimap(bitmap := 0, color1 := 0, variation1 := 0, color2 := 0, var
         Adjusted area is:
         - 865, 155
         - 935, 190
+
+        This seems more symmetric around the character
+        - 865, 150
+        - 935, 190
     */
-    return DetectPixelColorInRect(bitmap, 865, 155, 935, 190, color1, variation1, color2, variation2)
+    return DetectPixelColorInRect(bitmap, 865, 150, 935, 190, color1, variation1, color2, variation2)
 }
 
 
