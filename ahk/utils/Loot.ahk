@@ -52,7 +52,7 @@ PickUpLootOnGround(max_loot_level := 2, walk_delay := 1000) {
 
         Let's take 20 stride in X. That's at least 4 lines in <100 pixels.
     */
-    c_X_Stride := 40
+    c_X_Stride := 20
 
     bitmap1 := GetD2Bitmap()
     Press("{Alt down}", 200)

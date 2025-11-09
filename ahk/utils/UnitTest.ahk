@@ -24,6 +24,15 @@ MockedGetD2Bitmap(args*) {
     return s_Mocked_D2Bitmaps.RemoveAt(1)
 }
 
+MockD2Bitmaps(files*) {
+    global s_Mocked_D2Bitmaps
+    for file in files {
+        bitmap := Gdip_CreateBitmapFromFile(file)
+        Assert(bitmap, "Cannot load test bitmap from file: " file)
+        s_Mocked_D2Bitmaps.Push(bitmap)
+    }
+}
+
 ReportPass() {
     if (IsMainScript()) {
         MsgBox "All tests passed."
