@@ -7,9 +7,6 @@ SetDefaultMouseSpeed(0)
 CoordMode("Mouse", "Client")
 CoordMode("Pixel", "Client")
 
-#include gdip/Gdip_Toolbox.ahk
-pToken := Gdip_Startup()
-
 #include utils/Cube.ahk
 #include utils/Debug.ahk
 #include utils/Inventory.ahk

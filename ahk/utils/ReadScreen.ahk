@@ -1,4 +1,9 @@
+#include ../gdip/Gdip_All.ahk
+#include ../gdip/Gdip_Toolbox.ahk
+pToken := Gdip_Startup()
+
 #include ../data_structure/Types.ahk
+
 #include Debug.ahk
 
 
