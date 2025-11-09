@@ -1,5 +1,10 @@
+#include ../data_structure/Types.ahk
+#include Debug.ahk
+
+
 s_Max_X := 1068
 s_Max_Y := 600
+s_Hud_Y := 600
 
 GetD2Bitmap(save_to_file := "")
 {
@@ -97,6 +102,8 @@ DetectPixelColorInRect(bitmap, x1, y1, x2, y2, color1, variation1 := 0, color2 :
         {
             match := DetectPixelColor(bitmap, x, y, r1, g1, b1, variation1, r2, g2, b2, variation2)
             if (match) {
+                match_x := x
+                match_y := y
                 return match
             }
             y := y + 1
@@ -104,6 +111,9 @@ DetectPixelColorInRect(bitmap, x1, y1, x2, y2, color1, variation1 := 0, color2 :
         x := x + 1
     }
     return 0
+}
+DetectPixelColorInRect2(bitmap, x1, y1, x2, y2, color1, variation1 := 0, color2 := 0, variation2 := 0, &match_x := 0, &match_y := 0) {
+    return RectanglePattern(DetectColorCallback(bitmap, color1, variation1, color2, variation2), x1, y1, x2, y2, &match_x, &match_y)
 }
 
 DetectPixelColorInVerticalLine(bitmap, x, y1, y2, color1, variation1 := 0, color2 := 0, variation2 := 0, &match_x := 0, &match_y := 0) {
@@ -181,4 +191,80 @@ DetectColorInMinimap(bitmap := 0, color1 := 0, variation1 := 0, color2 := 0, var
         - 935, 190
     */
     return DetectPixelColorInRect(bitmap, 865, 155, 935, 190, color1, variation1, color2, variation2)
+}
+
+
+/*
+    For all the patterns below:
+    - Expect callback:
+        ```
+        callback(x, y) {
+            ...
+        }
+        ```
+    - Returns the first non-nil value the callback returns. Otherwise, returns nil.
+*/
+
+VerticalStridePattern(callback, x_stride := 1, x1 := 0, y1 := 0, x2 := s_Max_X, y2 := s_Max_Y, &match_x := 0, &match_y := 0) {
+    x := x1
+    while (x <= x2) {
+        y := y1
+        while (y <= y2) {
+            ret := callback(x, y)
+            if (ret != nil) {
+                match_x := x
+                match_y := y
+                return ret
+            }
+            y := y + 1
+        }
+        x := x + x_stride
+    }
+    return nil
+}
+
+RectanglePattern(callback, x1 := 0, y1 := 0, x2 := s_Max_X, y2 := s_Max_Y, &match_x := 0, &match_y := 0) {
+    ; Rectangle pattern is just a vertical stride pattern with stride being 1
+    return VerticalStridePattern(callback, 1, x1, y1, x2, y2, &match_x, &match_y)
+}
+
+/*
+    Bitmap config is an array of pairs. Each pair is a bitmap and a boolean.
+    The boolean indicates whether the color(s) should be detected in the bitmap or not.
+
+    Returns a callback that can be given to one of the patterns in the above.
+    
+    When the callback is called with a (x, y) coordinate, it will return an array of integers.
+    Each integer is the return value of DetectPixelColor() for the pixel on that coordinate in each of the bitmaps, respectively.
+*/
+DetectColorCallback(bitmap_config, color1 := 0, variation1 := 0, color2 := 0, variation2 := 0) {
+    n := bitmap_config.Length
+    for i, cfg in bitmap_config {
+        Assert(cfg[1], "Bitmap [" i "] should have value")
+    }
+
+    ARGB2RGB(color1, &r1, &g1, &b1)
+    r2 := g2 := b2 := 0
+    if (color2) {
+        ARGB2RGB(color2, &r2, &g2, &b2)
+    }
+
+    callback(x, y) {
+        ret := []
+        ret.Length := n
+        good := 0
+        for i, cfg in bitmap_config {
+            bitmap := cfg[1]
+            should_detect := cfg[2]
+            ret[i] := DetectPixelColor(cfg[1], x, y, r1, g1, b1, variation1, r2, g2, b2, variation2)
+            if ((ret[i] != 0) = should_detect) {
+                good := good + 1
+            }
+        }
+        if (good = n) {
+            return ret
+        }
+        return nil
+    }
+    return callback
 }
