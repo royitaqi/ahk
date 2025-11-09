@@ -54,13 +54,12 @@ F11::
     }
     Send "{F11}"
 }
-; Temporary
 F10::
 {
     switch s_CurrentMode
     {
     case 1:
-        OpenInventory()
+        TakeScreenShot()
         return
     }
     Send "{F10}"
