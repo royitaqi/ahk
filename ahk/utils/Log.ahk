@@ -15,6 +15,7 @@ s_Log_File := "log.txt"
      0 = Info
      1 = Verbose    - Often used by business level scripts (e.g. LK, P)
      2 = Debug      - Often used by util scripts
+     3 = Tedious    - Often used by util scripts for extreme details
 */
 s_Log_Level := 0
 
@@ -64,6 +65,9 @@ Log(text, level := 0) {
     if (level = 2) {
         text := "DEBUG: " text
     }
+    if (level = 3) {
+        text := "TEDIOUS: " text
+    }
 
     LogToFile(text)
 
@@ -88,6 +92,9 @@ LogVerbose(text) {
 LogDebug(text) {
     Log(text, 2)
 }
+LogTedious(text) {
+    Log(text, 3)
+}
 
 
 IsLogLevelVerbose() {
@@ -95,6 +102,9 @@ IsLogLevelVerbose() {
 }
 IsLogLevelDebug() {
     return s_Log_Level >= 2
+}
+IsLogLevelTedious() {
+    return s_Log_Level >= 3
 }
 
 LogLevelVerbose() {
@@ -104,4 +114,8 @@ LogLevelVerbose() {
 LogLevelDebug() {
     global s_Log_Level
     s_Log_Level := 2
+}
+LogLevelTedious() {
+    global s_Log_Level
+    s_Log_Level := 3
 }
