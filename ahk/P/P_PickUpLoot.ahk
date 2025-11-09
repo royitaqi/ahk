@@ -11,6 +11,7 @@
         return
     }
     Log("Loot detected (level=" loot_level ")")
+    s_P_Loot.Detected := s_P_Loot.Detected + 1
 
     ; Blink towards where loot may be
     Press "C"
