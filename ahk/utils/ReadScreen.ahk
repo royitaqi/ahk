@@ -118,8 +118,16 @@ DetectPixelColorInRect(bitmap, x1, y1, x2, y2, color1, variation1 := 0, color2 :
     }
     return 0
 }
+/*
+    Returns 1 or 2 if the corresponding color is detected. Otherwise return 0.
+*/
 DetectPixelColorInRect2(bitmap, x1, y1, x2, y2, color1, variation1 := 0, color2 := 0, variation2 := 0, &match_x := 0, &match_y := 0) {
-    return RectanglePattern(DetectColorCallback(bitmap, color1, variation1, color2, variation2), x1, y1, x2, y2, &match_x, &match_y)
+    ret := RectanglePattern(DetectColorCallback([[bitmap, true]], color1, variation1, color2, variation2), x1, y1, x2, y2, &match_x, &match_y)
+    if (ret) {
+        return ret[1]
+    } else {
+        return 0
+    }
 }
 
 DetectPixelColorInVerticalLine(bitmap, x, y1, y2, color1, variation1 := 0, color2 := 0, variation2 := 0, &match_x := 0, &match_y := 0) {
@@ -200,7 +208,7 @@ DetectColorInMinimap(bitmap := 0, color1 := 0, variation1 := 0, color2 := 0, var
         - 865, 150
         - 935, 190
     */
-    return DetectPixelColorInRect(bitmap, 865, 150, 935, 190, color1, variation1, color2, variation2)
+    return DetectPixelColorInRect2(bitmap, 865, 150, 935, 190, color1, variation1, color2, variation2)
 }
 
 

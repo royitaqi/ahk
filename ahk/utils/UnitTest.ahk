@@ -26,6 +26,7 @@ MockedGetD2Bitmap(args*) {
 
 MockD2Bitmaps(files*) {
     global s_Mocked_D2Bitmaps
+    Assert(s_Mocked_D2Bitmaps.Length = 0, "Leftover bitmaps detected: " s_Mocked_D2Bitmaps.Length)
     for file in files {
         bitmap := Gdip_CreateBitmapFromFile(file)
         Assert(bitmap, "Cannot load test bitmap from file: " file)
@@ -34,9 +35,12 @@ MockD2Bitmaps(files*) {
 }
 
 RunTest(test) {
-    global s_Tests_Ran
+    global s_Tests_Ran, s_Mocked_D2Bitmaps
+
     s_Tests_Ran.Push(test.Name)
     test.Call()
+
+    Assert(s_Mocked_D2Bitmaps.Length = 0, "Leftover bitmaps detected: " s_Mocked_D2Bitmaps.Length)
 }
 
 ReportPass(scriptname) {
