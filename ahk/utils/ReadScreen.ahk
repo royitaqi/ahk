@@ -2,6 +2,7 @@
 #include ../gdip/Gdip_Toolbox.ahk
 pToken := Gdip_Startup()
 
+#include ../data_structure/Disposable.ahk
 #include ../data_structure/Types.ahk
 
 #include Debug.ahk
@@ -26,7 +27,17 @@ GetD2BitmapImpl(save_to_file := "")
     }
 
     ; TODO: Implement something to call Gdip_DisposeImage() to dispose the bitmap
-    return bitmap
+    return D2Bitmap(bitmap)
+}
+
+class D2Bitmap extends Disposable {
+    __New(bitmap) {
+        super.__New(
+            bitmap,
+            Gdip_DisposeImage,
+            (bitmap) => Assert(bitmap, "D2Bitmap should be constructured with an actual bitmap"),
+        )
+    }
 }
 
 SaveD2Bitmap := Gdip_SaveBitmapToFile
