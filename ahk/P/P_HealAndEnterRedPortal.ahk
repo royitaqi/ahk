@@ -17,31 +17,37 @@ P_HealAndEnterRedPortal() {
     }
     LogVerbose("Hireling is alive")
 
+    ; Find the portal's position from a list of candidates by checking a few different pixels where the portal is supposed to be
     /*
         Portal positions:
         - 900, 285 (Anya is in the corner)
-        - 1050, 315 (Anya is in the middle)
+        - 1060, 325 (Anya is in the middle)
     */
-    c_Portal1_X := 900
-    c_Portal1_Y := 285
-    c_Portal2_X := 1063
-    c_Portal2_Y := 320
+    c_Portal_Positions := [{ x: 900, y: 285 }, { x: 1060, y: 325 }]
+    c_Deltas := [{ x: 0, y: 0 }, { x: 0, y: -25 }, { x: 0, y: 25 }]
+    redness := []
+    redness.Length := c_Portal_Positions.Length
     bitmap := GetD2Bitmap(TempFileOverwrite("Screenshot_P_before_entering_red_portal.bmp"))
-    color1 := GetPixelColorInRGB(bitmap, c_Portal1_X, c_Portal1_Y)
-    color2 := GetPixelColorInRGB(bitmap, c_Portal2_X, c_Portal2_Y)
-    ARGB2RGB(color1, &r1, &g1, &b1)
-    ARGB2RGB(color2, &r2, &g2, &b2)
-    redness1 := r1 * 2 - g1 - b1
-    redness2 := r2 * 2 - g2 - b2
-    if (redness1 > redness2) {
-        portal_x := c_Portal1_X
-        portal_y := c_Portal1_Y
-    } else {
-        portal_x := c_Portal2_X
-        portal_y := c_Portal2_Y
+    for i, pp in c_Portal_Positions {
+        redness[i] := 0
+        for , delta in c_Deltas {
+            x := pp.x + delta.x
+            y := pp.y + delta.y
+            color := GetPixelColorInRGB(bitmap, x, y)
+            ARGB2RGB(color, &r, &g, &b)
+            redness[i] := redness[i] + r * 2 - g - b
+        }
     }
+    max_redness := Max(redness*)
+    for i, v in redness {
+        if (v = max_redness) {
+            idx := i
+            break
+        }
+    }
+    
     ; Click the red portal
-    ClickOrMove2(portal_x, portal_y, "Left", , 1000)
+    ClickOrMove2(c_Portal_Positions[idx].x, c_Portal_Positions[idx].y, "Left", , 1000)
 
     ; Detect that we have entered the Temple
     loop {
