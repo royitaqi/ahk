@@ -28,8 +28,9 @@ PressImpl(key, delay := s_Press_Delay)
 }
 
 ClearMouse := ClearMouseImpl
-ClearMouseImpl(delay := 0) {
-    ClickOrMove(s_Max_X - 1, s_Max_Y - 1, "", delay)
+ClearMouseImpl(delay := 0, x := s_Max_X - 1, y := 1) {
+    ; Move mouse to top right corner, where there is less things to detect
+    ClickOrMove(x, y, "", delay)
 }
 
 ClickOrMove2 := ClickOrMove2Impl
