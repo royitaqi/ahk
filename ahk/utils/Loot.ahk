@@ -109,7 +109,7 @@ PickUpLootOnGround(max_loot_level := 2, walk_delay := 1000) {
     from_rows, from_cols: The height and width of the loot area in the inventory.
     to_row, to_col: The slot where the cube is.
 
-    Returns the number of loot transfered.
+    Returns the number of loot transfered. If the cube is full, return -1.
 */
 TransferLootFromInventoryIntoCube(from_row, from_col, from_rows, from_cols, to_row, to_col) {
     OpenInventory()
@@ -117,14 +117,29 @@ TransferLootFromInventoryIntoCube(from_row, from_col, from_rows, from_cols, to_r
     transfered_items := 0
     callback(row, col, x, y) {
         if (!IsInventorySlotEmpty(, row, col)) {
+            ; Pick up the loot from inventory
             ClickOrMoveToInventorySlot(row, col, "Left")
+            ; Put the loot into the cube
             ClickOrMoveToInventorySlot(to_row, to_col, "Left")
+
+            ; If the cube is full, then the previous click won't put the loot into the cube.
+            ; Test this situation by trying to put it back into its original slot in inventory and detect that this slot isn't empty.
+            ; If the loot was put into the cube, then this click does nothing and the slot will be empty.
+            ClickOrMoveToInventorySlot(row, col, "Left")
+            if (!IsInventorySlotEmpty(, row, col)) {
+                return -1
+            }
+
             transfered_items := transfered_items + 1
         }
     }
-    ForEachInventorySlot(callback, from_row, from_col, from_rows, from_cols)
+    ret := ForEachInventorySlot(callback, from_row, from_col, from_rows, from_cols)
 
     CloseInventory()
 
-    return transfered_items
+    if (ret) {
+        return ret
+    } else {
+        return transfered_items
+    }
 }

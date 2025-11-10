@@ -2,11 +2,10 @@
 #include Log.ahk
 
 
-StopScript(msg := "", try_to_pause_and_notify := true)
-{
+StopScript(msg := "", try_to_pause_and_notify := true) {
     ; Print/log the message is possible
     if (msg) {
-        Log(msg)
+        LogError(msg)
     }
 
     ; Try to pause the game and play notification sound
@@ -22,8 +21,7 @@ StopScript(msg := "", try_to_pause_and_notify := true)
     throw "Should have reloaded"
 }
 
-StopScriptWhenD2BecomeInactive()
-{
+StopScriptWhenD2BecomeInactive() {
     Impl() {
         if (!IsD2Active()) {
             StopScript("Stopping script because D2 became inactive", false)

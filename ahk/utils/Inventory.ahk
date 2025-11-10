@@ -1,3 +1,5 @@
+#include ../data_structure/Types.ahk
+
 #include Debug.ahk
 #include KeyboardAndMouse.ahk
 #include SaveAndLoad.ahk
@@ -113,18 +115,26 @@ IsInventorySlotEmpty(bitmap := 0, row := -1, col := -1) {
     }
 }
 
+/*
+    Go through each inventory slot in the specified area and invoke the callback.
+    Stops if the callback returns a value that evaluates to "true".
+    Returns that value in that case. Otherwise return nil.
+*/
 ForEachInventorySlot(callback, start_row := 0, start_col := 0, row_count := s_Inventory_Rows, col_count := s_Inventory_Cols) {
     Assert(callback, "Callback shouldn't be empty")
-
     row := start_row
     loop row_count {
         col := start_col
         loop col_count {
             x := InventoryX(col)
             y := InventoryY(row)
-            callback.Call(row, col, x, y)
+            ret := callback.Call(row, col, x, y)
+            if (ret) {
+                return ret
+            }
             col := col + 1
         }
         row := row + 1
     }
+    return nil
 }

@@ -32,6 +32,10 @@
 
         if (detected) {
             transfered_count := TransferLootFromInventoryIntoCube(2, 8, 4, 2, 1, 8)
+            if (transfered_count = -1) {
+                ; The cube is full. No point to do more runs. Stop the script by pausing the game.
+                StopScript("Cube is full. Pausing the game and stopping the script.", true)
+            }
             loot_count := loot_count + transfered_count
         }
 
