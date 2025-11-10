@@ -54,7 +54,7 @@ CheckHealth(strategy) {
             msg := "Health is lower than " percentage "%."
             if (IsInteger(action)) {
                 Press("" action "")
-                Log(msg " Potion " action " used.")
+                Log(msg " Potion [" action "] used.")
                 return i
             }
             else if (IsFunction(action)) {

@@ -19,6 +19,7 @@ P_TeleportToPindleAndKill() {
     c_Kill_Timeout_Seconds := 10
     start_tick := A_TickCount
     timeout_tick := start_tick + c_Kill_Timeout_Seconds * 1000
+    emergency_restart := false
     while (is_boss_alive := DetectBossInMinimap() && A_TickCount < timeout_tick) {
         ; Glacial Spike
         Press "F"
@@ -30,10 +31,17 @@ P_TeleportToPindleAndKill() {
 
         Sleep(1000)
 
-        CheckHealth([[40, P_EmergencyRestart]])
+        if (CheckHealth([[40, P_EmergencyRestart]])) {
+            global s_P_Potions_Used
+            s_P_Potions_Used := s_P_Potions_Used + 1
+            emergency_restart := true
+            break
+        }
     }
 
-    if (is_boss_alive) {
+    if (emergency_restart) {
+        LogWarning("Emergency restarting")
+    } else if (is_boss_alive) {
         LogWarning("Couldn't kill Pindle in 10 seconds")
     } else {
         dur := A_TickCount - start_tick
