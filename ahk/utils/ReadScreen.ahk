@@ -11,6 +11,7 @@ pToken := Gdip_Startup()
 s_Max_X := 1068
 s_Max_Y := 600
 s_Hud_Y := 600
+s_Last_D2Bitmap := nil
 
 GetD2Bitmap := GetD2BitmapImpl
 GetD2BitmapImpl(save_to_file := "")
@@ -21,13 +22,21 @@ GetD2BitmapImpl(save_to_file := "")
     ; Capture a screenshot of the window
     bitmap := Gdip_BitmapFromHWND(hwnd, 1)
 
-    ; Save bitmap to a file
+    ; Create the disposable D2Bitmap object
+    global s_Last_D2Bitmap
+    s_Last_D2Bitmap := D2Bitmap(bitmap)
+
+    ; Save the bitmap to a file if asked
     if (save_to_file) {
-        SaveD2Bitmap(bitmap, save_to_file)
+        SaveD2Bitmap(s_Last_D2Bitmap, save_to_file)
     }
 
-    ; TODO: Implement something to call Gdip_DisposeImage() to dispose the bitmap
-    return D2Bitmap(bitmap)
+    return s_Last_D2Bitmap
+}
+
+GetLastD2Bitmap() {
+    global s_Last_D2Bitmap
+    return s_Last_D2Bitmap
 }
 
 class D2Bitmap extends Disposable {
@@ -40,7 +49,9 @@ class D2Bitmap extends Disposable {
     }
 }
 
-SaveD2Bitmap := Gdip_SaveBitmapToFile
+SaveD2Bitmap(d2bitmap, file) {
+    Gdip_SaveBitmapToFile(d2bitmap.val, file)
+}
 
 ARGB2RGB(argb, &r, &g, &b)
 {

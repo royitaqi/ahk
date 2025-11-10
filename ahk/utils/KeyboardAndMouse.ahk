@@ -28,8 +28,8 @@ PressImpl(key, delay := s_Press_Delay)
 }
 
 ClearMouse := ClearMouseImpl
-ClearMouseImpl() {
-    ClickOrMove(s_Max_X - 1, s_Max_Y - 1, "", 0)
+ClearMouseImpl(delay := 0) {
+    ClickOrMove(s_Max_X - 1, s_Max_Y - 1, "", delay)
 }
 
 ClickOrMove2 := ClickOrMove2Impl

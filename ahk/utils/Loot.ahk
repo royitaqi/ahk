@@ -127,6 +127,8 @@ TransferLootFromInventoryIntoCube(from_row, from_col, from_rows, from_cols, to_r
             ; If the loot was put into the cube, then this click does nothing and the slot will be empty.
             ClickOrMoveToInventorySlot(row, col, "Left")
             if (!IsInventorySlotEmpty(, row, col)) {
+                global s_Last_D2Bitmap
+                SaveD2Bitmap(s_Last_D2Bitmap, TempFileOverwrite("Screenshot_P_cube_is_full.bmp"))
                 return -1
             }
 

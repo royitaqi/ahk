@@ -100,6 +100,8 @@ IsInventorySlotEmpty(bitmap := 0, row := -1, col := -1) {
     Assert(col >= 0, "Row should be non-negative")
 
     if (!bitmap) {
+        ; Move mouse away so that it's not on that slot
+        ClearMouse(100)
         bitmap := GetD2Bitmap()
     }
 

@@ -5,12 +5,12 @@
 
     ; Sleep for a bit to allow loot to fall on the ground and be detected.
     Sleep(1000)
-    bitmap := GetD2Bitmap()
-    loot_level := DetectLootInMinimap(bitmap, c_Max_Loot_Level)
-    loot_level_by_text := DetectLootByText(bitmap, c_Max_Loot_Level)
+    d2bitmap := GetD2Bitmap()
+    loot_level := DetectLootInMinimap(d2bitmap, c_Max_Loot_Level)
+    loot_level_by_text := DetectLootByText(d2bitmap, c_Max_Loot_Level)
     if (loot_level_by_text > 0 && loot_level = 0) {
         s_P_Loot_Caught_by_Text := s_P_Loot_Caught_by_Text + 1
-        SaveD2Bitmap(bitmap, TempFile("Screenshot_P_failed_to_detect_loot_run_" s_LK_Run_ID "_level_" loot_level "_caught_by_text_" loot_level_by_text ".bmp"))
+        SaveD2Bitmap(d2bitmap, TempFile("Screenshot_P_failed_to_detect_loot_run_" s_LK_Run_ID "_level_" loot_level "_caught_by_text_" loot_level_by_text ".bmp"))
     }
     if (loot_level = 0) {
         LogVerbose("No loot is detected")
