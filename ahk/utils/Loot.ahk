@@ -145,3 +145,18 @@ TransferLootFromInventoryIntoCube(from_row, from_col, from_rows, from_cols, to_r
         return transfered_items
     }
 }
+
+/*
+    Returns true if the mouse is holding a loot. Otherwise, returns false.
+*/
+IsMouseHoldingLoot(x := 0, y := 0) {
+    ; If no coordinates are given, move mouse to a known location so that we can test that pixel.
+    ; If coordinates are given, just test that pixel.
+    if (!x && !y) {
+        x := s_Max_X - 1
+        y := 1
+        ClearMouse(100, x, y)
+    }
+    d2bitmap := GetD2Bitmap()
+    return GetPixelColorInRGB(d2bitmap, x, y) != 0x1C1C1C
+}
