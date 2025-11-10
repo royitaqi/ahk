@@ -51,3 +51,11 @@ CountDown(msg) {
         countdown := countdown - 1
     }
 }
+
+TempFile(file) {
+    return "tmp/" FormatTime(A_Now, "HHmmss") "_" file
+}
+
+TempFileOverwrite(file) {
+    return "tmp/" file
+}

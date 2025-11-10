@@ -10,7 +10,7 @@
     loot_level_by_text := DetectLootByText(bitmap, c_Max_Loot_Level)
     if (loot_level_by_text > 0 && loot_level = 0) {
         s_P_Loot_Caught_by_Text := s_P_Loot_Caught_by_Text + 1
-        SaveD2Bitmap(bitmap, "tmp/" FormatTime(A_Now, "HHmmss") "_Screenshot_P_failed_to_detect_loot_run_" s_LK_Run_ID "_level_" loot_level "_caught_by_text_" loot_level_by_text ".bmp")
+        SaveD2Bitmap(bitmap, TempFile("Screenshot_P_failed_to_detect_loot_run_" s_LK_Run_ID "_level_" loot_level "_caught_by_text_" loot_level_by_text ".bmp"))
     }
     if (loot_level = 0) {
         LogVerbose("No loot is detected")
@@ -58,7 +58,7 @@
         ; Take a picture of the scene before moving on
         now := FormatTime(A_Now, "HHmmss")
         Press("{Alt down}", 200)
-        GetD2Bitmap("tmp/" now "_Screenshot_P_failed_loot_run_" s_P_Run_ID "_level_" loot_level ".bmp")
+        GetD2Bitmap(TempFile("Screenshot_P_failed_to_pick_up_loot_run_" s_P_Run_ID "_level_" loot_level ".bmp"))
         Press("{Alt up}", 0)
 
         if (loot_level = 1) {

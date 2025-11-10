@@ -26,7 +26,7 @@ P_HealAndEnterRedPortal() {
     c_Portal1_Y := 285
     c_Portal2_X := 1063
     c_Portal2_Y := 320
-    bitmap := GetD2Bitmap()
+    bitmap := GetD2Bitmap(TempFileOverwrite("Screenshot_P_before_entering_red_portal.bmp"))
     color1 := GetPixelColorInRGB(bitmap, c_Portal1_X, c_Portal1_Y)
     color2 := GetPixelColorInRGB(bitmap, c_Portal2_X, c_Portal2_Y)
     ARGB2RGB(color1, &r1, &g1, &b1)
