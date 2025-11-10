@@ -16,7 +16,7 @@ P_TeleportToPindleAndKill() {
     c_Cast_Y := 181
     ClickOrMove c_Cast_X, c_Cast_Y, "", s_Premove_Delay
 
-    c_Kill_Timeout_Seconds := 12
+    c_Kill_Timeout_Seconds := 10
     start_tick := A_TickCount
     timeout_tick := start_tick + c_Kill_Timeout_Seconds * 1000
     while (is_boss_alive := DetectBossInMinimap() && A_TickCount < timeout_tick) {
