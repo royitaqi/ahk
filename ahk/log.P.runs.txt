@@ -2,6 +2,47 @@
 11/08 22:53:47-00:47:57 P_4 OOM Runs: 421   |   P: 10=>10-0   HP: 0   T: 0
 11/09 07:42:27-09:04:15 P_5     Runs: 300   |   P: 6=>6-0   HP: 0   T: 0
 11/09 ????????-13:54:06 P_5 DEP Runs: 683   |   P: 9=>9-0   HP: 0   T: 0
+11/09 22:11:07-02:05:49 P_6 SGL Runs: 861   |   P: 15=>14-1   HP: 0   T: 0
 
 OOM = Out of Memory
 DEP = Didn't Enter Portal
+SGL = Still Grabbing Loot
+
+
+# Details
+
+SGL = Still Grabbing Loot
+```
+Roy's note:
+- The loot was still grabbed by the mouse when this happened.
+- There are two bugs:
+  1. The 3rd left click which was intended to put the loot back into its inventory slot didn't work.
+     This is because the mouse grabs the middle of the item.
+     Putting it back to the top left slot can overlap with the cube and still mean putting into the cube,
+     not put back to the inventory.
+  2. With the loot grabbed, when trying to close the inventory and test its state,
+     IsInventoryOpen() checks the bottom right statue, which happens to be covered by the loot.
+
+Error: The game should be loaded in order to open inventory
+
+	---- D:\GitHubRepositories\D2LoD\ahk\utils\Inventory.ahk
+	066: bitmap := GetD2Bitmap()
+	067: }
+▶	069: Assert(IsGameLoaded(bitmap, clear_mouse), "The game should be loaded in order to open inventory")
+	075: If (GetPixelColorInRGB(bitmap, 629, 463) != 0x849848)
+	075: {
+
+The current thread will exit.
+
+Call stack:
+D:\GitHubRepositories\D2LoD\ahk\utils\Debug.ahk (9) : [Assert] Throw Error(msg, level)
+D:\GitHubRepositories\D2LoD\ahk\utils\Inventory.ahk (69) : [IsInventoryOpen] Assert(IsGameLoaded(bitmap, clear_mouse), "The game should be loaded in order to open inventory")
+D:\GitHubRepositories\D2LoD\ahk\utils\Inventory.ahk (47) : [CloseInventory] If (!IsInventoryOpen(, true))
+D:\GitHubRepositories\D2LoD\ahk\utils\Loot.ahk (140) : [TransferLootFromInventoryIntoCube] CloseInventory()
+D:\GitHubRepositories\D2LoD\ahk\P\P_PickUpLoot.ahk (35) : [P_PickUpLoot] transfered_count := TransferLootFromInventoryIntoCube(2, 8, 4, 2, 1, 8)
+D:\GitHubRepositories\D2LoD\ahk\P\P.ahk (47) : [Func.Prototype.Call] task.Call()
+D:\GitHubRepositories\D2LoD\ahk\P\P.ahk (47) : [P_Loop] task.Call()
+D:\GitHubRepositories\D2LoD\ahk\P\P.ahk (39) : [P_Main] P_Loop()
+D:\GitHubRepositories\D2LoD\ahk\AdvancedMode.ahk (143) : [<Hotkey>] P_Main()
+> L
+```
