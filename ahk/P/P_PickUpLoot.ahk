@@ -17,6 +17,7 @@
         return
     }
     Log("Loot detected (level=" loot_level ")")
+    SaveD2Bitmap(d2bitmap, TempFile("Screenshot_P_loot_detected.bmp"))
     s_P_Loot.Detected := s_P_Loot.Detected + 1
 
     ; Blink towards where loot may be
