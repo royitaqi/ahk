@@ -122,11 +122,9 @@ TransferLootFromInventoryIntoCube(from_row, from_col, from_rows, from_cols, to_r
             ; Put the loot into the cube
             ClickOrMoveToInventorySlot(to_row, to_col, "Left")
 
-            ; If the cube is full, then the previous click won't put the loot into the cube.
-            ; Test this situation by trying to put it back into its original slot in inventory and detect that this slot isn't empty.
-            ; If the loot was put into the cube, then this click does nothing and the slot will be empty.
-            ClickOrMoveToInventorySlot(row, col, "Left")
-            if (!IsInventorySlotEmpty(, row, col)) {
+            ; Detect if the mouse is still holding the loot.
+            ; If so, the cube is probably full, and we need to stop the script because there is no point running any more.
+            if (IsMouseHoldingLoot()) {
                 global s_Last_D2Bitmap
                 SaveD2Bitmap(s_Last_D2Bitmap, TempFileOverwrite("Screenshot_P_cube_is_full.bmp"))
                 return -1

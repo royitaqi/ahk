@@ -70,9 +70,7 @@ F9::
     switch s_CurrentMode
     {
     case 1:
-        ; LogLevelDebug()
-        ret := PickUpLootOnGround()
-        Log("PickUpLootOnGround() = " ret)
+        ClearMouse()
         return
     }
     Send "{F9}"

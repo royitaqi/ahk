@@ -21,7 +21,12 @@ Noop(args*) {
 MockedGetD2Bitmap(args*) {
     global s_Mocked_D2Bitmaps
     Assert(s_Mocked_D2Bitmaps.Length >= 1, "Not enough mocked bitmaps")
-    return s_Mocked_D2Bitmaps.RemoveAt(1)
+    d2bitmap := s_Mocked_D2Bitmaps.RemoveAt(1)
+    
+    global s_Last_D2Bitmap
+    s_Last_D2Bitmap := d2bitmap
+    
+    return d2bitmap
 }
 
 MockD2Bitmaps(files*) {
