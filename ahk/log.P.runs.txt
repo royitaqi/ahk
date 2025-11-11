@@ -3,6 +3,7 @@
 11/09 07:42:27-09:04:15 P_5     Runs: 300   |   P: 6=>6-0   HP: 0   T: 0
 11/09 ????????-13:54:06 P_5 DEP Runs: 683   |   P: 9=>9-0   HP: 0   T: 0
 11/09 22:11:07-02:05:49 P_6 SGL Runs: 861   |   P: 15=>14-1   HP: 0   T: 0
+11/11 08:00:51-19:34:43 P_7     Runs: 2560  |   P: 15=>15-0   HP: 1   T: 0    // After removing circlets and magic/rare sacred armor
 
 OOM = Out of Memory
 DEP = Didn't Enter Portal
