@@ -4,6 +4,7 @@ Numpad1::SetAdvancedMode(1)
 Numpad2::SetAdvancedMode(2)
 Numpad3::SetAdvancedMode(3)
 Numpad4::SetAdvancedMode(4)
+F5::
 Numpad5::SetAdvancedMode(5)
 SetAdvancedMode(mode)
 {
