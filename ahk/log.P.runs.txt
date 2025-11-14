@@ -7,13 +7,21 @@
 11/10 22:26:32-07:32:29 P_7     Runs: 2000  |   P: 14=>14-0   HP: 2   T: 0
 11/11 08:10:53-19:49:27 P_7     Runs: 2560  |   P: 10=>10-0   HP: 1   T: 0
 11/11 22:37:13-07:43:48 P_7     Runs: 2000  |   P: 8=>8-0   HP: 0   T: 0
+11/12 20:46:36-10:49:38 P_8 WNF Runs: 2872  |   P: 13=>13-0   HP: 1   T: 0
 
 OOM = Out of Memory
 DEP = Didn't Enter Portal
 SGL = Still Grabbing Loot
+WNF = Window Not Found
 
 
 # Details
+
+WNF = Window Not Found
+* For some reason, ReadScreen will report that the window is not found at some point, as if the window is deactivaed.
+* Maybe some oher random window popped up and stole the focus.
+* No other window was found when this error was seen, supposedly long afer the error happened.
+
 
 SGL = Still Grabbing Loot
 ```
