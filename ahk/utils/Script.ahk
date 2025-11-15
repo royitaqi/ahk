@@ -33,3 +33,24 @@ StopScriptWhenD2BecomeInactive() {
 IsMainScript(scriptname) {
     return A_ScriptName = scriptname
 }
+
+RunForever(func) {
+    loop {
+        try {
+            LogImportant("Running " func.Name)
+            func.Call()
+        } catch Error as err {
+            LogError("Exception was thrown. " err.what ": " err.message "`n`n" err.stack)
+
+            ; Make sure D2 window is activated
+            hwnd := WinGetID("Diablo II")
+            WinActivate { Hwnd: hwnd } ; https://www.autohotkey.com/docs/v2/misc/WinTitle.htm
+            
+            ; Play alarm sound, but don't wait for it because it's too long
+            SoundPlay("sounds/WarSiren.aac", 0)
+            
+            ; Reload the game
+            ReloadFromAnywhere()
+        }
+    }
+}
