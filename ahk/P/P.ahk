@@ -83,7 +83,7 @@ P_Announce() {
 
     Log("Runs: " s_P_Run_ID
         "   |   P: " s_P_Loot.Detected "=>" s_P_Loot.Looted "-" s_P_Loot.Failed
-            "   HP: " s_P_Potions_Used
+            "   H: " s_P_Potions_Used
             "   T: " s_P_Loot_Caught_by_Text
             "   R: " s_P_Restarts
     )

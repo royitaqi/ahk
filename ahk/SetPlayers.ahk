@@ -1,6 +1,11 @@
 ﻿F1::SetPlayers(1)
-F2::SetPlayers(3)
-F3::SetPlayers(7)
+F2::SetPlayers(2)
+F3::SetPlayers(3)
+F4::SetPlayers(4)
+F5::SetPlayers(5)
+F6::SetPlayers(6)
+F7::SetPlayers(7)
+F8::SetPlayers(8)
 
 SetPlayers(n)
 {
