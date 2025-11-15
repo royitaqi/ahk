@@ -3,25 +3,31 @@
 #include ReadScreen.ahk
 
 
-SaveAndQuit(wait := true) {
+SaveAndQuit(timeout := 5000) {
     Send "{Escape}"
     ClickOrMove 500, 265, "", s_Premove_Delay
     ClickOrMove 500, 265, "Left", 0
 
-    if (wait) {
-        WaitUntilMainScreen()
+    waited := 0
+    while (!IsMainScreen(, true)) {
+        Assert(timeout = 0 || waited < timeout, "Timed out while waiting for main screen")
+        Sleep(100)
+        waited := waited + 100
     }
 }
 
-SinglePlayerChar1Hell(wait := true)
+SinglePlayerChar1Hell(timeout := 5000)
 {
     ClickOrMove(475, 315, "Left", 100)
     ClickOrMove(200, 150, "Left", 0)
     ClickOrMove(200, 150, "Left", 100)
     ClickOrMove(475, 375, "Left", 0)
 
-    if (wait) {
-        WaitUntilGameLoaded()
+    waited := 0
+    while (!IsGameLoaded(, true)) {
+        Assert(timeout = 0 || waited < timeout, "Timed out while waiting for game to be loaded")
+        Sleep(100)
+        waited := waited + 100
     }
 }
 
@@ -131,18 +137,6 @@ IsGamePaused(d2bitmap := 0, clear_mouse := false) {
         return 0
     }
     return 1
-}
-
-WaitUntilMainScreen() {
-    while (!IsMainScreen(, true)) {
-        Sleep(100)
-    }
-}
-
-WaitUntilGameLoaded() {
-    while (!IsGameLoaded(, true)) {
-        Sleep(100)
-    }
 }
 
 s_D2State_GamePaused := "GamePaused"
