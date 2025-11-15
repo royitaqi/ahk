@@ -1,10 +1,14 @@
 ﻿s_CurrentMode := 0
 Numpad0::SetAdvancedMode(0)
+^1::
 Numpad1::SetAdvancedMode(1)
+^2::
 Numpad2::SetAdvancedMode(2)
+^3::
 Numpad3::SetAdvancedMode(3)
+^4::
 Numpad4::SetAdvancedMode(4)
-F5::
+^5::
 Numpad5::SetAdvancedMode(5)
 SetAdvancedMode(mode)
 {
@@ -71,7 +75,7 @@ F9::
     switch s_CurrentMode
     {
     case 1:
-        ClearMouse()
+        SoundPlay("sounds/WarSiren.aac", 0)
         return
     }
     Send "{F9}"
