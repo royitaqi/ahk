@@ -145,6 +145,11 @@ WaitUntilGameLoaded() {
     }
 }
 
+s_D2State_GamePaused := "GamePaused"
+s_D2State_GameRunning := "GameRunning"
+s_D2State_MainScreen := "MainScreen"
+s_D2State_Unknown := "unknown"
+
 GetD2State(d2bitmap := 0, clear_mouse := false) {
     if (!d2bitmap) {
         if (clear_mouse) {
@@ -155,15 +160,44 @@ GetD2State(d2bitmap := 0, clear_mouse := false) {
 
     if (IsGameLoaded(d2bitmap, clear_mouse)) {
         if (IsGamePaused(d2bitmap, clear_mouse)) {
-            return "GamePaused"
+            global s_D2State_GamePaused
+            return s_D2State_GamePaused
         } else {
-            return "GameRunning"
+            global s_D2State_GameRunning
+            return s_D2State_GameRunning
         }
     }
     if (IsMainScreen(d2bitmap, clear_mouse)) {
-        return "MainScreen"
+        global s_D2State_MainScreen
+        return s_D2State_MainScreen
     }
-    return "unknown"
+    global s_D2State_Unknown
+    return s_D2State_Unknown
+}
+
+ReloadFromAnywhere() {
+    ; Use an infinite loop to guide the game into a loaded state
+    loop {
+        switch GetD2State(nil, true) {
+            case s_D2State_GameRunning:
+                ; Game could have panels open, or be in the chat box.
+                ; Keep pressing ESC until the pause menu show up.
+                Press("{Escape}")
+            case s_D2State_GamePaused:
+                ; Cancel the pause menu just so that we can call SaveAndQuit().
+                Press("{Escape}")
+                SaveAndQuit()
+            case s_D2State_MainScreen:
+                SinglePlayerChar1Hell()
+                LogImportant("Reloaded into the game")
+                return
+            case s_D2State_Unknown:
+                ; Could be in the splash screen, the character selection screen, or the difficulty selection screen.
+                ; Keep pressing ESC until the main screen show up.
+                Press("{Escape}")
+        }
+        Sleep 100
+    }
 }
 
 PauseGameIfPossible() {
