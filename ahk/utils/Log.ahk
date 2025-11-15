@@ -72,7 +72,7 @@ Log(text, level := 0) {
     LogToFile(text)
 
     ; Only log to screen if it's at or above INFO level, and message can be typed into the game.
-    if (level <= 0 && IsD2Active() && IsGameLoaded() && !IsGamePaused()) {
+    if (level <= 0 && D2Window.IsActive() && IsGameLoaded() && !IsGamePaused()) {
         Say(text)
     }
 }

@@ -1,3 +1,6 @@
+#include D2.ahk
+
+
 s_Premove_Delay := 200
 s_Click_Delay := 100
 s_Press_Delay := 100
@@ -6,8 +9,9 @@ s_Blink_Delay := 400
 s_Pick_Delay := 50
 
 ClickOrMove := ClickOrMoveImpl
-ClickOrMoveImpl(x, y, button := "", delay := 100)
-{
+ClickOrMoveImpl(x, y, button := "", delay := 100) {
+    D2Window.ActivateIfNecessary()
+
     if (button != "") {
         Click x, y, button
     } else {
@@ -19,8 +23,9 @@ ClickOrMoveImpl(x, y, button := "", delay := 100)
 }
 
 Press := PressImpl
-PressImpl(key, delay := s_Press_Delay)
-{
+PressImpl(key, delay := s_Press_Delay) {
+    D2Window.ActivateIfNecessary()
+
     Send key
     if (delay != 0) {
         Sleep delay
@@ -35,6 +40,8 @@ ClearMouseImpl(delay := 0, x := s_Max_X - 1, y := 1) {
 
 ClickOrMove2 := ClickOrMove2Impl
 ClickOrMove2Impl(x, y, button := "", premove_delay := s_Premove_Delay, click_delay := s_Click_Delay) {
+    D2Window.ActivateIfNecessary()
+
     MouseMove(x, y)
     if (premove_delay) {
         Sleep(premove_delay)

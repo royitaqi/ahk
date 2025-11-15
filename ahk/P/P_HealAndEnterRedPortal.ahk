@@ -6,10 +6,9 @@ P_HealAndEnterRedPortal() {
     ClickOrMove2(158, 184, "Left", , 1000)
 
     ; Open minimap and apply frozen armor
-    Send "B"
-    Send "E"
-    Click "Right"
-    Sleep 400
+    Press("B", 0)
+    Press("E", 0)
+    ClickOrMove2(534, 300, "Right", 0, 400)
     
     ; Check that the hireling is alive
     if (!CheckHirelingAlive()) {

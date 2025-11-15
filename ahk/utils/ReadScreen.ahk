@@ -16,8 +16,10 @@ s_Last_D2Bitmap := nil
 GetD2Bitmap := GetD2BitmapImpl
 GetD2BitmapImpl(save_to_file := "")
 {
+    D2Window.ActivateIfNecessary()
+
     ; Get the active game window's handle
-    hwnd := WinGetID("A")
+    hwnd := D2Window.Get()
 
     ; Capture a screenshot of the window
     bitmap := Gdip_BitmapFromHWND(hwnd, 1)

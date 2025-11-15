@@ -165,7 +165,7 @@ TooglePages()
         ClickStashNext("Left", 100)
         i := i + 1
 
-        if (!IsD2Active()) {
+        if (!D2Window.IsActive()) {
             return
         }
     }

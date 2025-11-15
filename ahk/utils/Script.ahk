@@ -23,7 +23,7 @@ StopScript(msg := "", try_to_pause_and_notify := true) {
 
 StopScriptWhenD2BecomeInactive() {
     Impl() {
-        if (!IsD2Active()) {
+        if (!D2Window.IsActive()) {
             StopScript("Stopping script because D2 became inactive", false)
         }
     }

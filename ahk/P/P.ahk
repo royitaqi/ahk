@@ -1,6 +1,7 @@
 ﻿#Requires AutoHotkey v2.0.0
 
 #include "../data_structure/Queue.ahk"
+#include "../utils/D2.ahk"
 #include "../utils/Health.ahk"
 #include "../utils/Log.ahk"
 #include "../utils/Loot.ahk"
@@ -34,6 +35,7 @@ P_Main() {
     LogLevelVerbose()
     ClearLogFile()
     SetPlayers(1)
+    D2Window.KeepActivated := true
     
     s_P_Tasks.Append(P_SaveLoadAnnounce)
     P_Loop()
