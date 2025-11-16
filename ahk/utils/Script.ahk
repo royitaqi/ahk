@@ -72,7 +72,9 @@ RunForever(func) {
                 SoundPlay("sounds/WarSiren.aac", 0)
                 LogImportant("Played war siren sound", ToFile)
             }
-            RetryCount(playSound, 3, 1000)
+            if (!RetryCount(playSound, 3, 1000)) {
+                LogWarning("Cannot play war siren sound during a failure recovery")
+            }
             
             ; Reload the game
             Assert(RetryCount(ReloadFromAnywhere, 3, 1000), "Cannot reload the game during a failure recovery", s_Fatal)
