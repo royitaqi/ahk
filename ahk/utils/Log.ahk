@@ -9,6 +9,7 @@
 s_Log_File := "log.txt"
 
 /*
+    -4 = Fatal
     -3 = Error
     -2 = Warning
     -1 = Important
@@ -18,6 +19,14 @@ s_Log_File := "log.txt"
      3 = Tedious    - Often used by util scripts for extreme details
 */
 s_Log_Level := 0
+s_Fatal := -4
+s_Error := -3
+s_Warning := -2
+s_Important := -1
+s_Info := 0
+s_Verbose := 1
+s_Debug := 2
+s_Tedious := 3
 
 Say(text, delay := 100) {
     Send "{Enter}"
@@ -29,9 +38,14 @@ Say(text, delay := 100) {
 }
 
 s_Log_To_File_Buffer := ""
-LogToFile(text) {
+ToFile(text, level := 0) {
+    line := _GetLine(text, level)
+    if (!line) {
+        return
+    }
+
     global s_Log_To_File_Buffer
-    line := s_Log_To_File_Buffer "" FormatTime(A_Now, "HH:mm:ss") " - " text "`n"
+    line := s_Log_To_File_Buffer "" FormatTime(A_Now, "HH:mm:ss") " - " line "`n"
     try {
         FileAppend(line, s_Log_File)
         s_Log_To_File_Buffer := ""
@@ -41,61 +55,72 @@ LogToFile(text) {
     }
 }
 
+ToScreen(text, level := 0) {
+    line := _GetLine(text, level)
+    if (!line) {
+        return
+    }
+
+    Say(line)
+}
+
 ClearLogFile() {
     FileOpen(s_Log_File, "w").Close()
 }
 
-Log(text, level := 0) {
+_GetLine(text, level) {
     if (level > s_Log_Level) {
+        return nil
+    }
+
+    switch (level) {
+        case -4:    return "FATAL: " text
+        case -3:    return "ERROR: " text
+        case -2:    return "WARNING: " text
+        case -1:    return "IMPORTANT: " text
+        case 0:     return text
+        case 1:     return "VERBOSE: " text
+        case 2:     return "DEBUG: " text
+        case 3:     return "TEDIOUS: " text
+        default:    Assert(false, "Level cannot be recognized: " level)
+    }
+}
+
+Log(text, destination := nil, level := 0) {
+    ; If destination is given, log to destination only
+    if (destination) {
+        destination.Call(text, level)
         return
     }
 
-    if (level = -3) {
-        text := "ERROR: " text
-    }
-    if (level = -2) {
-        text := "WARNING: " text
-    }
-    if (level = -1) {
-        text := "IMPORTANT: " text
-    }
-    if (level = 1) {
-        text := "VERBOSE: " text
-    }
-    if (level = 2) {
-        text := "DEBUG: " text
-    }
-    if (level = 3) {
-        text := "TEDIOUS: " text
-    }
-
-    LogToFile(text)
-
+    ; Otherwise, log to file, and to screen if suitable
+    ToFile(text, level)
     ; Only log to screen if it's at or above INFO level, and message can be typed into the game.
     if (level <= 0 && IsD2Active() && IsGameLoaded() && !IsGamePaused()) {
-        Say(text)
+        ToScreen(text, level)
     }
 }
-
-LogError(text) {
-    Log(text, -3)
+LogFatal(text, destination := nil) {
+    Log(text, destination, -4)
 }
-LogWarning(text) {
-    Log(text, -2)
+LogError(text, destination := nil) {
+    Log(text, destination, -3)
 }
-LogImportant(text) {
-    Log(text, -1)
+LogWarning(text, destination := nil) {
+    Log(text, destination, -2)
 }
-LogVerbose(text) {
-    Log(text, 1)
+LogImportant(text, destination := nil) {
+    Log(text, destination, -1)
 }
-LogDebug(text) {
-    Log(text, 2)
+LogVerbose(text, destination := nil) {
+    Log(text, destination, 1)
 }
-LogTedious(text) {
-    Log(text, 3)
+LogDebug(text, destination := nil) {
+    Log(text, destination, 2)
 }
-
+LogTedious(text, destination := nil) {
+    Log(text, destination, 3)
+}
 
 IsLogLevelVerbose() {
     return s_Log_Level >= 1

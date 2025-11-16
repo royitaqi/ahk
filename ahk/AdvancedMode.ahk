@@ -75,7 +75,12 @@ F9::
     switch s_CurrentMode
     {
     case 1:
-        SoundPlay("sounds/WarSiren.aac", 0)
+        LogLevelDebug()
+        test() {
+            Log("Testing")
+            throw Error("Test error")
+        }
+        RunForever(test)
         return
     }
     Send "{F9}"

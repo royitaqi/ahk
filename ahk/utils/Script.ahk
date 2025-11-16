@@ -5,7 +5,7 @@
 StopScript(msg := "", try_to_pause_and_notify := true) {
     ; Print/log the message is possible
     if (msg) {
-        LogError(msg)
+        LogImportant(msg)
     }
 
     ; Try to pause the game and play notification sound
@@ -34,23 +34,48 @@ IsMainScript(scriptname) {
     return A_ScriptName = scriptname
 }
 
+RetryCount(func, attempts, delayBetweenTries := 0) {
+    tried := 0
+    loop {
+        try {
+            func.Call()
+        } catch Error {
+            tried := tried + 1
+            if (tried = attempts) {
+                return false
+            }
+        } else {
+            return true
+        }
+        Sleep(delayBetweenTries)
+    }
+}
+
 RunForever(func) {
     loop {
         try {
             LogImportant("Running " func.Name)
             func.Call()
         } catch Error as err {
-            LogError("Exception was thrown. " err.what ": " err.message "`n`n" err.stack)
+            LogError("Error was thrown: [" err.what "] " err.message "`n`n" err.stack, ToFile)
 
             ; Make sure D2 window is activated
-            hwnd := WinGetID("Diablo II")
-            WinActivate { Hwnd: hwnd } ; https://www.autohotkey.com/docs/v2/misc/WinTitle.htm
+            activateD2() {
+                hwnd := WinGetID("Diablo II")
+                WinActivate { Hwnd: hwnd } ; https://www.autohotkey.com/docs/v2/misc/WinTitle.htm
+                LogImportant("Activated D2 window", ToFile)
+            }
+            Assert(RetryCount(activateD2, 3, 1000), "Cannot activate D2 during a failure recovery", s_Fatal)
             
             ; Play alarm sound, but don't wait for it because it's too long
-            SoundPlay("sounds/WarSiren.aac", 0)
+            playSound() {
+                SoundPlay("sounds/WarSiren.aac", 0)
+                LogImportant("Played war siren sound", ToFile)
+            }
+            RetryCount(playSound, 3, 1000)
             
             ; Reload the game
-            ReloadFromAnywhere()
+            Assert(RetryCount(ReloadFromAnywhere, 3, 1000), "Cannot reload the game during a failure recovery", s_Fatal)
         }
     }
 }

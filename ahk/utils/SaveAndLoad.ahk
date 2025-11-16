@@ -170,13 +170,19 @@ GetD2State(d2bitmap := 0, clear_mouse := false) {
 }
 
 ReloadFromAnywhere() {
+    c_Max_Escape_Count := 3
+    escapeCount := 0
     ; Use an infinite loop to guide the game into a loaded state
     loop {
-        switch GetD2State(nil, true) {
+        state := GetD2State(nil, true)
+        LogDebug("ReloadFromAnywhere: state=" state, ToFile)
+        switch state {
             case s_D2State_GameRunning:
                 ; Game could have panels open, or be in the chat box.
                 ; Keep pressing ESC until the pause menu show up.
                 Press("{Escape}")
+                escapeCount := escapeCount + 1
+                Assert(escapeCount <= c_Max_Escape_Count, "Cannot press more then " c_Max_Escape_Count " ESC during reload")
             case s_D2State_GamePaused:
                 ; Cancel the pause menu just so that we can call SaveAndQuit().
                 Press("{Escape}")
@@ -189,6 +195,8 @@ ReloadFromAnywhere() {
                 ; Could be in the splash screen, the character selection screen, or the difficulty selection screen.
                 ; Keep pressing ESC until the main screen show up.
                 Press("{Escape}")
+                escapeCount := escapeCount + 1
+                Assert(escapeCount <= c_Max_Escape_Count, "Cannot press more then " c_Max_Escape_Count " ESC during reload")
         }
         Sleep 100
     }

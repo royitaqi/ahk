@@ -1,17 +1,17 @@
 #include Log.ahk
 
 
-Assert(expr, msg := "Assertion failed", level := -1)
+Assert(expr, msg := "Assertion failed", log_level := s_Error, backtrack_level := -1)
 {
     if (!expr) {
-        LogError(msg)
+        Log(msg, ToFile, log_level)
         ; -1 makes AHK show the calling function instead of this function
-        throw Error(msg, level)
+        throw Error(msg, backtrack_level)
     }
 }
 
-AssertEqual(actual, expected, msg := "Values should equal", level := -2) {
-    Assert(actual = expected, msg " (expected " expected ", actually " actual ")", level)
+AssertEqual(actual, expected, msg := "Values should equal", log_level := s_Error, backtrack_level := -2) {
+    Assert(actual = expected, msg " (expected " expected ", actually " actual ")", log_level, backtrack_level)
 }
 
 /* Test mouse position */

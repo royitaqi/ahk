@@ -17,7 +17,7 @@ GetD2Bitmap := GetD2BitmapImpl
 GetD2BitmapImpl(save_to_file := "")
 {
     ; Get the active game window's handle
-    hwnd := WinGetID("A")
+    hwnd := WinGetID("Diablo II")
 
     ; Capture a screenshot of the window
     bitmap := Gdip_BitmapFromHWND(hwnd, 1)
@@ -96,7 +96,7 @@ DetectPixelColor(d2bitmap, x, y, r1, g1, b1, variation1 := 0, r2 := 0, g2 := 0, 
     argb := Gdip_GetPixel(d2bitmap.val, x, y)
     ARGB2RGB(argb, &r, &g, &b)
 
-    if (IsLogLevelDebug()) {
+    if (IsLogLevelTedious()) {
         hex := RGB2Hex(r, g, b)
         LogTedious("DetectPixelColor(): X=" x " Y=" y " color=0x" hex)
     }

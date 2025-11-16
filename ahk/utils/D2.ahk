@@ -1,11 +1,3 @@
-IsD2Active()
-{
-    title := WinGetTitle("A")
-    return SubStr(title, 1, StrLen("Diablo II")) == "Diablo II"
-}
-
-IsD2Windowed()
-{
-    color := PixelGetColor(533, 287, "Slow")
-    return color != 0x000000
+IsD2Active() {
+    return WinActive("Diablo II")
 }
